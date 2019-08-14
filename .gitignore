@@ -1,0 +1,9 @@
+.tmp
+node_modules/
+.sass-cache
+.idea
+*.iml
+*.DS_Store
+*.log
+.project
+.elasticbeanstalk/

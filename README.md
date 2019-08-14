@@ -1,1 +1,1 @@
-# prj_moogle
+# Webpack multi pages
