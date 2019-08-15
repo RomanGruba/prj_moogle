@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
 
@@ -62,6 +64,9 @@ module.exports = {
 
   // https://webpack.js.org/concepts/plugins/
   plugins: [
+    new CopyWebpackPlugin([
+        {from:'src/img',to:'img'}
+    ]),
     new HtmlWebpackPlugin({
       template: './src/page-index/tmpl.html',
       inject: true,
@@ -74,7 +79,6 @@ module.exports = {
       chunks: ['about'],
       filename: 'about.html'
     }),
-
     new WebpackBar()
   ]
 }
