@@ -6,8 +6,8 @@
 }
 
 .in-hidden {
-    display: none;
-  }
+  display: none;
+}
 
 table {
   max-width: 1300px;
@@ -112,6 +112,7 @@ td {
     margin: 10px auto;
 
   }
+
   .image-mov {
     display: block;
     width: 450px;
@@ -119,9 +120,11 @@ td {
     background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 170px;
   }
+
   .image-mov_section {
     display: flex;
   }
+
   .image-mov_but {
     background-color: brown;
     width: 30px;
@@ -130,31 +133,39 @@ td {
     margin: 0;
     padding: 0;
   }
+
   .movie-descr_section {
     max-width: 500px;
   }
+
   .in-hidden {
     display: block;
   }
-  .data-down{
+
+  .data-down {
     display: none;
   }
-  .text-Movie{
+
+  .text-Movie {
     display: flex;
     flex-flow: column;
     margin-left: 20px;
 
   }
-  .image-mov_but_items{
+
+  .image-mov_but_items {
     display: flex;
   }
-  .image-mov_but{
+
+  .image-mov_but {
     margin: 5px 4px;
   }
-  .image-mov_title{
+
+  .image-mov_title {
     margin: 5px 0;
   }
 }
+
 @media screen and (min-width: 1024px) {
   max-width: auto;
 }
@@ -205,16 +216,11 @@ body {
   width: 270px;
 }
 
-
-
 .film-media {
   display: none;
 }
 
-.actor_photo img {
-  position: relative;
-  top: -15px;
-}
+
 
 @media screen and (min-width: 768px) {
   .page-about_section2 {
@@ -241,7 +247,7 @@ body {
   }
 
   .frames {
-    width: 380px;
+    width: 340px;
   }
 
   .actors-list,
@@ -254,11 +260,6 @@ body {
     list-style: none;
     width: 56px;
     text-align: center;
-    margin-right: 14px;
-
-    &:nth-last-of-type(1) {
-      margin-right: 0px;
-    }
   }
 
   .actor_photo {
@@ -266,22 +267,35 @@ body {
     height: 56px;
     overflow: hidden;
     border-radius: 50%;
+    margin: 0 auto;
     margin-bottom: 18px;
+    text-align: center;
   }
+
+  .actor_image {
+    position: relative;
+    top: -15px;
+  }
+
+  .no_image {
+    top: 0;
+  }
+
 
   .frames_item {
     list-style: none;
-    margin-right: 8px;
-
-    &:nth-last-of-type(1) {
-      margin-right: 0px;
-    }
   }
 
   .frames_picture {
-    width: 80px;
-    height: 74px;
-    overflow: hidden;
+    height: 84px;
+    width: 84px;
+    margin: 0 auto;
+
+  }
+
+  .frames_image {
+    height: 84px;
+    object-fit: cover;
   }
 }
 
