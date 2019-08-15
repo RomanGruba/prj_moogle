@@ -1,2 +1,11 @@
 @import './search-form';
 // @import './search-input';
+
+@import './header.scss';
+@import './nav.scss';
+@import './elem-grid.scss';
+
+html, body {
+  min-height: 100vh;
+}
+

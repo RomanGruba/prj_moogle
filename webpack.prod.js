@@ -19,7 +19,7 @@ module.exports = {
   entry: {
     index: './src/page-index/main.js',
     about: './src/page-about/main.js',
-    contacts: './src/page-contacts/main.js'
+
   },
 
   // how to write the compiled files to disk
@@ -86,6 +86,7 @@ module.exports = {
       chunks: ['about'],
       filename: 'about.html'
     }),
+    
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css'

@@ -1,9 +1,9 @@
-body {
-  position: absolute;
-}
+// body {
+//   position: absolute;
+// }
 
 .search_block {
-  position: relative;
+  position: absolute;
   top: 0;
   right: 0;
   width: 100vw;
@@ -14,6 +14,7 @@ body {
   justify-content: center;
   background-color: rgb(119, 193, 187);
   transform: translate(100%, -100%) scale(0, 0);
+  z-index: 1;
 }
 
 .show-search {
