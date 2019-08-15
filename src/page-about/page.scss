@@ -5,12 +5,12 @@
   height: auto;
 }
 
-// .in-hidden {
-  //   display: none;
-  // }
+.in-hidden {
+    display: none;
+  }
 
 table {
-  width: 360px;
+  max-width: 1300px;
 }
 
 .green-line {
@@ -23,90 +23,11 @@ table {
 
 td {
   font-weight: normal;
-  color: #039;
-  padding: 10px 15px;
+  color: #bfbfbf;
+  padding: 5px 15px;
 }
 
-
-@media screen and (max-width: 359px) {
-  .page-about_part1 {
-    margin: 0 auto;
-    max-width: 359px;
-    max-height: auto;
-    padding: 2px 5px 0px 5px;
-  }
-
-  .image-mov_section {
-    position: relative;
-    display: block;
-    max-height: 250px;
-  }
-
-  .image-mov {
-    display: block;
-    margin: 0 auto;
-    width: 360px;
-    height: 170px;
-    background: url('../img/img_test_first1/Dark_time.png') no-repeat;
-    background-size: 350px, 170px;
-  }
-
-  .image-mov_title {
-    display: block;
-    position: absolute;
-    top: 131px;
-    left: 25px;
-    color: white;
-    font-size: 20px;
-  }
-
-  .image-mov_butData {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px auto;
-    max-width: 340px;
-  }
-
-  .image-mov_but {
-    background-color: brown;
-    width: 30px;
-    height: 30px;
-    border-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .data-down {
-    font-size: 13px;
-    color: #89c9c4;
-  }
-
-  .movie-descr_section {
-    margin: 5px auto;
-    max-width: 340px;
-    color: #757575;
-  }
-
-  table {
-    width: 360px;
-  }
-
-  .green-line {
-    background-color: #addad6;
-  }
-
-  .table-answ {
-    padding-left: 40px;
-  }
-
-  td {
-    font-weight: normal;
-    color: #039;
-    padding: 10px 15px;
-  }
-}
-
-@media screen and (min-width: 360px) and (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .page-about_part1 {
     margin: 0 auto;
     max-width: 767px;
@@ -114,6 +35,10 @@ td {
     padding: 2px 5px 0px 5px;
   }
 
+  .movie-descr_title {
+    display: none;
+  }
+
   .image-mov_section {
     position: relative;
     display: block;
@@ -165,9 +90,8 @@ td {
     color: #757575;
   }
 
-
   table {
-    width: 360px;
+    max-width: 100%;
   }
 
   .green-line {
@@ -178,9 +102,56 @@ td {
     padding-left: 40px;
   }
 
-  td {
-    font-weight: normal;
-    color: #039;
-    padding: 10px 15px;
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px){
+  .page-about_part1 {
+    display: flex;
+    max-width: 1023px;
+    margin: 10px auto;
+
+  }
+  .image-mov {
+    display: block;
+    width: 450px;
+    height: 340px;
+    background: url('../img/img_test_first1/Dark_time.png') no-repeat;
+    background-size: 350px, 170px;
+  }
+  .image-mov_section {
+    display: flex;
+  }
+  .image-mov_but {
+    background-color: brown;
+    width: 30px;
+    height: 30px;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .movie-descr_section {
+    max-width: 500px;
+  }
+  .in-hidden {
+    display: block;
+  }
+  .data-down{
+    display: none;
+  }
+  .text-Movie{
+    display: flex;
+    flex-flow: column;
+    margin-left: 20px;
+
+  }
+  .image-mov_but_items{
+    display: flex;
+  }
+  .image-mov_but{
+    margin: 5px 4px;
+  }
+  .image-mov_title{
+    margin: 5px 0;
   }
 }
