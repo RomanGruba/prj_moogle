@@ -30,6 +30,7 @@ td {
 @media screen and (max-width: 767px) {
   .page-about_part1 {
     margin: 10px auto;
+    margin-bottom: 20px;
     max-width: 767px;
     max-height: auto;
     padding: 2px 5px 0px 5px;
@@ -40,7 +41,6 @@ td {
   }
 
   .image-mov_section {
-    position: relative;
     display: block;
     max-height: 250px;
   }
@@ -53,9 +53,11 @@ td {
     background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 170px;
   }
+  .image-movie_title_section {
+    position: relative;
+  }
 
   .image-mov_title {
-    display: block;
     position: absolute;
     top: 131px;
     left: 25px;
@@ -101,7 +103,6 @@ td {
   .table-answ {
     padding-left: 40px;
   }
-
 
 }
 
@@ -156,7 +157,7 @@ td {
   }
 }
 @media screen and (min-width: 1024px) {
-  max-width: auto;
+
 }
 
 button {
