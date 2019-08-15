@@ -12,7 +12,7 @@ module.exports = {
   // https://webpack.js.org/concepts/entry-points/#multi-page-application
   entry: {
     index: './src/page-index/main.js',
-    about: './src/page-about/main.js',
+    about: './src/page-about/main.js'
 
   },
 
@@ -80,7 +80,6 @@ module.exports = {
       chunks: ['about'],
       filename: 'about.html'
     }),
-    
     new WebpackBar()
   ]
 }
