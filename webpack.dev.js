@@ -13,7 +13,6 @@ module.exports = {
   entry: {
     index: './src/page-index/main.js',
     about: './src/page-about/main.js'
-
   },
 
   // https://webpack.js.org/configuration/dev-server/
