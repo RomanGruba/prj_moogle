@@ -15,3 +15,14 @@ export function getSingleFilmTitle(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_title`;
   return fetch(url).then(res => res.json());
 }
+export function getSingleFilmContries(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=production_contries`;
+  return fetch(url).then(res => res.json());
+}
+
+export function getSingleFilmTagline(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=tagline`;
+  return fetch(url).then(res => res.json());
+}
+
+
