@@ -15,3 +15,8 @@ export function getSingleFilmFrames(id) {
   const url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
   return fetch(url).then(res => res.json());
 }
+
+export function getSingleFeedback(id) {
+  const url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
+  return fetch(url).then(res => res.json());
+}

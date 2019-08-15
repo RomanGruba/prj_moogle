@@ -2,9 +2,9 @@
 <li class="actors_item">
   <div class="actor_photo">
     {{#if profile_path}}
-    <img class="actor_image" src="https://image.tmdb.org/t/p/w500/{{profile_path}}" alt="">
+    <img class="actor_image" src="" data-lazy="https://image.tmdb.org/t/p/w500/{{profile_path}}" alt="">
     {{else }}
-    <img class="actor_image no_image" src="../img/avatar-default-icon.png" alt="">
+    <img class="actor_image no_image" src="" data-lazy='../img/avatar-default-icon.png' alt="">
     {{/if}}
   </div>
   <span class="actor_name">{{name}}</span>

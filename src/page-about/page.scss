@@ -190,11 +190,17 @@ body {
   margin: 0 auto;
 }
 
+.trailerAndMedia {
+  display: flex;
+  flex-direction: column;
+}
+
 .trailer {
   display: flex;
   text-align: left;
   flex-direction: column;
   margin-bottom: 38px;
+  order: 2;
 }
 
 .section2_subtitle {
@@ -217,14 +223,71 @@ body {
 }
 
 .film-media {
+  order: 1;
+  margin: 0 auto;
+}
+
+.frames {
   display: none;
 }
 
+.actors {
+  width: 330px;
 
+}
+
+.actors_item {
+  list-style: none;
+  width: 56px;
+  text-align: center;
+}
+
+.actor_photo {
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.actor_image {
+  position: relative;
+  top: -15px;
+}
+
+
+.slick-arrow.slick-prev {
+  left: 0;
+}
+
+.slick-arrow.slick-next {
+  right: 0;
+}
+
+.slick-list.draggable {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.actors .slick-arrow {
+  position: absolute;
+  top: 34px;
+}
 
 @media screen and (min-width: 768px) {
   .page-about_section2 {
     width: 720px;
+  }
+
+  .trailer {
+    order: 0;
+  }
+
+  .frames {
+    display: block;
   }
 
   .iframe_trailer {
@@ -236,6 +299,7 @@ body {
   .film-media {
     display: flex;
     justify-content: space-between;
+    width: 720px;
   }
 
   .feedback_content {
@@ -256,34 +320,13 @@ body {
     margin-bottom: 90px;
   }
 
-  .actors_item {
-    list-style: none;
-    width: 56px;
-    text-align: center;
-  }
-
-  .actor_photo {
-    width: 56px;
-    height: 56px;
-    overflow: hidden;
-    border-radius: 50%;
-    margin: 0 auto;
-    margin-bottom: 18px;
-    text-align: center;
-  }
-
-  .actor_image {
-    position: relative;
-    top: -15px;
-  }
-
   .no_image {
     top: 0;
   }
 
-
   .frames_item {
     list-style: none;
+    width: 84px;
   }
 
   .frames_picture {
@@ -297,6 +340,12 @@ body {
     height: 84px;
     object-fit: cover;
   }
+
+  .actors .slick-arrow {
+    top: 44px;
+  }
+
+
 }
 
 @media screen and (min-width: 1024px) {
@@ -313,12 +362,16 @@ body {
     width: 880px;
   }
 
+  .film-media {
+    width: 978px;
+  }
+
   .actors {
-    width: 408px;
+    width: 400px;
   }
 
   .frames {
-    width: 536px;
+    width: 500px;
   }
 
   .actors_item {
@@ -335,9 +388,19 @@ body {
     height: 106px;
   }
 
+  .frames_image {
+    height: 120px;
+
+  }
+
   .feedback_photo {
     width: 80px;
     height: 80px;
     margin-right: 16px;
+  }
+
+  .actors .slick-arrow {
+    top: 55px;
+
   }
 }
