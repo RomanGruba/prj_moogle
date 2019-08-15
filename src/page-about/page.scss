@@ -105,7 +105,7 @@ td {
 
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px){
+@media screen and (min-width: 768px) {
   .page-about_part1 {
     display: flex;
     max-width: 1023px;
@@ -154,4 +154,7 @@ td {
   .image-mov_title{
     margin: 5px 0;
   }
+}
+@media screen and (min-width: 1024px) {
+  max-width: auto;
 }
