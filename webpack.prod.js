@@ -4,7 +4,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin') // installed via 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist')
 
@@ -18,7 +19,7 @@ module.exports = {
   entry: {
     index: './src/page-index/main.js',
     about: './src/page-about/main.js',
-    contacts: './src/page-contacts/main.js'
+
   },
 
   // how to write the compiled files to disk
@@ -70,6 +71,9 @@ module.exports = {
   // https://webpack.js.org/concepts/plugins/
   plugins: [
     new CleanWebpackPlugin(), // cleans output.path by default
+    new CopyWebpackPlugin([
+        {from:'src/img',to:'img'}
+    ]),
     new HtmlWebpackPlugin({
       template: './src/page-index/tmpl.html',
       inject: 'body',
@@ -82,12 +86,7 @@ module.exports = {
       chunks: ['about'],
       filename: 'about.html'
     }),
-    new HtmlWebpackPlugin({
-      template: './src/page-contacts/tmpl.html',
-      inject: 'body',
-      chunks: ['contacts'],
-      filename: 'contacts.html'
-    }),
+    
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css'

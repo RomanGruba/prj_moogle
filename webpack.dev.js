@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
 
@@ -10,8 +12,8 @@ module.exports = {
   // https://webpack.js.org/concepts/entry-points/#multi-page-application
   entry: {
     index: './src/page-index/main.js',
-    about: './src/page-about/main.js',
-    contacts: './src/page-contacts/main.js'
+    about: './src/page-about/main.js'
+
   },
 
   // https://webpack.js.org/configuration/dev-server/
@@ -63,6 +65,9 @@ module.exports = {
 
   // https://webpack.js.org/concepts/plugins/
   plugins: [
+    new CopyWebpackPlugin([
+        {from:'src/img',to:'img'}
+    ]),
     new HtmlWebpackPlugin({
       template: './src/page-index/tmpl.html',
       inject: true,
@@ -74,12 +79,6 @@ module.exports = {
       inject: true,
       chunks: ['about'],
       filename: 'about.html'
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/page-contacts/tmpl.html',
-      inject: true,
-      chunks: ['contacts'],
-      filename: 'contacts.html'
     }),
     new WebpackBar()
   ]

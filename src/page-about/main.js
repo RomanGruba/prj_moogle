@@ -1,6 +1,7 @@
-// import '../scss/main.scss';
-// import './page.scss';
-// import list from './list.hbs';
+import '../scss/main.scss';
+import './page.scss';
+import './film-data';
+
 
 // document.addEventListener('DOMContentLoaded', () => {
 //   console.log('DOMContentLoaded', 'page-about');
