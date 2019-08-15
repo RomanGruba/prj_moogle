@@ -1,20 +1,11 @@
 import '../scss/main.scss';
-import './page.scss'
+import './page.scss';
+import '../scss/header.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded', 'page-index')
-})
 
-class Foo {
-  constructor () {
-    this.value = 'foobar'
-  }
-  static instance () {
-    return new Foo()
-  }
-  getValue () {
-    return this.value
-  }
+const sidebarShow = document.querySelector(".toggle-btn");
+sidebarShow.addEventListener("click", show);
+
+function show(){
+  document.getElementById("sidebar").classList.toggle("active")
 }
-
-console.log(Foo.instance().getValue())
