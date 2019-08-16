@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  text-decoration: none;
 }
 
 .button_icon {
@@ -139,12 +140,19 @@
 .fils_item {
   position: relative;
 }
+.films-item:hover {
+  filter: brightness(1.5);
+}
+.fill-color {
+  fill: gold;
+}
 .img-sample,
 .films-item,
 .img-container {
   width: 346px;
   height: 178px;
   border-radius: 3px;
+  filter: brightness(0.9);
 }
 .films-item:not(:last-child) {
   margin-bottom: 6px;

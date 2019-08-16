@@ -23,7 +23,13 @@ class FilmInfo2 {
       filmOverview: document.querySelector('.movie-descr'),
       filmPoster: document.querySelector('.image-mov')
     }
+
     this.renderAll()
+
+    // this.renderTitle();
+    // this.renderContries();
+    // this.renderTagline();
+
   }
 
   renderAll() {
