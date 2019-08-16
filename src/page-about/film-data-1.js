@@ -32,13 +32,13 @@ class FilmInfo2 {
     })
   }
 
-  renderContries() {
-    getSingleFilmContries(this.filmId).then(data => {
-      const contryMov = data.map(production_contries => getSingleFilmContries(production_contries)).join('');
-      console.log(contryMov);
-      this.refs.filmContries.insertAdjacentHTML('afterbegin', contryMov);
-    })
-  }
+  // renderContries() {
+  //   getSingleFilmContries(this.filmId).then(data => {
+  //     const contryMov = data.map(production_contries => getSingleFilmContries(production_contries)).join('');
+  //     console.log(contryMov);
+  //     this.refs.filmContries.insertAdjacentHTML('afterbegin', contryMov);
+  //   })
+  // }
   renderTagline() {
     getSingleFilmTagline(this.filmId).then(data => {
       const taglineMov = data.tagline;
