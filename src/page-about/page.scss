@@ -17,6 +17,7 @@ table {
   background-color: #addad6;
 }
 
+
 .table-answ {
   padding-left: 40px;
 }
@@ -210,6 +211,15 @@ body {
 .feedback_item {
   display: flex;
   margin-bottom: 16px;
+}
+
+.feedback_text {
+  max-height: 75px;
+  display: block;
+  overflow: hidden;
+  &.active {
+    max-height: initial;
+  }
 }
 
 .feedback_photo {
