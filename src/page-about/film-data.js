@@ -18,11 +18,12 @@ class FilmData {
       ulFrames: document.querySelector(".frames-list"),
       ulFeedbacks: document.querySelector(".feedback-list"),
       actors: document.querySelectorAll(".actor_image"),
-      frames: document.querySelectorAll(".frames_image")
+      frames: document.querySelectorAll(".frames_image"),
+      largeFeedbacks: document.querySelectorAll(".largeFeedback")
     };
-    this.renderTrailer();
-    this.renderActors();
-    this.renderFrames();
+    // this.renderTrailer();
+    // this.renderActors();
+    // this.renderFrames();
     this.renderFeedbacks();
   }
 
@@ -43,7 +44,6 @@ class FilmData {
 
   renderTrailer() {
     getSingleFilmTrailer(this.filmId).then(data => {
-
       const trailerKey = data.results[0].key;
       this.refs.iframeTrailer.src =
         "http://www.youtube.com/embed/" + trailerKey;
@@ -54,7 +54,6 @@ class FilmData {
         this.refs.iframeTrailer.src =
           "http://www.youtube.com/embed/" + trailerKey;
       } else this.refs.iframeTrailer.src = "http://www.youtube.com/embed/";
-
     });
   }
 
@@ -86,9 +85,27 @@ class FilmData {
 
   renderFeedbacks() {
     getSingleFeedback(this.filmId).then(data => {
-      const markup = feedbacks(data.results);
+      const classifiedFeedback = [];
+      data.results.map(el => {
+        if (el.content.length > 380) {
+          el.feedbackLength = "largeFeedback";
+          classifiedFeedback.push(el);
+        } else {
+          el.feedbackLength = "smallFeedback";
+          classifiedFeedback.push(el);
+        }
+      });
+      const markup = feedbacks(classifiedFeedback);
       this.refs.ulFeedbacks.insertAdjacentHTML("afterbegin", markup);
+      this.splitFeedback(classifiedFeedback);
     });
+  }
+
+  splitFeedback(data) {
+    data.forEach(el => {
+      console.log(el.content);
+    });
+
   }
 }
 

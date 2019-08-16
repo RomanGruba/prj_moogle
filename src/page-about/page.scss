@@ -214,14 +214,14 @@ body {
   margin-bottom: 16px;
 }
 
-.feedback_text {
-  max-height: 75px;
-  display: block;
-  overflow: hidden;
-  &.active {
-    max-height: initial;
-  }
-}
+// .feedback_text {
+//   max-height: 75px;
+//   display: block;
+//   overflow: hidden;
+//   &.active {
+//     max-height: initial;
+//   }
+// }
 
 .feedback_photo {
   width: 40px;
