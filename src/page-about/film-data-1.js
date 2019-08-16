@@ -18,7 +18,7 @@ class FilmInfo2 {
       filmTitle: document.querySelector('.image-mov_title'),
       filmContries: document.querySelector('[data-field="country"]'),
       filmTagline: document.querySelector('[data-field="tagline"]'),
-      filmGenres: document.querySelector('[data-field="genre]'),
+      filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
       filmPoster: document.querySelector('.image-mov')
@@ -52,29 +52,31 @@ class FilmInfo2 {
     console.log(data);
   }
   renderContries(data) {
-      const contryMov = data.production_countries.reduce((contries, el, indx) => {
-        if(indx > 0) {
-          return  contries + ', ' + el.name
-        }
-        return  contries + el.name
-      }, '');
+    const contryMov = data.production_countries.reduce((contries, el, indx) => {
+      if (indx > 0) {
+        return contries + ', ' + el.name
+      }
+      return contries + el.name
+    }, '');
     this.refs.filmContries.textContent = contryMov;
     console.log('contryMov', contryMov);
   }
-  renderTagline() {
-    getSingleFilmTagline(this.filmId).then(data => {
-      const taglineMov = data.tagline;
-      this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
-    })
+  renderTagline(data) {
+    const taglineMov = data.tagline;
+    this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
+
   }
-  renderGenre(){
-    getSingleGenres(this.filmId).then(data => {
-      const genresMov = data.genres;
-      this.refs.filmGenres.insertAdjacentHTML('afterbegin', genresMov);
-    })
+  renderGenre(data) {
+    const genreMov = data.genres.reduce((g, el, indx) => {
+      if (indx > 0) {
+        return g + ', ' + el.name
+      }
+      return g + el.name
+    }, '');
+    console.log(genreMov);
+    this.refs.filmGenres.textContent = genreMov;
   }
-  renderRuntime() {
-    getSingleRuntime(this.filmId).then(data => {
+  renderRuntime(data) {
       const runtimeMov = data.runtime;
       console.log(runtimeMov);
       this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
@@ -88,14 +90,11 @@ class FilmInfo2 {
           return String(value).padStart(2, '0');
         }
       }
-    })
   }
-  renderOverview() {
-    getSingleOwerview(this.filmId).then(data => {
+  renderOverview(data) {
       const overviewMov = data.overview;
       this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
-      console.log(data.person);
-    })
+    
   }
   renderPost(data) {
     const posterMov = data.backdrop_path;
