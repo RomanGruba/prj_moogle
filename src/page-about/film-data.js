@@ -123,7 +123,7 @@ class FilmData {
 }
 
 // const filmdata = new FilmData(448358);
-const filmdata = new FilmData(429617);
+const filmdata = new FilmData(localStorage.getItem('id'));
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
 // const filmdata = new FilmData(384018);
