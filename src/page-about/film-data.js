@@ -18,12 +18,11 @@ class FilmData {
       ulFrames: document.querySelector(".frames-list"),
       ulFeedbacks: document.querySelector(".feedback-list"),
       actors: document.querySelectorAll(".actor_image"),
-      frames: document.querySelectorAll(".frames_image"),
-      largeFeedbacks: document.querySelectorAll(".largeFeedback")
+      frames: document.querySelectorAll(".frames_image")
     };
-    // this.renderTrailer();
-    // this.renderActors();
-    // this.renderFrames();
+    this.renderTrailer();
+    this.renderActors();
+    this.renderFrames();
     this.renderFeedbacks();
   }
 
@@ -89,27 +88,42 @@ class FilmData {
       data.results.map(el => {
         if (el.content.length > 380) {
           el.feedbackLength = "largeFeedback";
+          el.smallText = el.content.substr(0, 380);
+          el.extendedText = el.content.substr(380);
           classifiedFeedback.push(el);
         } else {
-          el.feedbackLength = "smallFeedback";
+          el.smallText = el.content;
           classifiedFeedback.push(el);
         }
       });
       const markup = feedbacks(classifiedFeedback);
       this.refs.ulFeedbacks.insertAdjacentHTML("afterbegin", markup);
-      this.splitFeedback(classifiedFeedback);
+      this.showMoreFeedbackText();
     });
   }
 
-  splitFeedback(data) {
-    data.forEach(el => {
-      console.log(el.content);
+  showMoreFeedbackText() {
+    this.refs.ulFeedbacks.addEventListener("click", e => {
+      if (
+        e.target.nodeName === "BUTTON" &&
+        e.target.textContent === "...more"
+      ) {
+        const hiddenSpan = e.target.previousSibling;
+        hiddenSpan.classList.add("show_text");
+        e.target.textContent = "...less";
+      } else if (
+        e.target.nodeName === "BUTTON" &&
+        e.target.textContent === "...less"
+      ) {
+        const hiddenSpan = e.target.previousSibling;
+        hiddenSpan.classList.remove("show_text");
+        e.target.textContent = "...more";
+      }
     });
-
   }
 }
 
 // const filmdata = new FilmData(448358);
-// const filmdata = new FilmData(429617);
+const filmdata = new FilmData(429617);
 // const filmdata = new FilmData(429203);
-const filmdata = new FilmData(384018);
+// const filmdata = new FilmData(384018);
