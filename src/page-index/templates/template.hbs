@@ -1,9 +1,9 @@
 {{#each this}}
-<li class="films-item" data-id={{id}}>
+<li class="films-item" >
   <a href="http://localhost:8080/about.html">
     <div class="img-container">
       <img class="img-sample" src="https://image.tmdb.org/t/p/original/{{backdrop_path}}" alt="movie" />
-      <div class="gradient">
+      <div data-id={{id}} class="gradient">
         <button class="button_icon button_icon-star">
           <svg class="icon icon-star">
             <use href="../img/icons/sprite.svg#star"></use>
