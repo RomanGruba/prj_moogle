@@ -9,9 +9,6 @@ import {
   getSinglePoster
 } from '../js/api';
 
-import {
-  lazyLoad
-} from '../page-about/film-data';
 
 class FilmInfo2 {
   constructor(id) {
@@ -34,10 +31,10 @@ class FilmInfo2 {
       console.log('single data:', data);
       this.renderTitle(data);
       this.renderContries(data);
-      // this.renderTagline(data);
-      // this.renderGenre();
-      // this.renderRuntime(data);
-      // this.renderOverview(data);
+      this.renderTagline(data);
+      this.renderGenre(data);
+      this.renderRuntime(data);
+      this.renderOverview(data);
       this.renderPost(data);
     })
   }
@@ -49,11 +46,8 @@ class FilmInfo2 {
     console.log(data);
   }
   renderContries(data) {
-    // getSingleFilmContries(this.filmId).then(data => {
-      // })
       const contryMov = data.production_countries.reduce((contries, el, indx) => {
         if(indx > 0) {
-
           return  contries + ', ' + el.name
         }
         return  contries + el.name
@@ -67,12 +61,12 @@ class FilmInfo2 {
       this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
     })
   }
-  // renderGenre(){
-  //   getSingleGenres(this.filmId).then(data => {
-  //     const genresMov = data.genres;
-  //     this.refs.filmGenres.insertAdjacentHTML('afterbegin', genresMov);
-  //   })
-  // }
+  renderGenre(){
+    getSingleGenres(this.filmId).then(data => {
+      const genresMov = data.genres;
+      this.refs.filmGenres.insertAdjacentHTML('afterbegin', genresMov);
+    })
+  }
   renderRuntime() {
     getSingleRuntime(this.filmId).then(data => {
       const runtimeMov = data.runtime;
@@ -98,13 +92,10 @@ class FilmInfo2 {
     })
   }
   renderPost(data) {
-    // getSinglePoster(this.filmId).then(data =>{
-    // })
     const posterMov = data.backdrop_path;
     console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
     console.log(this.refs.filmPoster);
     this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
-    // this.refs.poster.forEach(image => lazyLoad(image));
   }
 }
 
