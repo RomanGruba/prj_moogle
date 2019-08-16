@@ -50,14 +50,12 @@ class Mooogle {
 
     this.renderFilms();
     this.filmsList.addEventListener('click', event => {
-
-      if(e.target.nodeName = "LI") {
+      alert(event.target.nodeName)
+      if(event.target !== event.currentTarget) {
 
         console.dir(event.target);
         localStorage.setItem('id', event.target.dataset.id);
       }
-
-      localStorage.setItem('id');
 
     });
 
