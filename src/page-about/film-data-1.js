@@ -6,7 +6,8 @@ import {
   getSingleGenres,
   getSingleRuntime,
   getSingleOwerview,
-  getSinglePoster
+  getSinglePoster,
+  getSinglePosterLittle
 } from '../js/api';
 
 
@@ -21,7 +22,7 @@ class FilmInfo2 {
       filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
-      filmPoster: document.querySelector('.image-mov')
+      filmPoster: document.querySelector('.image-mov'),
     }
 
     this.renderAll()
@@ -41,7 +42,8 @@ class FilmInfo2 {
       this.renderGenre(data);
       this.renderRuntime(data);
       this.renderOverview(data);
-      this.renderPost(data);
+      this.renderPost1(data);
+      // this.renderPost2(data);
     })
   }
 
@@ -94,14 +96,15 @@ class FilmInfo2 {
   renderOverview(data) {
       const overviewMov = data.overview;
       this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
-    
+
   }
-  renderPost(data) {
+  renderPost1(data) {
     const posterMov = data.backdrop_path;
     console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
     console.log(this.refs.filmPoster);
     this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
   }
+
 }
 
 
