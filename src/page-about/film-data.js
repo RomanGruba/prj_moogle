@@ -48,7 +48,6 @@ class FilmData {
         "http://www.youtube.com/embed/" + trailerKey;
 
       if (data.results[0].key) {
-        console.log("sdfsdf");
         const trailerKey = data.results[0].key;
         this.refs.iframeTrailer.src =
           "http://www.youtube.com/embed/" + trailerKey;
