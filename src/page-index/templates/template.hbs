@@ -1,7 +1,8 @@
-  {{#each this}}
-  <li class="films-item">
+{{#each this}}
+<li class="films-item">
+  <a href="#">
     <div class="img-container">
-      <img class="img-sample" src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="movie" />
+      <img class="img-sample" src="https://image.tmdb.org/t/p/original/{{backdrop_path}}" alt="movie" />
       <div class="gradient">
         <button class="button_icon button_icon-star">
 
@@ -18,5 +19,6 @@
       </div>
     </div>
     <p class="films-name">{{title}} ({{release_date}})</p>
-  </li>
-  {{/each}}
+  </a>
+</li>
+{{/each}}
