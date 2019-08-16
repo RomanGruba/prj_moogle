@@ -18,9 +18,9 @@ class FilmInfo2 {
       filmContries: document.querySelector('[data-field="country"]'),
       filmTagline: document.querySelector('[data-field="tagline"]'),
     }
-    this.renderTitle();
-    this.renderContries();
-    this.renderTagline();
+    // this.renderTitle();
+    // this.renderContries();
+    // this.renderTagline();
   }
 
   renderTitle() {

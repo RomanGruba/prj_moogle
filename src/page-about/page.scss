@@ -214,15 +214,6 @@ body {
   margin-bottom: 16px;
 }
 
-.feedback_text {
-  max-height: 75px;
-  display: block;
-  overflow: hidden;
-  &.active {
-    max-height: initial;
-  }
-}
-
 .feedback_photo {
   width: 40px;
   height: 40px;
@@ -286,6 +277,14 @@ body {
 .actors .slick-arrow {
   position: absolute;
   top: 34px;
+}
+
+.hidden_text {
+  display: none;
+}
+
+.hidden_text.show_text {
+  display: inline;
 }
 
 @media screen and (min-width: 768px) {
