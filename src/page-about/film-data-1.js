@@ -70,6 +70,7 @@ class FilmInfo2 {
   renderGenre(){
     getSingleGenres(this.filmId).then(data => {
       const genresMov = data.genres;
+      console.log(this.refs.filmGenres);
       this.refs.filmGenres.insertAdjacentHTML('afterbegin', genresMov);
     })
   }
@@ -108,4 +109,4 @@ class FilmInfo2 {
 
 
 
-const filmInfo = new FilmInfo2(76341)
+const filmInfo = new FilmInfo2(localStorage.getItem('id'))

@@ -54,13 +54,16 @@ class Mooogle {
     
 
     this.renderFilms();
-    this.filmsList.addEventListener("click", event => {
-      if ((e.target.nodeName = "LI")) {
-        console.dir(event.target.dataset.id);
 
-        localStorage.setItem("id", event.target.dataset.id);
+    this.filmsList.addEventListener('click', event => {
+      alert(event.target.nodeName)
+      if(event.target !== event.currentTarget) {
+
+        console.dir(event.target);
+        localStorage.setItem('id', event.target.dataset.id);
       }
-      localStorage.setItem("id");
+
+
     });
     // Olecsey
   }
@@ -103,6 +106,9 @@ class Mooogle {
 const newMooogle = new Mooogle();
 // ======================
 // Vica
+
+const sidebarShow = document.querySelector('.toggle-btn');
+sidebarShow.addEventListener("click", show);
 function show() {
   document.getElementById("sidebar").classList.toggle("active");
   document.body.classList.toggle("modal-overlay-menu");
