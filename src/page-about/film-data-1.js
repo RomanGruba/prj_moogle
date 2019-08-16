@@ -16,6 +16,12 @@ import {
 import {
   getSingleOwerview
 } from '../js/api';
+import {
+  getSinglePoster
+} from '../js/api';
+// import {
+//   lazyLoad
+// } from '../page-about/film-data';
 
 class FilmInfo2 {
   constructor(id) {
@@ -27,7 +33,8 @@ class FilmInfo2 {
       filmTagline: document.querySelector('[data-field="tagline"]'),
       filmGenres: document.querySelector('[data-field="genre]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
-      filmOverview: document.querySelector('.movie-descr')
+      filmOverview: document.querySelector('.movie-descr'),
+      filmPoster: document.querySelector('.image-mov_section')
     }
     this.renderTitle();
     this.renderContries();
@@ -35,7 +42,7 @@ class FilmInfo2 {
     // this.renderGenre();
     this.renderRuntime();
     this.renderOverview();
-
+    this.renderPost();
   }
   renderTitle() {
     getSingleFilmTitle(this.filmId).then(data => {
@@ -47,8 +54,8 @@ class FilmInfo2 {
   }
   renderContries() {
     getSingleFilmContries(this.filmId).then(data => {
-      const contr = data.production_contries.reduce((contries, el) => contries + el.name, 0);
-      console.log(contr);
+      const contryMov = data.production_contries.reduce((contries, el) => contries + el.name, 0);
+      console.log(contryMov);
       // this.refs.filmContries.insertAdjacentHTML('afterbegin', contryMov);
     })
   }
@@ -68,7 +75,7 @@ class FilmInfo2 {
     getSingleRuntime(this.filmId).then(data => {
       const runtimeMov = data.runtime;
       console.log(runtimeMov);
-      this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин /${getTimeFromMins(runtimeMov)} `);
+      this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
 
       function getTimeFromMins(runtimeMov) {
         let hours = pad(Math.trunc(runtimeMov / 60));
@@ -87,7 +94,15 @@ class FilmInfo2 {
       this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
     })
   }
+  renderPost() {
+    getSinglePoster(this.filmId).then(data =>{
+      const posterMov = poster(data.poster_path);
+      this.refs.filmPoster.insertAdjacentHTML('afterbegin', posterMov);
+      this.refs.poster.forEach(image => lazyLoad(image));
+    })
+  }
 }
+
 
 
 

@@ -53,3 +53,8 @@ export function getSingleOwerview(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=overview`;
   return fetch(url).then(res => res.json());
 }
+
+export function getSinglePoster(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=poster_path`;
+  return fetch(url).then(res => res.json());
+}

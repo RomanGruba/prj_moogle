@@ -42,8 +42,9 @@ td {
   }
 
   .image-mov_section {
+    margin: 0 auto;
     display: block;
-    max-height: 250px;
+    max-height: 178px;
   }
 
   .image-mov {
@@ -51,16 +52,17 @@ td {
     margin: 0 auto;
     width: 360px;
     height: 170px;
-    background: url('../img/img_test_first1/Dark_time.png') no-repeat;
+    // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 170px;
   }
+
   .image-movie_title_section {
     position: relative;
   }
 
   .image-mov_title {
     position: absolute;
-    top: 131px;
+    top: 160px;
     left: 25px;
     color: white;
     font-size: 20px;
@@ -69,7 +71,7 @@ td {
   .image-mov_butData {
     display: flex;
     justify-content: space-between;
-    margin: 10px auto;
+    margin: 15px auto;
     max-width: 340px;
   }
 
