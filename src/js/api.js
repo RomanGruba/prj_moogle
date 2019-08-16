@@ -11,6 +11,11 @@ export function getSingleFilmActors(id) {
   return fetch(url).then(res => res.json());
 }
 
+export function getPopularFilms() {
+  const url = `${baseUrl}/movie/popular?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
+
 export function getSingleFilmFrames(id) {
   const url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
   return fetch(url).then(res => res.json());
