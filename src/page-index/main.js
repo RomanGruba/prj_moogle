@@ -10,18 +10,27 @@ class Mooogle {
     // Oleg
     // модальное окно "search"
     this.searchBlock = document.querySelector(".search_block");
-    // кнопка "search"
-    this.searchBtn = document.querySelector(".search-engine");
+    // кнопка вызова модального окна
+    this.btnCallSearchModal = document.querySelector(".search-engine");
     // поле "input"
     this.searchInput = document.querySelector("#search_input");
+    // кнопка "search"
+    this.searchForm = document.querySelector('#search_form');
 
-    // слушатель на кнопку "search"
-    this.searchBtn.addEventListener(
+    // слушатель на кнопку вызова модального окна
+    this.btnCallSearchModal.addEventListener(
       "click",
       this.openSearchBlockHandler.bind(this)
     );
 
-    // обработчик на клик по модалке "search"
+    // обработчик поиска
+    this.fnSearchingHandler = function searchingHandler(e) {
+      e.preventDefault();
+      console.dir(e.target);
+    }
+    this.clickOnSearchBtn = this.fnSearchingHandler.bind(this);
+
+    // обработчик на клик по модалке
     this.fnClickCloseSearchBlockHandler = function clickCloseSearchBlockHandler(e) {
       if (e.target.className !== "search_modal") {
         return;
@@ -63,6 +72,9 @@ class Mooogle {
 
     // Olecsey
   }
+
+  // ТЕЛО КЛАССА
+
   // =========================
   // Oleg
   // обработчик открытия модального окна "search"
@@ -70,21 +82,21 @@ class Mooogle {
 
     window.addEventListener('keydown', this.clickOnEsc);
     window.addEventListener('click', this.clickOnVoid);
-    this.searchBlock.classList.add('open_search');
+    this.searchForm.addEventListener('submit', this.clickOnSearchBtn);
 
-    // this.searchInput.setAttribute('autofocus', true);
+    this.searchBlock.classList.add('open_search');
     this.searchInput.focus();
 
   }
 
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
-
     this.searchBlock.classList.remove('open_search');
     this.searchInput.blur();
+
     window.removeEventListener('keydown', this.clickOnEsc);
     window.removeEventListener('click', this.clickOnVoid);
-
+    this.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
   }
   // Oleg
   // ================
