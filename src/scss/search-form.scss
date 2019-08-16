@@ -1,34 +1,47 @@
-// body {
-//   position: absolute;
-// }
-
 .search_block {
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   top: 0;
   right: 0;
+  transform: translate(100%, -100%) scale(0, 0);
+  transition: transform 500ms ease-in-out;
+  z-index: 666;
+}
+
+.search_box {
   width: 100vw;
   height: 70vh;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: rgb(119, 193, 187);
-  transform: translate(100%, -100%) scale(0, 0);
-  z-index: 1;
 }
 
-.show-search {
-transform: translate(0, 0) scale(1, 1);
-transition: transform 2000ms ease-in-out;
+.search_modal {
+  width: 100vw;
+  height: 30vh;
+  position: relative;
+}
+
+.open_search {
+  transform: translate(0, 0) scale(1, 1);
+}
+
+.icon_logo {
+  margin-bottom: 20px;
 }
 
 .search_logo {
-  color: rgb(55, 44, 72);
+  margin-bottom: 80px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 24px;
-  letter-spacing: 0px;
   line-height: 14px;
+  letter-spacing: 0px;
+  color: rgb(55, 44, 72);
 }
 
 .search {
@@ -44,25 +57,25 @@ transition: transform 2000ms ease-in-out;
 }
 
 .search_input {
-  border: none;
-  background-color: rgb(119, 193, 187);
   padding-left: 10px;
-  color: #fff;
-  font-size: 16px;
-  letter-spacing: 0px;
-  line-height: 16px;
+  border: none;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  background-color: rgb(119, 193, 187);
+  color: #fff;
 }
 
 .search_input::placeholder {
-  color: #fff;
-  background-color: rgb(119, 193, 187);
-  font-size: 16px;
-  letter-spacing: 0px;
-  line-height: 16px;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  background-color: rgb(119, 193, 187);
+  color: #fff;
 }
 
 .search_input:focus {
@@ -73,9 +86,9 @@ transition: transform 2000ms ease-in-out;
   margin: 0;
   padding: 0;
   border: none;
+  font-size: 24px;
   background-color: rgb(119, 193, 187);
   color: #fff;
-  font-size: 24px;
 }
 
 .search_under_line::after {
@@ -100,13 +113,4 @@ transition: transform 2000ms ease-in-out;
   .search_input::placeholder {
     font-size: 18px;
   }
-}
-
-.is-hidden {
-  // display: none;
-}
-
-.nv {
-  display: flex;
-  justify-content: space-between;
 }

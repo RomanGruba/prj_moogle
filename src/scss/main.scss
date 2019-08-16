@@ -1,9 +1,25 @@
 @import './search-form';
-// @import './search-input';
-
 @import './header.scss';
 @import './nav.scss';
 @import './elem-grid.scss';
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 
 html, body {
   min-height: 100vh;
