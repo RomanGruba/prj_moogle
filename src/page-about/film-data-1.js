@@ -22,15 +22,11 @@ class FilmInfo2 {
       filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
-      filmPoster: document.querySelector('.image-mov'),
+      filmPoster1: document.querySelector('.image-mov1'),
+     filmPoster2: document.querySelector('.image-mov2')
     }
 
     this.renderAll()
-
-    // this.renderTitle();
-    // this.renderContries();
-    // this.renderTagline();
-
   }
 
   renderAll() {
@@ -43,7 +39,7 @@ class FilmInfo2 {
       this.renderRuntime(data);
       this.renderOverview(data);
       this.renderPost1(data);
-      // this.renderPost2(data);
+      this.renderPost2(data);
     })
   }
 
@@ -104,7 +100,13 @@ class FilmInfo2 {
     const posterMov = data.backdrop_path;
     console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
     console.log(this.refs.filmPoster);
-    this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+    this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+  }
+  renderPost2(data) {
+    const posterMov2 = data.poster_path;
+    console.log(`https://image.tmdb.org/t/p/original${posterMov2}`);
+    console.log(this.refs.filmPoster);
+    this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
 
 }
