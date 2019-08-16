@@ -22,7 +22,9 @@ class Mooogle {
     );
 
     // обработчик на клик по модалке "search"
-    this.fnClickCloseSearchBlockHandler = function clickCloseSearchBlockHandler(e) {
+    this.fnClickCloseSearchBlockHandler = function clickCloseSearchBlockHandler(
+      e
+    ) {
       if (e.target.className !== "search_modal") {
         return;
       }
@@ -42,13 +44,17 @@ class Mooogle {
     // ===============
     // Oleksii
     this.filmsList = document.querySelector(".films-list");
-    // this.buttonStar = document.querySelector(".button_icon-star");
-    // this.buttonBell = document.querySelector(".button_icon-bell");
-    // this.fill = document.querySelector(".fill-color");
-    // this.iconStar = document.querySelector(".icon-star");
+    this.buttonStar = document.querySelector(".button_icon-star");
+    this.buttonBell = document.querySelector(".button_icon-bell");
+    this.Star = document.querySelector(".icon-star");
+    this.Bell = document.querySelector(".icon-bell");
+    this.fill = document.querySelector(".fill-color");
+    this.iconStar = document.querySelector(".icon-star");
 
+    
 
     this.renderFilms();
+
     this.filmsList.addEventListener('click', event => {
       alert(event.target.nodeName)
       if(event.target !== event.currentTarget) {
@@ -57,32 +63,28 @@ class Mooogle {
         localStorage.setItem('id', event.target.dataset.id);
       }
 
-    });
 
+    });
     // Olecsey
   }
   // =========================
   // Oleg
   // обработчик открытия модального окна "search"
   openSearchBlockHandler() {
-
-    window.addEventListener('keydown', this.clickOnEsc);
-    window.addEventListener('click', this.clickOnVoid);
-    this.searchBlock.classList.add('open_search');
+    window.addEventListener("keydown", this.clickOnEsc);
+    window.addEventListener("click", this.clickOnVoid);
+    this.searchBlock.classList.add("open_search");
 
     // this.searchInput.setAttribute('autofocus', true);
     this.searchInput.focus();
-
   }
 
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
-
-    this.searchBlock.classList.remove('open_search');
+    this.searchBlock.classList.remove("open_search");
     this.searchInput.blur();
-    window.removeEventListener('keydown', this.clickOnEsc);
-    window.removeEventListener('click', this.clickOnVoid);
-
+    window.removeEventListener("keydown", this.clickOnEsc);
+    window.removeEventListener("click", this.clickOnVoid);
   }
   // Oleg
   // ================
