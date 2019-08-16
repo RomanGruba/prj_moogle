@@ -8,9 +8,11 @@ import { getPopularFilms } from "../js/api";
 const sidebarShow = document.querySelector(".toggle-btn");
 sidebarShow.addEventListener("click", show);
 
-function show() {
+
+function show(){
   document.getElementById("sidebar").classList.toggle("active");
-}
+  document.body.classList.toggle("modal-overlay-menu");
+
 
 class Mooogle {
   constructor() {
