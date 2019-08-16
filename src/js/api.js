@@ -11,6 +11,11 @@ export function getSingleFilmActors(id) {
   return fetch(url).then(res => res.json());
 }
 
+export function getSingleFilm(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}`;
+  return fetch(url).then(res => res.json());
+}
+
 export function getSingleFilmTitle(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_title`;
   return fetch(url).then(res => res.json());
@@ -39,4 +44,22 @@ export function getSingleFeedback(id) {
   const url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
   return fetch(url).then(res => res.json());
 }
+export function getSingleGenres(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
+  return fetch(url).then(res => res.json());
+}
 
+export function getSingleRuntime(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=runtime`;
+  return fetch(url).then(res => res.json());
+}
+
+export function getSingleOwerview(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=overview`;
+  return fetch(url).then(res => res.json());
+}
+
+export function getSinglePoster(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=poster_path`;
+  return fetch(url).then(res => res.json());
+}
