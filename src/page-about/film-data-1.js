@@ -1,27 +1,17 @@
 import {
-  getSingleFilmTitle
-} from '../js/api';
-import {
-  getSingleFilmContries
-} from '../js/api';
-import {
-  getSingleFilmTagline
-} from '../js/api';
-import {
-  getSingleGenres
-} from '../js/api';
-import {
-  getSingleRuntime
-} from '../js/api';
-import {
-  getSingleOwerview
-} from '../js/api';
-import {
+  getSingleFilmTitle,
+  getSingleFilm,
+  getSingleFilmContries,
+  getSingleFilmTagline,
+  getSingleGenres,
+  getSingleRuntime,
+  getSingleOwerview,
   getSinglePoster
 } from '../js/api';
-// import {
-//   lazyLoad
-// } from '../page-about/film-data';
+
+import {
+  lazyLoad
+} from '../page-about/film-data';
 
 class FilmInfo2 {
   constructor(id) {
@@ -34,30 +24,42 @@ class FilmInfo2 {
       filmGenres: document.querySelector('[data-field="genre]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
-      filmPoster: document.querySelector('.image-mov_section')
+      filmPoster: document.querySelector('.image-mov')
     }
-    this.renderTitle();
-    this.renderContries();
-    this.renderTagline();
-    // this.renderGenre();
-    this.renderRuntime();
-    this.renderOverview();
-    this.renderPost();
+    this.renderAll()
   }
-  renderTitle() {
-    getSingleFilmTitle(this.filmId).then(data => {
-      const titleMov = data.original_title;
-      console.log(titleMov);
-      this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
-      console.log(data);
+
+  renderAll() {
+    getSingleFilm(this.filmId).then(data => {
+      console.log('single data:', data);
+      this.renderTitle(data);
+      this.renderContries(data);
+      // this.renderTagline(data);
+      // this.renderGenre();
+      // this.renderRuntime(data);
+      // this.renderOverview(data);
+      this.renderPost(data);
     })
   }
-  renderContries() {
-    getSingleFilmContries(this.filmId).then(data => {
-      const contryMov = data.production_contries.reduce((contries, el) => contries + el.name, 0);
-      console.log(contryMov);
-      // this.refs.filmContries.insertAdjacentHTML('afterbegin', contryMov);
-    })
+
+  renderTitle(data) {
+    const titleMov = data.original_title;
+    console.log(titleMov);
+    this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
+    console.log(data);
+  }
+  renderContries(data) {
+    // getSingleFilmContries(this.filmId).then(data => {
+      // })
+      const contryMov = data.production_countries.reduce((contries, el, indx) => {
+        if(indx > 0) {
+
+          return  contries + ', ' + el.name
+        }
+        return  contries + el.name
+      }, '');
+    this.refs.filmContries.textContent = contryMov;
+    console.log('contryMov', contryMov);
   }
   renderTagline() {
     getSingleFilmTagline(this.filmId).then(data => {
@@ -92,14 +94,17 @@ class FilmInfo2 {
     getSingleOwerview(this.filmId).then(data => {
       const overviewMov = data.overview;
       this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
+      console.log(data.person);
     })
   }
-  renderPost() {
-    getSinglePoster(this.filmId).then(data =>{
-      const posterMov = poster(data.poster_path);
-      this.refs.filmPoster.insertAdjacentHTML('afterbegin', posterMov);
-      this.refs.poster.forEach(image => lazyLoad(image));
-    })
+  renderPost(data) {
+    // getSinglePoster(this.filmId).then(data =>{
+    // })
+    const posterMov = data.backdrop_path;
+    console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
+    console.log(this.refs.filmPoster);
+    this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+    // this.refs.poster.forEach(image => lazyLoad(image));
   }
 }
 
