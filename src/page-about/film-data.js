@@ -43,7 +43,6 @@ class FilmData {
 
   renderTrailer() {
     getSingleFilmTrailer(this.filmId).then(data => {
-
       const trailerKey = data.results[0].key;
       this.refs.iframeTrailer.src =
         "http://www.youtube.com/embed/" + trailerKey;
@@ -53,7 +52,6 @@ class FilmData {
         this.refs.iframeTrailer.src =
           "http://www.youtube.com/embed/" + trailerKey;
       } else this.refs.iframeTrailer.src = "http://www.youtube.com/embed/";
-
     });
   }
 
@@ -85,13 +83,46 @@ class FilmData {
 
   renderFeedbacks() {
     getSingleFeedback(this.filmId).then(data => {
-      const markup = feedbacks(data.results);
+      const classifiedFeedback = [];
+      data.results.map(el => {
+        if (el.content.length > 380) {
+          el.feedbackLength = "largeFeedback";
+          el.smallText = el.content.substr(0, 380);
+          el.extendedText = el.content.substr(380);
+          classifiedFeedback.push(el);
+        } else {
+          el.smallText = el.content;
+          classifiedFeedback.push(el);
+        }
+      });
+      const markup = feedbacks(classifiedFeedback);
       this.refs.ulFeedbacks.insertAdjacentHTML("afterbegin", markup);
+      this.showMoreFeedbackText();
+    });
+  }
+
+  showMoreFeedbackText() {
+    this.refs.ulFeedbacks.addEventListener("click", e => {
+      if (
+        e.target.nodeName === "BUTTON" &&
+        e.target.textContent === "...more"
+      ) {
+        const hiddenSpan = e.target.previousSibling;
+        hiddenSpan.classList.add("show_text");
+        e.target.textContent = "...less";
+      } else if (
+        e.target.nodeName === "BUTTON" &&
+        e.target.textContent === "...less"
+      ) {
+        const hiddenSpan = e.target.previousSibling;
+        hiddenSpan.classList.remove("show_text");
+        e.target.textContent = "...more";
+      }
     });
   }
 }
 
 // const filmdata = new FilmData(448358);
-// const filmdata = new FilmData(429617);
+const filmdata = new FilmData(429617);
 // const filmdata = new FilmData(429203);
-const filmdata = new FilmData(384018);
+// const filmdata = new FilmData(384018);

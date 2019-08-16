@@ -50,11 +50,15 @@ class Mooogle {
 
     this.renderFilms();
     this.filmsList.addEventListener('click', event => {
+
       if(e.target.nodeName = "LI") {
 
         console.dir(event.target);
         localStorage.setItem('id', event.target.dataset.id);
       }
+
+      localStorage.setItem('id');
+
     });
 
     // Olecsey
@@ -63,16 +67,24 @@ class Mooogle {
   // Oleg
   // обработчик открытия модального окна "search"
   openSearchBlockHandler() {
-    window.addEventListener("keydown", this.clickOnEsc);
-    window.addEventListener("click", this.clickOnVoid);
-    this.searchBlock.classList.add("open_search");
+
+    window.addEventListener('keydown', this.clickOnEsc);
+    window.addEventListener('click', this.clickOnVoid);
+    this.searchBlock.classList.add('open_search');
+
+    // this.searchInput.setAttribute('autofocus', true);
+    this.searchInput.focus();
+
   }
 
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
-    this.searchBlock.classList.remove("open_search");
-    window.removeEventListener("keydown", this.clickOnEsc);
-    window.removeEventListener("click", this.clickOnVoid);
+
+    this.searchBlock.classList.remove('open_search');
+    this.searchInput.blur();
+    window.removeEventListener('keydown', this.clickOnEsc);
+    window.removeEventListener('click', this.clickOnVoid);
+
   }
   // Oleg
   // ================
