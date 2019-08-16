@@ -10,19 +10,30 @@ class Mooogle {
     // Oleg
     // модальное окно "search"
     this.searchBlock = document.querySelector(".search_block");
-    // кнопка "search"
-    this.searchBtn = document.querySelector(".search-engine");
+    // кнопка вызова модального окна
+    this.btnCallSearchModal = document.querySelector(".search-engine");
     // поле "input"
     this.searchInput = document.querySelector("#search_input");
+    // кнопка "search"
+    this.searchForm = document.querySelector('#search_form');
 
-    // слушатель на кнопку "search"
-    this.searchBtn.addEventListener(
+    // слушатель на кнопку вызова модального окна
+    this.btnCallSearchModal.addEventListener(
       "click",
       this.openSearchBlockHandler.bind(this)
     );
 
-    // обработчик на клик по модалке "search"
+
+    // обработчик поиска
+    this.fnSearchingHandler = function searchingHandler(e) {
+      e.preventDefault();
+      console.dir(e.target);
+    }
+    this.clickOnSearchBtn = this.fnSearchingHandler.bind(this);
+
+    // обработчик на клик по модалке
     this.fnClickCloseSearchBlockHandler = function clickCloseSearchBlockHandler(e) {
+
       if (e.target.className !== "search_modal") {
         return;
       }
@@ -42,49 +53,52 @@ class Mooogle {
     // ===============
     // Oleksii
     this.filmsList = document.querySelector(".films-list");
-    // this.buttonStar = document.querySelector(".button_icon-star");
-    // this.buttonBell = document.querySelector(".button_icon-bell");
-    // this.fill = document.querySelector(".fill-color");
-    // this.iconStar = document.querySelector(".icon-star");
+    this.buttonStar = document.querySelector(".button_icon-star");
+    this.buttonBell = document.querySelector(".button_icon-bell");
+    this.Star = document.querySelector(".icon-star");
+    this.Bell = document.querySelector(".icon-bell");
+    this.fill = document.querySelector(".fill-color");
+    this.iconStar = document.querySelector(".icon-star");
 
+    
 
     this.renderFilms();
-    this.filmsList.addEventListener('click', event => {
 
-      if(e.target.nodeName = "LI") {
+    this.filmsList.addEventListener('click', event => {
+      alert(event.target.nodeName)
+      if(event.target !== event.currentTarget) {
 
         console.dir(event.target);
         localStorage.setItem('id', event.target.dataset.id);
       }
 
-      localStorage.setItem('id');
 
     });
-
     // Olecsey
   }
+
+  // ТЕЛО КЛАССА
+
   // =========================
   // Oleg
   // обработчик открытия модального окна "search"
   openSearchBlockHandler() {
-
     window.addEventListener('keydown', this.clickOnEsc);
     window.addEventListener('click', this.clickOnVoid);
+    
     this.searchBlock.classList.add('open_search');
-
-    // this.searchInput.setAttribute('autofocus', true);
     this.searchInput.focus();
-
+    this.searchForm.addEventListener('submit', this.clickOnSearchBtn);
   }
 
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
-
     this.searchBlock.classList.remove('open_search');
     this.searchInput.blur();
+    this.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
+
     window.removeEventListener('keydown', this.clickOnEsc);
     window.removeEventListener('click', this.clickOnVoid);
-
   }
   // Oleg
   // ================
@@ -106,6 +120,9 @@ class Mooogle {
 const newMooogle = new Mooogle();
 // ======================
 // Vica
+
+const sidebarShow = document.querySelector('.toggle-btn');
+sidebarShow.addEventListener("click", show);
 function show() {
   document.getElementById("sidebar").classList.toggle("active");
   document.body.classList.toggle("modal-overlay-menu");

@@ -68,6 +68,7 @@ class FilmInfo2 {
     this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
 
   }
+
   renderGenre(data) {
     const genreMov = data.genres.reduce((g, el, indx) => {
       if (indx > 0) {
@@ -77,6 +78,7 @@ class FilmInfo2 {
     }, '');
     console.log(genreMov);
     this.refs.filmGenres.textContent = genreMov;
+
   }
   renderRuntime(data) {
       const runtimeMov = data.runtime;
@@ -110,4 +112,4 @@ class FilmInfo2 {
 
 
 
-const filmInfo = new FilmInfo2(76341)
+const filmInfo = new FilmInfo2(localStorage.getItem('id'))
