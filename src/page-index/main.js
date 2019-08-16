@@ -46,7 +46,7 @@ class Mooogle {
     this.filmsList = document.querySelector('.films-list');
 
     this.renderFilms();
-    filmsList.addEventListener('click', event => {
+    this.filmsList.addEventListener('click', event => {
       localStorage.setItem('id');
     });
     // Olecsey
@@ -59,11 +59,15 @@ class Mooogle {
     window.addEventListener('keydown', this.clickOnEsc);
     window.addEventListener('click', this.clickOnVoid);
     this.searchBlock.classList.add('open_search');
+
+    // this.searchInput.setAttribute('autofocus', true);
+    this.searchInput.focus();
   }
 
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
     this.searchBlock.classList.remove('open_search');
+    this.searchInput.blur();
     window.removeEventListener('keydown', this.clickOnEsc);
     window.removeEventListener('click', this.clickOnVoid);
   }
