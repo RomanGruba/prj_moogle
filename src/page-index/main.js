@@ -46,9 +46,9 @@ class Mooogle {
     this.filmsList = document.querySelector('.films-list');
 
     this.renderFilms();
-    filmsList.addEventListener('click', event => {
-      localStorage.setItem('id');
-    });
+    // filmsList.addEventListener('click', event => {
+    //   localStorage.setItem('id');
+    // });
     // Olecsey
     // ===============
   }
