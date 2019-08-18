@@ -35,7 +35,7 @@ class FilmInfo2 {
 
   renderAll() {
     getSingleFilm(this.filmId).then(data => {
-      console.log('single data:', data);
+      // console.log('single data:', data);
       this.renderTitle(data);
       this.renderContries(data);
       this.renderTagline(data);
@@ -49,9 +49,9 @@ class FilmInfo2 {
 
   renderTitle(data) {
     const titleMov = data.original_title;
-    console.log(titleMov);
+    // console.log(titleMov);
     this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
-    console.log(data);
+    // console.log(data);
   }
   renderContries(data) {
     const contryMov = data.production_countries.reduce((contries, el, indx) => {
@@ -61,7 +61,7 @@ class FilmInfo2 {
       return contries + el.name
     }, '');
     this.refs.filmContries.textContent = contryMov;
-    console.log('contryMov', contryMov);
+    // console.log('contryMov', contryMov);
   }
   renderTagline(data) {
     const taglineMov = data.tagline;
@@ -76,13 +76,13 @@ class FilmInfo2 {
       }
       return g + el.name
     }, '');
-    console.log(genreMov);
+    // console.log(genreMov);
     this.refs.filmGenres.textContent = genreMov;
 
   }
   renderRuntime(data) {
       const runtimeMov = data.runtime;
-      console.log(runtimeMov);
+      // console.log(runtimeMov);
       this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
 
       function getTimeFromMins(runtimeMov) {
@@ -102,8 +102,8 @@ class FilmInfo2 {
   }
   renderPost1(data) {
     const posterMov = data.backdrop_path;
-    console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
-    console.log(this.refs.filmPoster);
+    // console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
+    // console.log(this.refs.filmPoster);
     this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
   }
 

@@ -1,23 +1,27 @@
 <div class="search_block">
   <div class="search_box">
-    <img src="../img/png/icon-logo.png" alt="icon-logo" class="icon_logo" />
+    <img
+      src="../img/png/icon-logo.png"
+      alt="icon-logo"
+      class="icon_logo"
+      width="119"
+    />
     <p class="search_logo">Mooogle</p>
 
-    <div class="search">
+    <form id="search_form" class="search" action="#">
       <svg class="search_icon">
         <use href="../img/svg/symbol-defs-search.svg#icon-search" />
       </svg>
-      <form id="search_form" action="#">
-        <input
-          id="search_input"
-          class="search_input"
-          type="text"
-          name="query"
-          placeholder="Search..."
-        />
-        <button type="submit" class="search_btn">&#10148;</button>
-      </form>
-    </div>
+      <input
+        id="search_input"
+        class="search_input"
+        type="text"
+        name="query"
+        placeholder="Search..."
+        autocomplete="off"
+      />
+      <button type="submit" class="search_btn">&#10148;</button>
+    </form>
     <div class="search_under_line"></div>
   </div>
 
