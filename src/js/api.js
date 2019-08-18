@@ -117,9 +117,6 @@ export default {
       .then(res => res.json())
       .catch(error => console.warn(error));
   },
-  get searchQuery() {
-    return this.query;
-  },
   set searchQuery(str) {
     this.query = str;
   },

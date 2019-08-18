@@ -31,7 +31,7 @@ class Mooogle {
     );
 
     // обработчик поиска
-    this.searchingHandler = function (e) {
+    this.searchingHandler = function(e) {
       e.preventDefault();
       const form = e.currentTarget;
       const input = form.elements.query;
@@ -39,16 +39,7 @@ class Mooogle {
       newApp.openPreloader();
       api.resetPage();
       this.refs.filmsList.innerHTML = '';
-      api
-        .getSearching()
-        .then(data => {
-          this.newArrayResults(data);
-          this.builderListItemOnPageIndex();
-          this.infinityScroll();
-        })
-        .catch(error => {
-          console.warn(error);
-        });
+      this.renderSearchingFilm();
       this.closeSearchBlockHandler();
       input.value = '';
       newApp.closePreloader();
@@ -56,35 +47,51 @@ class Mooogle {
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // бесконечный скролл
-    this.infScrl = function () {
-
+    // для "renderPopularFilms()"
+    this.onEntPop = function(e) {
+      if (e[0].isIntersecting) {
+        this.renderPopularFilms();
+        this.observer.disconnect();
+      }
+    };
+    this.onEntryPopular = this.onEntPop.bind(this);
+    this.infScrlPop = function() {
       const observOptions = {
         rootMargin: '100px'
       };
-      const observer = new IntersectionObserver(this.onEntry, observOptions);
-      observer.observe(this.refs.sentinal);
+      this.observer = new IntersectionObserver(
+        this.onEntryPopular,
+        observOptions
+      );
+      this.observer.observe(this.refs.sentinal);
     };
-    this.infinityScroll = this.infScrl.bind(this);
-    // ===
-    this.onEnt = function (e) {
+    this.infinityScrollPopular = this.infScrlPop.bind(this);
+    // для "Searching"
+    this.onEntSearch = function(e) {
       if (e[0].isIntersecting) {
-        this.builderListItemOnPageIndex();
-        observer.disconnect();
+        this.renderSearchingFilm()
+        this.observer.disconnect();
       }
-    }
-    this.onEntry = this.onEnt.bind(this);
+    };
+    this.onEntrySearch = this.onEntSearch.bind(this);
+    this.infScrlSearch = function() {
+      const observOptions = {
+        rootMargin: '100px'
+      };
+      this.observer = new IntersectionObserver(
+        this.onEntrySearch,
+        observOptions
+      );
+      this.observer.observe(this.refs.sentinal);
+    };
+    this.infinityScrollSearching = this.infScrlSearch.bind(this);
 
-    // Получение массива результатов для строителя
-    this.newArrRes = function (objData) {
+    // строитель списка фильмов на "page-index"
+    this.insertListItem = function(objData) {
       this.newArrRes = objData.results.map(el => {
         el.release_date = new Date(el.release_date).getFullYear();
         return el;
-      })
-    };
-    this.newArrayResults = this.newArrRes.bind(this);
-
-    // строитель списка фильмов на "page-index"
-    this.insertListItem = function () {
+      });
       const markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML('beforeend', markup);
       api.increment();
@@ -92,9 +99,7 @@ class Mooogle {
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
 
     // обработчик на клик по модалке
-    this.clickCloseSearchBlockHandler = function (
-      e
-    ) {
+    this.clickCloseSearchBlockHandler = function(e) {
       if (e.target.className !== 'search_modal') {
         return;
       }
@@ -103,7 +108,7 @@ class Mooogle {
     this.clickOnVoid = this.clickCloseSearchBlockHandler.bind(this);
 
     // обработчик на клик по "Esc"
-    this.keyPressHandle = function (e) {
+    this.keyPressHandle = function(e) {
       if (e.code !== 'Escape') {
         return;
       }
@@ -120,12 +125,10 @@ class Mooogle {
     this.fill = document.querySelector('.fill-color');
     this.iconStar = document.querySelector('.icon-star');
 
-    this.renderFilms();
+    this.renderPopularFilms();
 
     this.refs.filmsList.addEventListener('click', event => {
-      // alert(event.target.nodeName);
       if (event.target !== event.currentTarget) {
-        // console.dir(event.target);
         localStorage.setItem('id', event.target.dataset.id);
       }
     });
@@ -154,15 +157,29 @@ class Mooogle {
     window.removeEventListener('keydown', this.clickOnEsc);
     window.removeEventListener('click', this.clickOnVoid);
   }
+
+  renderSearchingFilm() {
+    api
+      .getSearching()
+      .then(data => {
+        this.builderListItemOnPageIndex(data);
+        this.infinityScrollSearching();
+      })
+      .catch(error => {
+        console.warn(error);
+      });
+  }
   // Oleg
   // ================
   // Olecsey
-  renderFilms() {
-    api.getPopularFilms().then(data => {
-      this.newArrayResults(data);
-      this.builderListItemOnPageIndex();
-      this.infinityScroll();
-    });
+  renderPopularFilms() {
+    api
+      .getPopularFilms()
+      .then(data => {
+        this.builderListItemOnPageIndex(data);
+        this.infinityScrollPopular();
+      })
+      .catch(error => console.warn(error));
   }
   // Olecsey
   // ===============
