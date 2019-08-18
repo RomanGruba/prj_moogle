@@ -60,7 +60,7 @@ class Mooogle {
     this.fill = document.querySelector(".fill-color");
     this.iconStar = document.querySelector(".icon-star");
 
-    
+
 
     this.renderFilms();
 
@@ -85,7 +85,7 @@ class Mooogle {
   openSearchBlockHandler() {
     window.addEventListener('keydown', this.clickOnEsc);
     window.addEventListener('click', this.clickOnVoid);
-    
+
     this.searchBlock.classList.add('open_search');
     this.searchInput.focus();
     this.searchForm.addEventListener('submit', this.clickOnSearchBtn);
@@ -115,6 +115,8 @@ class Mooogle {
   }
   // Olecsey
   // ===============
+
+
 }
 
 const newMooogle = new Mooogle();
@@ -129,3 +131,5 @@ function show() {
 }
 // Vica
 // ======================
+
+//hidden-by-click

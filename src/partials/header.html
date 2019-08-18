@@ -1,18 +1,55 @@
 <header class="header">
 <nav class="nav-header">
 <div id="sidebar" class="sidebar">
-    <button class="toggle-btn"><img class="menu-svg" src="../img/menu.svg" alt=""></button>
+    <button class="toggle-btn"><svg class="menu-svg">
+          <use href="../img/header-svg.svg#icon-menu"></use>
+        </svg></button>
     <ul id="menu-list" class="menu-list">
-      <li class="menu-items-click"><img class="movie-svg" src="../img/video.svg" alt="">Movies</li>
-      <li class="menu-items-click"><img class="movie-svg" src="../img/video.svg" alt="">TV Shows</li>
-      <li class="menu-items-click"><img class="movie-svg" src="../img/star.svg" alt="">Favorite</li>
+      <li class="menu-items-click">
+        <svg class="movie-svg">
+          <use href="../img/header-svg.svg#icon-video"></use>
+        </svg>Movies</li>
+      <li class="menu-items-click">
+        <svg class="movie-svg">
+          <use href="../img/header-svg.svg#icon-video"></use>
+        </svg>TV Shows</li>
+      <li class="menu-items-click">
+          <svg class="movie-svg">
+              <use href="../img/header-svg.svg#icon-star"></use>
+            </svg>Favorite</li>
     </ul>
     </div>
   <div class="logotype">
   <img class="logo-img" src="../img/logo.png" alt="mooogle">
     <p class="logo-title">Mooogle</p>
   </div>
-<button class="search-engine" id="search_engine_btn"><img class="search-svg" src="../img/search.svg" alt="svg-search">
+<button class="search-engine" id="search_engine_btn"><svg class="search-svg">
+    <use href="../img/header-svg.svg#icon-search"></use>
+  </svg>
+  <form class="search_btn-form" action ="#" method = "get">
+    <input class="search-btn-input" type = "text" name = "a" id="id_input" value = "Search">
+  </form>
 </button>
 </nav>
+  <div class="header__menu-big">
+    <a href="" class="header__menu-links">Movies</a>
+    <a href="" class="header__menu-links">TV Shows</a>
+    <a href="" class="header__menu-links">Favorite</a>
+  </div>
+  <div class="header__sort-movies">
+    <div class="sort-movies">Category</div>
+    <div class="sort-movies-nav">
+      <button class="sort-movies-btn">by name
+          <svg class="sort-btn-svg">
+              <use href="../img/sorting-svg.svg#icon-sort"></use>
+           </svg>
+      </button>
+      <button class="sort-movies-btn">by date
+          <svg class="sort-btn-svg">
+              <use href="../img/sorting-svg.svg#icon-sort"></use>
+           </svg>
+      </button>
+
+    </div>
+  </div>
 </header>
