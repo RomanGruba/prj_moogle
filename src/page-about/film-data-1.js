@@ -7,7 +7,8 @@ import {
   getSingleRuntime,
   getSingleOwerview,
   getSinglePoster,
-  getSinglePosterLittle
+  getSinglePosterLittle,
+  getSingleDirector
 } from '../js/api';
 
 
@@ -22,15 +23,12 @@ class FilmInfo2 {
       filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
-      filmPoster: document.querySelector('.image-mov'),
+      filmPoster1: document.querySelector('.image-mov1'),
+      filmPoster2: document.querySelector('.image-mov2'),
+      filmDirector: document.querySelector('[data-field="director"]'),
     }
 
     this.renderAll()
-
-    // this.renderTitle();
-    // this.renderContries();
-    // this.renderTagline();
-
   }
 
   renderAll() {
@@ -43,7 +41,8 @@ class FilmInfo2 {
       this.renderRuntime(data);
       this.renderOverview(data);
       this.renderPost1(data);
-      // this.renderPost2(data);
+      this.renderPost2(data);
+      this.renderDirector(data);
     })
   }
 
@@ -81,33 +80,43 @@ class FilmInfo2 {
 
   }
   renderRuntime(data) {
-      const runtimeMov = data.runtime;
-      console.log(runtimeMov);
-      this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
+    const runtimeMov = data.runtime;
+    console.log(runtimeMov);
+    this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
 
-      function getTimeFromMins(runtimeMov) {
-        let hours = pad(Math.trunc(runtimeMov / 60));
-        let minutes = pad(runtimeMov % 60);
-        return hours + ':' + minutes;
+    function getTimeFromMins(runtimeMov) {
+      let hours = pad(Math.trunc(runtimeMov / 60));
+      let minutes = pad(runtimeMov % 60);
+      return hours + ':' + minutes;
 
-        function pad(value) {
-          return String(value).padStart(2, '0');
-        }
+      function pad(value) {
+        return String(value).padStart(2, '0');
       }
+    }
   }
   renderOverview(data) {
-      const overviewMov = data.overview;
-      this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
+    const overviewMov = data.overview;
+    this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
 
   }
   renderPost1(data) {
     const posterMov = data.backdrop_path;
     console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
     console.log(this.refs.filmPoster);
-    this.refs.filmPoster.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+    this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+  }
+  renderPost2(data) {
+    const posterMov2 = data.poster_path;
+    console.log(`https://image.tmdb.org/t/p/original${posterMov2}`);
+    console.log(this.refs.filmPoster);
+    this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
 
+renderDirector(data){
+console.log(data.credits);
 }
+}
+
 
 
 
