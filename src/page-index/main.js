@@ -1,10 +1,10 @@
-import '../scss/main.scss';
-import './page.scss';
-import '../scss/header.scss';
-import filmsTemplate from './templates/template.hbs';
-import api from '../js/api.js';
-import newApp from '../js/app.js';
-import { getPopularTvShows } from '../js/api';
+import "../scss/main.scss";
+import "./page.scss";
+import "../scss/header.scss";
+import filmsTemplate from "./templates/template.hbs";
+import api from "../js/api.js";
+import newApp from "../js/app.js";
+import { getPopularTvShows } from "../js/api";
 
 class Mooogle {
   constructor() {
@@ -31,6 +31,8 @@ class Mooogle {
       buttonFilm: document.querySelector('.menu-items-click--film'),
       headerButtonFilm: document.querySelector('.header-items-click--film'),
       headerButtonTvShow: document.querySelector('.header-items-click--tv')
+      buttonIconStar: document.querySelector(".button_icon-star"),
+      iconStar: document.querySelector(".icon-star")
     };
 
     // слушатель на кнопку вызова модального окна
@@ -113,6 +115,15 @@ class Mooogle {
         localStorage.setItem('mediaType', 'movie');
       }
     });
+    
+    // слушатель на
+    this.refs.buttonIconStar.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        localStorage.setItem("status", "favorite");
+        this.iconStar.style.cssText = "fill: gold";
+      }
+    });
 
     // обработчик поиска
     this.searchingHandler = function(e) {
@@ -137,10 +148,8 @@ class Mooogle {
         if (api.query === '') {
           this.refs.scrollUpBtn.classList.remove('is-hidden');
           this.renderPopularFilms();
-          console.log('popular');
         } else {
           this.renderSearchingFilm();
-          console.log('search');
         }
         this.killInfinityScroll();
       }
@@ -167,7 +176,6 @@ class Mooogle {
       });
       const markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML('beforeend', markup);
-      console.log('api.page :', api.page);
       api.increment();
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
@@ -208,8 +216,8 @@ class Mooogle {
     this.refs.searchBlock.classList.remove('open_search');
     this.refs.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
 
-    window.removeEventListener('keydown', this.clickOnEsc);
-    window.removeEventListener('click', this.clickOnVoid);
+    window.removeEventListener("keydown", this.clickOnEsc);
+    window.removeEventListener("click", this.clickOnVoid);
   }
 
   // Рендеринг найденых фильмов
@@ -272,12 +280,12 @@ class Mooogle {
   }
 }
 
-const newMooogle = new Mooogle();
+new Mooogle();
 // ======================
 // Vica
 
-const sidebarShow = document.querySelector('.toggle-btn');
-sidebarShow.addEventListener('click', show);
+const sidebarShow = document.querySelector(".toggle-btn");
+sidebarShow.addEventListener("click", show);
 function show() {
   document.getElementById('sidebar').classList.toggle('active');
   document.body.classList.toggle('modal-overlay-menu');
@@ -285,4 +293,3 @@ function show() {
 // Vica
 // ======================
 
-//hidden-by-click
