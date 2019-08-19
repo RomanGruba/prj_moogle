@@ -56,7 +56,7 @@ td {
     margin: 0 auto;
     // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 300px;
-   
+
   }
 
   .image-mov2 {
@@ -88,7 +88,8 @@ td {
   }
 
   .image-mov_but {
-    background-color: none;
+    background: none;
+    border: none;
     width: 30px;
     height: 30px;
     fill: black;
@@ -150,7 +151,8 @@ td {
   }
 
   .image-mov_but {
-    background-color: none;
+    background: none;
+    border: none;
     width: 30px;
     height: 30px;
     fill: #77c1bb;
