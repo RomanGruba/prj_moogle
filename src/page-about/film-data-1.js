@@ -55,10 +55,9 @@ class FilmInfo2 {
   }
   renderTitle(){
   getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
-    const title = data.original_name;
-    console.log(title);
-    console.log(data);
+  const title = data.original_name || data.original_title;
     this.refs.filmTitle.insertAdjacentHTML('afterbegin', title);
+    console.log(title);
   })
 
   // renderTitle(data) {
@@ -143,5 +142,5 @@ class FilmInfo2 {
   }
 }
 
-const filmdata = new FilmInfo2(1622, 'TV');
-// const filmInfo = new FilmInfo2(1233, 'MOVIE')
+// const filmdata = new FilmInfo2(1622, 'TV');
+const filmInfo = new FilmInfo2(122, 'movie')
