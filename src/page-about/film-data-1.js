@@ -50,7 +50,7 @@ class FilmInfo2 {
   renderTitle(data) {
     const titleMov = data.original_title;
     const titleRelease = data.release_date;
-    console.log(data.release_date.setFullYear);
+console.log(new Date(titleRelease).getFullYear());
     this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
   }
 
@@ -115,7 +115,7 @@ class FilmInfo2 {
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
 renderDirector(data) {
-  console.log('res data', data);
+  console.log('res data', data.credits.crew.map(crew => crew));
 }
 }
 
