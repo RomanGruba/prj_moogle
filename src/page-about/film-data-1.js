@@ -11,7 +11,9 @@ import {
   getSingleDirector,
   getSingleDataRealise
 } from '../js/api';
-import { O_DIRECTORY } from 'constants';
+import {
+  O_DIRECTORY
+} from 'constants';
 
 
 class FilmInfo2 {
@@ -120,15 +122,15 @@ class FilmInfo2 {
   }
   renderDirector(data) {
     // console.log('res data', data.credits.crew.map(crew => crew));
-    const direct = data.credits.crew.find(crew => crew.job === "Director").map;
-  console.log(direct);
-  // this.refs.filmDirector.textContent = direct;
+    const direct = data.credits.crew.find(crew => crew.job === "Director").name;
+    console.log(direct);
+    // this.refs.filmDirector.textContent = direct;
 
   }
   renderRealiseFull(data) {
-      const realiseFullData = data.release_date;
-      console.log(realiseFullData);
-      this.refs.filmRealiseFull.textContent = realiseFullData;
+    const realiseFullData = data.release_date;
+    console.log(realiseFullData);
+    this.refs.filmRealiseFull.textContent = realiseFullData;
   }
 }
 
