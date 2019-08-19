@@ -1,10 +1,10 @@
-import '../scss/main.scss';
-import './page.scss';
-import '../scss/header.scss';
-import filmsTemplate from './templates/template.hbs';
-import api from '../js/api.js';
-import newApp from '../js/app.js';
-import { getPopularTvShows } from '../js/api';
+import "../scss/main.scss";
+import "./page.scss";
+import "../scss/header.scss";
+import filmsTemplate from "./templates/template.hbs";
+import api from "../js/api.js";
+import newApp from "../js/app.js";
+import { getPopularTvShows } from "../js/api";
 
 class Mooogle {
   constructor() {
@@ -56,12 +56,12 @@ class Mooogle {
     // бесконечный скролл
     this.onEnt = function(e) {
       if (e[0].isIntersecting) {
-        if (api.query === '') {
+        if (api.query === "") {
           this.renderPopularFilms();
-          console.log("popular");
+          // console.log("popular");
         } else {
           this.renderSearchingFilm();
-          console.log("search");
+          // console.log("search");
         }
         this.killInfinityScroll();
       }
@@ -88,7 +88,7 @@ class Mooogle {
       });
       const markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
-      console.log("api.page :", api.page);
+      // console.log("api.page :", api.page);
       api.increment();
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
@@ -119,50 +119,68 @@ class Mooogle {
     this.refs.buttonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
+        newApp.openPreloader();
+        api.resetPage();
         this.clearList();
+        this.killInfinityScroll();
         this.renderTvShows();
         localStorage.setItem("mediaType", "TV");
         show();
+        newApp.closePreloader();
       }
     });
     this.refs.headerButtonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
+        newApp.openPreloader();
+        api.resetPage();
+        this.killInfinityScroll();
         this.clearList();
+        api.resetPage();
         this.renderTvShows();
         localStorage.setItem("mediaType", "TV");
+        newApp.closePreloader();
       }
     });
-
 
     this.refs.buttonFilm.addEventListener("click", event => {
       event.preventDefault();
 
       if (event.target === event.currentTarget) {
+        newApp.openPreloader();
+        api.resetPage();
+        this.killInfinityScroll();
         this.clearList();
+        api.resetPage();
         this.renderPopularFilms();
         localStorage.setItem("mediaType", "movie");
         show();
+        newApp.closePreloader();
       }
     });
 
     this.refs.headerButtonFilm.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
+        newApp.openPreloader();
+        api.resetPage();
+        this.killInfinityScroll();
         this.clearList();
+        api.resetPage();
         this.renderPopularFilms();
         localStorage.setItem("mediaType", "movie");
+        newApp.closePreloader();
       }
     });
 
     this.refs.filmsList.addEventListener("click", event => {
-      preventDefault();
+      // console.log(event.target.dataset.id);
+      // console.log('worksssssssssssssssssss');
+      // event.preventDefault();
       if (event.target !== event.currentTarget) {
-        console.log(event.target.dataset.id);
-        localStorage.setItem("id", event.target.dataset.id);
+        localStorage.setItem("id", event.target.closest('.films-item').dataset.id);
 
-        localStorage.setItem("mediaType", "movie");
-
+        // localStorage.setItem("mediaType", "movie");
       }
     });
     // Olecsey
@@ -185,8 +203,8 @@ class Mooogle {
     this.refs.searchBlock.classList.remove("open_search");
     this.refs.searchForm.removeEventListener("submit", this.clickOnSearchBtn);
 
-    window.removeEventListener('keydown', this.clickOnEsc);
-    window.removeEventListener('click', this.clickOnVoid);
+    window.removeEventListener("keydown", this.clickOnEsc);
+    window.removeEventListener("click", this.clickOnVoid);
   }
 
   // Рендеринг найденых фильмов
@@ -225,26 +243,25 @@ class Mooogle {
   }
 
   renderTvShows() {
-    getPopularTvShows().then(data => {
-      this.builderListItemOnPageIndex(data);
-    });
+    getPopularTvShows()
+      .then(data => {
+        this.builderListItemOnPageIndex(data);
+      })
+      .catch(error => console.warn(error));
   }
 
   // Oleksii==========
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
-
-  // Olecsey
-  // ===============
 }
 
 const newMooogle = new Mooogle();
 // ======================
 // Vica
 
-const sidebarShow = document.querySelector('.toggle-btn');
-sidebarShow.addEventListener('click', show);
+const sidebarShow = document.querySelector(".toggle-btn");
+sidebarShow.addEventListener("click", show);
 function show() {
   document.getElementById("sidebar").classList.toggle("active");
   document.body.classList.toggle("modal-overlay-menu");
