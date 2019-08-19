@@ -40,6 +40,7 @@ class Mooogle {
       api.resetPage();
       this.refs.filmsList.innerHTML = '';
       this.renderSearchingFilm();
+      // this.infinityScrollSearching();
       this.closeSearchBlockHandler();
       input.value = '';
       newApp.closePreloader();
@@ -47,44 +48,34 @@ class Mooogle {
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // бесконечный скролл
-    // для "renderPopularFilms()"
-    this.onEntPop = function(e) {
+    this.onEnt = function(e) {
+      // let flag = false;
       if (e[0].isIntersecting) {
-        this.renderPopularFilms();
+        // if (flag) {
+        //   return;
+        // }
+        if (api.query === '') {
+          this.renderPopularFilms();
+          console.log('popular');
+        } else {
+          this.renderSearchingFilm();
+          console.log('search');
+        }
+        // flag = true;
         this.observer.disconnect();
       }
     };
-    this.onEntryPopular = this.onEntPop.bind(this);
-    this.infScrlPop = function() {
+
+    this.onEntry = this.onEnt.bind(this);
+
+    this.infScrl = function() {
       const observOptions = {
         rootMargin: '100px'
       };
-      this.observer = new IntersectionObserver(
-        this.onEntryPopular,
-        observOptions
-      );
+      this.observer = new IntersectionObserver(this.onEntry, observOptions);
       this.observer.observe(this.refs.sentinal);
     };
-    this.infinityScrollPopular = this.infScrlPop.bind(this);
-    // для "Searching"
-    this.onEntSearch = function(e) {
-      if (e[0].isIntersecting) {
-        this.renderSearchingFilm()
-        this.observer.disconnect();
-      }
-    };
-    this.onEntrySearch = this.onEntSearch.bind(this);
-    this.infScrlSearch = function() {
-      const observOptions = {
-        rootMargin: '100px'
-      };
-      this.observer = new IntersectionObserver(
-        this.onEntrySearch,
-        observOptions
-      );
-      this.observer.observe(this.refs.sentinal);
-    };
-    this.infinityScrollSearching = this.infScrlSearch.bind(this);
+    this.infinityScroll = this.infScrl.bind(this);
 
     // строитель списка фильмов на "page-index"
     this.insertListItem = function(objData) {
@@ -94,6 +85,7 @@ class Mooogle {
       });
       const markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML('beforeend', markup);
+      console.log('api.page :', api.page);
       api.increment();
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
@@ -158,26 +150,29 @@ class Mooogle {
     window.removeEventListener('click', this.clickOnVoid);
   }
 
+  // Рендеринг найденых фильмов
   renderSearchingFilm() {
     api
       .getSearching()
       .then(data => {
         this.builderListItemOnPageIndex(data);
-        this.infinityScrollSearching();
+        this.infinityScroll();
       })
       .catch(error => {
         console.warn(error);
       });
   }
+
   // Oleg
   // ================
   // Olecsey
+  // Рендеринг популярных фильмов
   renderPopularFilms() {
     api
       .getPopularFilms()
       .then(data => {
         this.builderListItemOnPageIndex(data);
-        this.infinityScrollPopular();
+        this.infinityScroll();
       })
       .catch(error => console.warn(error));
   }
