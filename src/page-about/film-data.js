@@ -29,7 +29,7 @@ class FilmData {
     this.renderFeedbacks();
   }
 
-  // movieOrTV
+  // defineMovieOrTv()
 
   lazyLoad(targt) {
     const options = {};

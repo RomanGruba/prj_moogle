@@ -126,7 +126,6 @@ class Mooogle {
     this.Bell = document.querySelector(".icon-bell");
     this.fill = document.querySelector(".fill-color");
     this.iconStar = document.querySelector(".icon-star");
-    this.renderFilms();
     this.buttonTvShow = document.querySelector(".menu-items-click--tv");
     this.buttonFilm = document.querySelector(".menu-items-click--film");
 
@@ -174,7 +173,6 @@ class Mooogle {
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
     this.refs.searchBlock.classList.remove('open_search');
-    this.searchInput.blur();
     this.refs.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
 
     window.removeEventListener("keydown", this.clickOnEsc);
