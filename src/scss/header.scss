@@ -139,6 +139,10 @@
 /*end*/
 
 @media (min-width: 768px){
+  .menu-btn-header{
+    display: none;
+    visibility: hidden;
+  }
   .header__menu-big{
   visibility: visible;
   display: flex;
