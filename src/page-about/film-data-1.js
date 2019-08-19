@@ -9,11 +9,10 @@ import {
   getSinglePoster,
   getSinglePosterLittle,
   getSingleDirector,
-  getSingleDataRealise
+  getSingleDataRealise,
+  getSingleScreenPlay
 } from '../js/api';
-import {
-  O_DIRECTORY
-} from 'constants';
+
 
 
 class FilmInfo2 {
@@ -30,7 +29,8 @@ class FilmInfo2 {
       filmPoster1: document.querySelector('.image-mov1'),
       filmPoster2: document.querySelector('.image-mov2'),
       filmDirector: document.querySelector('[data-field="director"]'),
-      filmRealiseFull: document.querySelector('.data-down')
+      filmRealiseFull: document.querySelector('.data-down'),
+      fimlScreenPlay: document.querySelector('[data-field="scenario"]')
     }
 
     this.renderAll()
@@ -49,6 +49,7 @@ class FilmInfo2 {
       this.renderPost2(data);
       this.renderDirector(data);
       this.renderRealiseFull(data);
+      this.renderScreenPlay(data);
     })
   }
 
@@ -121,16 +122,18 @@ class FilmInfo2 {
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
   renderDirector(data) {
-    // console.log('res data', data.credits.crew.map(crew => crew));
     const direct = data.credits.crew.find(crew => crew.job === "Director").name;
-    console.log(direct);
-    // this.refs.filmDirector.textContent = direct;
+    this.refs.filmDirector.textContent = direct;
 
   }
   renderRealiseFull(data) {
     const realiseFullData = data.release_date;
     console.log(realiseFullData);
     this.refs.filmRealiseFull.textContent = realiseFullData;
+  }
+  renderScreenPlay(data) {
+    const screenPlaeer = data.credits.crew.find(crew => crew.job === "Screenplay").name;
+    this.refs.fimlScreenPlay.textContent = screenPlaeer;
   }
 }
 
