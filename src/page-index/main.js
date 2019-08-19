@@ -125,7 +125,7 @@ class Mooogle {
         this.clearList();
         this.killInfinityScroll();
         this.renderTvShows();
-        localStorage.setItem("mediaType", "TV");
+        // localStorage.setItem("mediaType", "TV");
         show();
         newApp.closePreloader();
       }
@@ -139,7 +139,7 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderTvShows();
-        localStorage.setItem("mediaType", "TV");
+        // localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
       }
     });
@@ -154,7 +154,7 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderPopularFilms();
-        localStorage.setItem("mediaType", "movie");
+        // localStorage.setItem("mediaType", "movie");
         show();
         newApp.closePreloader();
       }
@@ -169,20 +169,20 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderPopularFilms();
-        localStorage.setItem("mediaType", "movie");
+        // localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
       }
     });
 
     this.refs.filmsList.addEventListener("click", event => {
-      
+
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
           "id",
           event.target.closest(".films-item").dataset.id
         );
-
-        localStorage.setItem("mediaType", "movie");
+        console.log(event.target.closest(".films-item").dataset.id);
+        localStorage.setItem("mediaType", event.target.closest(".films-item").dataset.mediatype);
       }
     });
     // Olecsey

@@ -1,6 +1,10 @@
 {{#each this}}
 
-<li class="films-item" data-id={{id}}>
+{{#if title}}
+<li class="films-item" data-id={{id}} data-mediatype="movie">
+   {{else}}
+<li class="films-item" data-id={{id}} data-mediatype="TV">
+{{/if}}
   <a href="/about.html">
     <div class="img-container">
       <img class="img-sample" src="https://image.tmdb.org/t/p/original/{{backdrop_path}}" alt="movie" />
