@@ -16,8 +16,9 @@ import {
 
 
 class FilmInfo2 {
-  constructor(id) {
+  constructor(id, mediaType) {
     this.filmId = id;
+    this.mediaType = mediaType;
     this.apy_key = "ed5781108818e96397f9efe7bddd0923";
     this.refs = {
       filmTitle: document.querySelector('.image-mov_title'),
@@ -37,9 +38,9 @@ class FilmInfo2 {
   }
 
   renderAll() {
-    getSingleFilm(this.filmId).then(data => {
+    getSingleFilm(this.filmId, this.mediaType).then(data => {
       // console.log('single data:', data);
-      this.renderTitle(data);
+      this.renderTitle();
       this.renderContries(data);
       this.renderTagline(data);
       this.renderGenre(data);
@@ -52,16 +53,21 @@ class FilmInfo2 {
       this.renderScreenPlay(data);
     })
   }
+  renderTitle(){
+  getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
+    const title = data.original_name;
+    console.log(title);
+    console.log(data);
+    this.refs.filmTitle.insertAdjacentHTML('afterbegin', title);
+  })
 
-  renderTitle(data) {
-    const titleMov = data.original_title;
-    const titleRelease = data.release_date;
-    const titleReleaseOK = new Date(titleRelease).getFullYear();
-    console.log(titleReleaseOK);
-    this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${titleMov} (${titleReleaseOK})`);
-  }
-
-
+  // renderTitle(data) {
+  //   const titleMov = data.original_title;
+  //   const titleRelease = data.release_date;
+  //   const titleReleaseOK = new Date(titleRelease).getFullYear();
+  //   console.log(titleReleaseOK);
+  //   this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${titleMov} (${titleReleaseOK})`);
+}
   renderContries(data) {
     const contryMov = data.production_countries.reduce((contries, el, indx) => {
       if (indx > 0) {
@@ -137,4 +143,4 @@ class FilmInfo2 {
   }
 }
 
-const filmInfo = new FilmInfo2(localStorage.getItem('id'))
+const filmdata = new FilmInfo2(1622, 'TV');
