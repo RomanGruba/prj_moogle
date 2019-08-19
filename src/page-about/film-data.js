@@ -8,10 +8,10 @@ import feedbacks from "../page-about/feedbacks.hbs";
 import $ from "jquery";
 import slick from "slick-carousel";
 
-
 class FilmData {
-  constructor(id) {
+  constructor(id, mediaType) {
     this.filmId = id;
+    this.mediaType = mediaType;
     this.api_key = "ed5781108818e96397f9efe7bddd0923";
     this.refs = {
       iframeTrailer: document.querySelector(".iframe_trailer"),
@@ -23,6 +23,10 @@ class FilmData {
       feedbackSection: document.querySelector(".feedback"),
       trailer: document.querySelector(".trailer")
     };
+    this.defineMovieOrTv();
+  }
+
+  defineMovieOrTv() {
     this.renderTrailer();
     this.renderActors();
     this.renderFrames();
@@ -45,7 +49,7 @@ class FilmData {
   }
 
   renderTrailer() {
-    getSingleFilmTrailer(this.filmId).then(data => {
+    getSingleFilmTrailer(this.filmId, this.mediaType).then(data => {
       if (data.results.length > 0) {
         this.refs.trailer.classList.remove("hidden_text");
         const trailerKey = data.results[0].key;
@@ -56,7 +60,7 @@ class FilmData {
   }
 
   renderActors() {
-    getSingleFilmActors(this.filmId).then(data => {
+    getSingleFilmActors(this.filmId, this.mediaType).then(data => {
       const markup = actors(data.credits.cast);
       this.refs.ulActors.insertAdjacentHTML("afterbegin", markup);
       this.refs.actors.forEach(image => lazyLoad(image));
@@ -69,7 +73,7 @@ class FilmData {
   }
 
   renderFrames() {
-    getSingleFilmFrames(this.filmId).then(data => {
+    getSingleFilmFrames(this.filmId, this.mediaType).then(data => {
       const markup = frames(data.backdrops);
       this.refs.ulFrames.insertAdjacentHTML("afterbegin", markup);
       this.refs.frames.forEach(image => lazyLoad(image));
@@ -82,7 +86,7 @@ class FilmData {
   }
 
   renderFeedbacks() {
-    getSingleFeedback(this.filmId).then(data => {
+    getSingleFeedback(this.filmId, this.mediaType).then(data => {
       if (data.results.length > 0) {
         const classifiedFeedback = [];
         data.results.map(el => {
@@ -124,8 +128,12 @@ class FilmData {
   }
 }
 
-// const filmdata = new FilmData(448358);
-// const filmdata = new FilmData(localStorage.getItem("id"));
+// const filmdata = new FilmData(
+//   localStorage.getItem("id"),
+//   localStorage.getItem("mediaType")
+// );
+
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
-const filmdata = new FilmData(384018);
+const filmdata = new FilmData(1622, 'TV');
+// const filmdata = new FilmData(448358);
