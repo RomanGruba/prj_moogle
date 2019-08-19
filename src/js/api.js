@@ -34,7 +34,7 @@ export function getSingleFilm(id) {
 export function getSingleFilmTitle(id, mediaType) {
   let url;
   if (mediaType === "movie") {
-    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_name`;
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_title`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=original_name`;
 

@@ -144,3 +144,4 @@ class FilmInfo2 {
 }
 
 const filmdata = new FilmInfo2(1622, 'TV');
+// const filmInfo = new FilmInfo2(1233, 'MOVIE')
