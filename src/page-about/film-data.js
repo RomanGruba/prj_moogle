@@ -18,7 +18,9 @@ class FilmData {
       ulFrames: document.querySelector(".frames-list"),
       ulFeedbacks: document.querySelector(".feedback-list"),
       actors: document.querySelectorAll(".actor_image"),
-      frames: document.querySelectorAll(".frames_image")
+      frames: document.querySelectorAll(".frames_image"),
+      feedbackSection: document.querySelector(".feedback"),
+      trailer: document.querySelector(".trailer")
     };
     this.renderTrailer();
     this.renderActors();
@@ -43,15 +45,12 @@ class FilmData {
 
   renderTrailer() {
     getSingleFilmTrailer(this.filmId).then(data => {
-      const trailerKey = data.results[0].key;
-      this.refs.iframeTrailer.src =
-        "http://www.youtube.com/embed/" + trailerKey;
-
-      if (data.results[0].key) {
+      if (data.results.length > 0) {
+        this.refs.trailer.classList.remove("hidden_text");
         const trailerKey = data.results[0].key;
         this.refs.iframeTrailer.src =
           "http://www.youtube.com/embed/" + trailerKey;
-      } else this.refs.iframeTrailer.src = "http://www.youtube.com/embed/";
+      } else this.refs.trailer.classList.add("hidden_text");
     });
   }
 
@@ -83,21 +82,23 @@ class FilmData {
 
   renderFeedbacks() {
     getSingleFeedback(this.filmId).then(data => {
-      const classifiedFeedback = [];
-      data.results.map(el => {
-        if (el.content.length > 380) {
-          el.feedbackLength = "largeFeedback";
-          el.smallText = el.content.substr(0, 380);
-          el.extendedText = el.content.substr(380);
-          classifiedFeedback.push(el);
-        } else {
-          el.smallText = el.content;
-          classifiedFeedback.push(el);
-        }
-      });
-      const markup = feedbacks(classifiedFeedback);
-      this.refs.ulFeedbacks.insertAdjacentHTML("afterbegin", markup);
-      this.showMoreFeedbackText();
+      if (data.results.length > 0) {
+        const classifiedFeedback = [];
+        data.results.map(el => {
+          if (el.content.length > 380) {
+            el.feedbackLength = "largeFeedback";
+            el.smallText = el.content.substr(0, 380);
+            el.extendedText = el.content.substr(380);
+            classifiedFeedback.push(el);
+          } else {
+            el.smallText = el.content;
+            classifiedFeedback.push(el);
+          }
+        });
+        const markup = feedbacks(classifiedFeedback);
+        this.refs.ulFeedbacks.insertAdjacentHTML("afterbegin", markup);
+        this.showMoreFeedbackText();
+      } else this.refs.feedbackSection.classList.add("hidden_text");
     });
   }
 
@@ -123,8 +124,7 @@ class FilmData {
 }
 
 // const filmdata = new FilmData(448358);
-const filmdata = new FilmData(localStorage.getItem('id'));
+// const filmdata = new FilmData(localStorage.getItem("id"));
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
-// const filmdata = new FilmData(384018);
-
+const filmdata = new FilmData(384018);
