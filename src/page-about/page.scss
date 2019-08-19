@@ -45,16 +45,18 @@ td {
     margin: 0 auto;
     display: block;
     max-height: 178px;
-    max-width: 400px
+    max-width: 400px;
+    position: relative;
   }
 
   .image-mov1 {
     display: block;
     width: auto;
-    height: 300px;
+    height: 200px;
     margin: 0 auto;
     // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 300px;
+   
   }
 
   .image-mov2 {
@@ -75,6 +77,7 @@ td {
     left: 25px;
     color: white;
     font-size: 20px;
+    text-align: center;
   }
 
   .image-mov_butData {
