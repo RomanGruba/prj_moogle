@@ -4,9 +4,7 @@ import '../scss/header.scss';
 import filmsTemplate from './templates/template.hbs';
 import api from '../js/api.js';
 import newApp from '../js/app.js';
-import tvShowTemplate from "./templates/templatrTvShow.hbs";
-import { getPopularTvShows } from "../js/api";
-
+import { getPopularTvShows } from '../js/api';
 
 class Mooogle {
   constructor() {
@@ -41,9 +39,9 @@ class Mooogle {
       api.searchQuery = input.value;
       newApp.openPreloader();
       api.resetPage();
-      this.refs.filmsList.innerHTML = '';
+      this.clearList();
+      this.killInfinityScroll();
       this.renderSearchingFilm();
-      // this.infinityScrollSearching();
       this.closeSearchBlockHandler();
       input.value = '';
       newApp.closePreloader();
@@ -52,11 +50,7 @@ class Mooogle {
 
     // бесконечный скролл
     this.onEnt = function(e) {
-      // let flag = false;
       if (e[0].isIntersecting) {
-        // if (flag) {
-        //   return;
-        // }
         if (api.query === '') {
           this.renderPopularFilms();
           console.log('popular');
@@ -64,13 +58,10 @@ class Mooogle {
           this.renderSearchingFilm();
           console.log('search');
         }
-        // flag = true;
-        this.observer.disconnect();
+        this.killInfinityScroll();
       }
     };
-
     this.onEntry = this.onEnt.bind(this);
-
     this.infScrl = function() {
       const observOptions = {
         rootMargin: '100px'
@@ -79,6 +70,10 @@ class Mooogle {
       this.observer.observe(this.refs.sentinal);
     };
     this.infinityScroll = this.infScrl.bind(this);
+    this.killer = function() {
+      this.observer.disconnect();
+    };
+    this.killInfinityScroll = this.killer.bind(this);
 
     // строитель списка фильмов на "page-index"
     this.insertListItem = function(objData) {
@@ -113,26 +108,12 @@ class Mooogle {
     // Oleg
     // ===============
     // Oleksii
-    this.buttonStar = document.querySelector('.button_icon-star');
-    this.buttonBell = document.querySelector('.button_icon-bell');
-    this.Star = document.querySelector('.icon-star');
-    this.Bell = document.querySelector('.icon-bell');
-    this.fill = document.querySelector('.fill-color');
-    this.iconStar = document.querySelector('.icon-star');
-    this.filmsList = document.querySelector(".films-list");
-    this.buttonStar = document.querySelector(".button_icon-star");
-    this.buttonBell = document.querySelector(".button_icon-bell");
-    this.Star = document.querySelector(".icon-star");
-    this.Bell = document.querySelector(".icon-bell");
-    this.fill = document.querySelector(".fill-color");
-    this.iconStar = document.querySelector(".icon-star");
-    this.buttonTvShow = document.querySelector(".menu-items-click--tv");
-    this.buttonFilm = document.querySelector(".menu-items-click--film");
-
+    this.buttonTvShow = document.querySelector('.menu-items-click--tv');
+    this.buttonFilm = document.querySelector('.menu-items-click--film');
 
     this.renderPopularFilms();
 
-    this.buttonTvShow.addEventListener("click", event => {
+    this.buttonTvShow.addEventListener('click', event => {
       if (event.target === event.currentTarget) {
         this.clearList();
         this.renderTvShows();
@@ -140,17 +121,17 @@ class Mooogle {
       }
     });
 
-    this.buttonFilm.addEventListener("click", event => {
+    this.buttonFilm.addEventListener('click', event => {
       if (event.target === event.currentTarget) {
         this.clearList();
         this.renderFilms();
         show();
       }
     });
-    this.filmsList.addEventListener("click", event => {
+    this.refs.filmsList.addEventListener('click', event => {
       preventDefault();
       if (event.target !== event.currentTarget) {
-        localStorage.setItem("id", event.target.dataset.id);
+        localStorage.setItem('id', event.target.dataset.id);
       }
     });
     // Olecsey
@@ -175,8 +156,8 @@ class Mooogle {
     this.refs.searchBlock.classList.remove('open_search');
     this.refs.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
 
-    window.removeEventListener("keydown", this.clickOnEsc);
-    window.removeEventListener("click", this.clickOnVoid);
+    window.removeEventListener('keydown', this.clickOnEsc);
+    window.removeEventListener('click', this.clickOnVoid);
   }
 
   // Рендеринг найденых фильмов
@@ -184,6 +165,10 @@ class Mooogle {
     api
       .getSearching()
       .then(data => {
+        if (data.total_pages < api.page) {
+          this.killInfinityScroll();
+          return;
+        }
         this.builderListItemOnPageIndex(data);
         this.infinityScroll();
       })
@@ -200,6 +185,10 @@ class Mooogle {
     api
       .getPopularFilms()
       .then(data => {
+        if (data.total_pages < api.page) {
+          this.killInfinityScroll();
+          return;
+        }
         this.builderListItemOnPageIndex(data);
         this.infinityScroll();
       })
@@ -208,33 +197,25 @@ class Mooogle {
 
   renderTvShows() {
     getPopularTvShows().then(data => {
-      const newArr = data.results.map(el => {
-        el.first_air_date = new Date(el.first_air_date).getFullYear();
-        return el;
-      });
-      const markup = tvShowTemplate(newArr);
-      this.filmsList.insertAdjacentHTML("afterbegin", markup);
+      this.builderListItemOnPageIndex(data);
     });
   }
 
   // Oleksii==========
   clearList() {
-    this.filmsList.innerHTML = "";
+    this.refs.filmsList.innerHTML = '';
   }
-
 
   // Olecsey
   // ===============
-
-
 }
 
 const newMooogle = new Mooogle();
 // ======================
 // Vica
 
-const sidebarShow = document.querySelector(".toggle-btn");
-sidebarShow.addEventListener("click", show);
+const sidebarShow = document.querySelector('.toggle-btn');
+sidebarShow.addEventListener('click', show);
 function show() {
   document.getElementById('sidebar').classList.toggle('active');
   document.body.classList.toggle('modal-overlay-menu');

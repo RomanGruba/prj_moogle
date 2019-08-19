@@ -18,7 +18,12 @@
         </button>
       </div>
     </div>
+    {{#if title}}
     <p class="films-name">{{title}} ({{release_date}})</p>
+    {{else}}
+    <p class="films-name">{{original_name}} ({{first_air_date}}) </p>
+    {{/if}}
+    {{!-- <p class="films-name">{{title}} ({{release_date}})</p> --}}
   </a>
 </li>
 {{/each}}
