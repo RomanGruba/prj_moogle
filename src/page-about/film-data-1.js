@@ -11,6 +11,9 @@ import {
   getSingleDirector,
   getSingleDataRealise
 } from '../js/api';
+import {
+  O_DIRECTORY
+} from 'constants';
 
 
 class FilmInfo2 {
@@ -27,6 +30,7 @@ class FilmInfo2 {
       filmPoster1: document.querySelector('.image-mov1'),
       filmPoster2: document.querySelector('.image-mov2'),
       filmDirector: document.querySelector('[data-field="director"]'),
+      filmRealiseFull: document.querySelector('.data-down')
     }
 
     this.renderAll()
@@ -44,14 +48,16 @@ class FilmInfo2 {
       this.renderPost1(data);
       this.renderPost2(data);
       this.renderDirector(data);
+      this.renderRealiseFull(data);
     })
   }
 
   renderTitle(data) {
     const titleMov = data.original_title;
     const titleRelease = data.release_date;
-console.log(new Date(titleRelease).getFullYear());
-    this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
+    const titleReleaseOK = new Date(titleRelease).getFullYear();
+    console.log(titleReleaseOK);
+    this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${titleMov} (${titleReleaseOK})`);
   }
 
 
@@ -114,12 +120,18 @@ console.log(new Date(titleRelease).getFullYear());
     console.log(this.refs.filmPoster);
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
-renderDirector(data) {
-  console.log('res data', data.credits.crew.map(crew => crew));
+  renderDirector(data) {
+    // console.log('res data', data.credits.crew.map(crew => crew));
+    const direct = data.credits.crew.find(crew => crew.job === "Director").name;
+    console.log(direct);
+    // this.refs.filmDirector.textContent = direct;
+
+  }
+  renderRealiseFull(data) {
+    const realiseFullData = data.release_date;
+    console.log(realiseFullData);
+    this.refs.filmRealiseFull.textContent = realiseFullData;
+  }
 }
-}
-
-
-
 
 const filmInfo = new FilmInfo2(localStorage.getItem('id'))
