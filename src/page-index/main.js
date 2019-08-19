@@ -4,6 +4,9 @@ import '../scss/header.scss';
 import filmsTemplate from './templates/template.hbs';
 import api from '../js/api.js';
 import newApp from '../js/app.js';
+import tvShowTemplate from "./templates/templatrTvShow.hbs";
+import { getPopularTvShows } from "../js/api";
+
 
 class Mooogle {
   constructor() {
@@ -116,12 +119,31 @@ class Mooogle {
     this.Bell = document.querySelector('.icon-bell');
     this.fill = document.querySelector('.fill-color');
     this.iconStar = document.querySelector('.icon-star');
+    this.filmsList = document.querySelector(".films-list");
+    this.buttonTvShow = document.querySelector(".menu-items-click--tv");
+    this.buttonFilm = document.querySelector(".menu-items-click--film");
 
     this.renderPopularFilms();
 
-    this.refs.filmsList.addEventListener('click', event => {
+    this.buttonTvShow.addEventListener("click", event => {
+      if (event.target === event.currentTarget) {
+        this.clearList();
+        this.renderTvShows();
+        show();
+      }
+    });
+
+    this.buttonFilm.addEventListener("click", event => {
+      if (event.target === event.currentTarget) {
+        this.clearList();
+        this.renderFilms();
+        show();
+      }
+    });
+    this.filmsList.addEventListener("click", event => {
+      preventDefault();
       if (event.target !== event.currentTarget) {
-        localStorage.setItem('id', event.target.dataset.id);
+        localStorage.setItem("id", event.target.dataset.id);
       }
     });
     // Olecsey
@@ -144,10 +166,11 @@ class Mooogle {
   // обработчик закрытия модального окна "search"
   closeSearchBlockHandler() {
     this.refs.searchBlock.classList.remove('open_search');
+    this.searchInput.blur();
     this.refs.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
 
-    window.removeEventListener('keydown', this.clickOnEsc);
-    window.removeEventListener('click', this.clickOnVoid);
+    window.removeEventListener("keydown", this.clickOnEsc);
+    window.removeEventListener("click", this.clickOnVoid);
   }
 
   // Рендеринг найденых фильмов
@@ -176,6 +199,24 @@ class Mooogle {
       })
       .catch(error => console.warn(error));
   }
+
+  renderTvShows() {
+    getPopularTvShows().then(data => {
+      const newArr = data.results.map(el => {
+        el.first_air_date = new Date(el.first_air_date).getFullYear();
+        return el;
+      });
+      const markup = tvShowTemplate(newArr);
+      this.filmsList.insertAdjacentHTML("afterbegin", markup);
+    });
+  }
+
+  // Oleksii==========
+  clearList() {
+    this.filmsList.innerHTML = "";
+  }
+
+
   // Olecsey
   // ===============
 }
@@ -184,8 +225,8 @@ const newMooogle = new Mooogle();
 // ======================
 // Vica
 
-const sidebarShow = document.querySelector('.toggle-btn');
-sidebarShow.addEventListener('click', show);
+const sidebarShow = document.querySelector(".toggle-btn");
+sidebarShow.addEventListener("click", show);
 function show() {
   document.getElementById('sidebar').classList.toggle('active');
   document.body.classList.toggle('modal-overlay-menu');

@@ -42,12 +42,10 @@ export function getSingleFilmTagline(id) {
     .catch(error => console.warn(error));
 }
 
-// export function getPopularFilms() {
-//   const url = `${baseUrl}/movie/popular?api_key=${api_key}&append_to_response=credits`;
-//   return fetch(url)
-//     .then(res => res.json())
-//     .catch(error => console.warn(error));
-// }
+export function getPopularTvShows() {
+  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
 
 export function getSingleFilmFrames(id) {
   const url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
@@ -97,6 +95,7 @@ export function getSinglePosterLittle(id) {
     .catch(error => console.warn(error));
 }
 
+
 // ======================================
 // Oleg
 
@@ -127,3 +126,9 @@ export default {
     this.page = 1;
   }
 };
+
+export function getSingleDirector(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
+
