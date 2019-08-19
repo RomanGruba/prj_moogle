@@ -115,7 +115,7 @@ class FilmInfo2 {
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
 renderDirector(data) {
-  console.log('res data', data);
+  console.log('res data', data.credits);
 }
 }
 
