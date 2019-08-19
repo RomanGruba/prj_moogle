@@ -27,7 +27,8 @@ class Mooogle {
       buttonFilm: document.querySelector(".menu-items-click--film"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
-
+      buttonIconStar: document.querySelector(".button_icon-star"),
+      iconStar: document.querySelector(".icon-star")
     };
 
     // слушатель на кнопку вызова модального окна
@@ -175,14 +176,22 @@ class Mooogle {
     });
 
     this.refs.filmsList.addEventListener("click", event => {
-
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
           "id",
           event.target.closest(".films-item").dataset.id
         );
-        console.log(event.target.closest(".films-item").dataset.id);
-        localStorage.setItem("mediaType", event.target.closest(".films-item").dataset.mediatype);
+        localStorage.setItem(
+          "mediaType",
+          event.target.closest(".films-item").dataset.mediatype
+        );
+      }
+    });
+    this.refs.buttonIconStar.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        localStorage.setItem("status", "favorite");
+        this.iconStar.style.cssText = "fill: gold";
       }
     });
     // Olecsey
