@@ -1,0 +1,49 @@
+/* button up */
+
+#div_scroll_up {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+#div_scroll_up {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  box-shadow: 0 1px 1px #fbfaf9, 1px 1px 0 #fbfaf9 inset;
+  background: #75000a;
+  margin: 0 20px;
+  transition: box-shadow 0.2s ease, transform 0.5s ease, margin-top 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#div_scroll_up svg {
+  height: 48px;
+  width: 48px;
+  transform: scale(1, 1);
+  fill: #fbfaf9;
+}
+#div_scroll_up:hover {
+  transform: scale(1.1, 1.1);
+  box-shadow: 0 0 10px #e03849, 1px 1px 150px #fbfaf9 inset;
+}
+#div_scroll_up:hover svg {
+  transform: scale(1.1, 1.1);
+  fill: #e03849;
+  transition: transform 0.2s ease, fill 0.2s ease;
+}
+#div_scroll_up:active {
+  margin-top: 5px;
+  box-shadow: 0 1px 1px #e03849, 1px 1px 0 #fbfaf9 inset;
+}
+#div_scroll_up:active svg {
+  fill: #fbfaf9;
+}
+
+.is-hidden {
+  display: none;
+}
