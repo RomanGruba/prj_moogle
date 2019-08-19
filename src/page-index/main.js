@@ -24,7 +24,9 @@ class Mooogle {
       // список "ul" в "grid"
       filmsList: document.querySelector(".films-list"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
-      buttonFilm: document.querySelector(".menu-items-click--film")
+      buttonFilm: document.querySelector(".menu-items-click--film"),
+      headerButtonFilm: document.querySelector(".header-items-click--film"),
+      headerButtonTvShow: document.querySelector(".header-items-click--tv")
     };
 
     // слушатель на кнопку вызова модального окна
@@ -115,12 +117,20 @@ class Mooogle {
     this.renderPopularFilms();
 
     this.refs.buttonTvShow.addEventListener("click", event => {
-      event.preventDefault()
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         this.clearList();
         this.renderTvShows();
         localStorage.setItem("mediaType", "TV");
         show();
+      }
+    });
+    this.refs.headerButtonTvShow.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        this.clearList();
+        this.renderTvShows();
+        localStorage.setItem("mediaType", "TV");
       }
     });
 
@@ -136,10 +146,23 @@ class Mooogle {
       }
     });
 
+    this.refs.headerButtonFilm.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        this.clearList();
+        this.renderPopularFilms();
+        localStorage.setItem("mediaType", "movie");
+      }
+    });
+
     this.refs.filmsList.addEventListener("click", event => {
       preventDefault();
       if (event.target !== event.currentTarget) {
+        console.log(event.target.dataset.id);
         localStorage.setItem("id", event.target.dataset.id);
+
+        localStorage.setItem("mediaType", "movie");
+
       }
     });
     // Olecsey
