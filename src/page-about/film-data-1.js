@@ -33,7 +33,7 @@ class FilmInfo2 {
 
   renderAll() {
     getSingleFilm(this.filmId).then(data => {
-      console.log('single data:', data);
+      // console.log('single data:', data);
       this.renderTitle(data);
       this.renderContries(data);
       this.renderTagline(data);
@@ -48,9 +48,9 @@ class FilmInfo2 {
 
   renderTitle(data) {
     const titleMov = data.original_title;
-    console.log(titleMov);
+  
     this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
-    console.log(data);
+    
   }
   renderContries(data) {
     const contryMov = data.production_countries.reduce((contries, el, indx) => {
@@ -60,7 +60,7 @@ class FilmInfo2 {
       return contries + el.name
     }, '');
     this.refs.filmContries.textContent = contryMov;
-    console.log('contryMov', contryMov);
+
   }
   renderTagline(data) {
     const taglineMov = data.tagline;
@@ -75,7 +75,7 @@ class FilmInfo2 {
       }
       return g + el.name
     }, '');
-    console.log(genreMov);
+ 
     this.refs.filmGenres.textContent = genreMov;
 
   }
