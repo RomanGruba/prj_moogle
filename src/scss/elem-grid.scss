@@ -3,7 +3,17 @@
   padding: 0;
   text-decoration: none;
 }
+.fill-gold{
+fill: gold;
+}
+.imbd {
+  color:white;
+  padding:10px;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
 
+}
 .button_icon {
   top: 10px;
   position: absolute;
@@ -121,7 +131,7 @@
 .icon {
   height: 15px;
   width: 15px;
-  fill: #fff;
+  fill: white;
 }
 
 .gradient {

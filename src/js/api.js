@@ -35,6 +35,11 @@ export function getPopularFilms() {
   return fetch(url).then(res => res.json());
 }
 
+export function getPopularTvShows() {
+  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
+
 export function getSingleFilmFrames(id) {
   const url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
   return fetch(url).then(res => res.json());
