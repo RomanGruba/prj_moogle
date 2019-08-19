@@ -128,10 +128,12 @@ class FilmData {
   }
 }
 
-// const filmdata = new FilmData(448358);
-// const filmdata = new FilmData(localStorage.getItem("id"), "movie");
+// const filmdata = new FilmData(
+//   localStorage.getItem("id"),
+//   localStorage.getItem("mediaType")
+// );
+
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
-
-
-const filmdata = new FilmData(60708, 'TV');
+const filmdata = new FilmData(1622, 'TV');
+// const filmdata = new FilmData(448358);

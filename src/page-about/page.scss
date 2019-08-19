@@ -56,7 +56,7 @@ td {
     margin: 0 auto;
     // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 300px;
-   
+
   }
 
   .image-mov2 {
@@ -192,8 +192,6 @@ td {
   }
 }
 
-@media screen and (min-width: 1024px) {}
-
 button {
   cursor: pointer;
 }
@@ -204,10 +202,6 @@ img {
   height: auto;
 }
 
-
-body {
-  background-color: teal;
-}
 
 .page-about_section2 {
   width: 330px;
@@ -281,6 +275,11 @@ body {
   top: -15px;
 }
 
+
+.slick-arrow.slick-prev:before,
+.slick-arrow.slick-next:before {
+  color: teal
+}
 
 .slick-arrow.slick-prev {
   left: 0;
