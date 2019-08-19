@@ -2,10 +2,7 @@ const api_key = "ed5781108818e96397f9efe7bddd0923";
 const baseUrl = `https://api.themoviedb.org/3`;
 
 export function getSingleFilmTrailer(id, mediaType) {
-  let url;
-  if (mediaType === "movie") {
-    url = `${baseUrl}/movie/${id}/videos?api_key=${api_key}`;
-  } else url = `${baseUrl}/tv/${id}/videos?api_key=${api_key}`;
+  const url = `${baseUrl}/${mediaType}/${id}/videos?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -13,11 +10,7 @@ export function getSingleFilmTrailer(id, mediaType) {
 }
 
 export function getSingleFilmActors(id, mediaType) {
-  let url;
-  if (mediaType === "movie") {
-    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  } else
-    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=credits`;
+  const url = `${baseUrl}/${mediaType}/${id}?api_key=${api_key}&append_to_response=credits`;
 
   return fetch(url)
     .then(res => res.json())
@@ -57,10 +50,7 @@ export function getPopularTvShows() {
 }
 
 export function getSingleFilmFrames(id, mediaType) {
-  let url;
-  if (mediaType === "movie") {
-    url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
-  } else url = `${baseUrl}/tv/${id}/images?api_key=${api_key}`;
+  const url = `${baseUrl}/${mediaType}/${id}/images?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -68,16 +58,12 @@ export function getSingleFilmFrames(id, mediaType) {
 }
 
 export function getSingleFeedback(id, mediaType) {
-  let url;
-  if (mediaType === "movie") {
-    url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
-  } else url = `${baseUrl}/tv/${id}/reviews?api_key=${api_key}`;
-
+ const url = `${baseUrl}/${mediaType}/${id}/reviews?api_key=${api_key}`;
+  
   return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
-
 
 export function getSingleGenres(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
@@ -115,13 +101,12 @@ export function getSinglePosterLittle(id) {
 }
 export function getSingleDataRealise(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=release_date`;
-  return fetch(url).then(res => res.json())
+  return fetch(url).then(res => res.json());
 }
 export function getSingleDirector(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
   return fetch(url).then(res => res.json());
 }
-
 
 // ======================================
 // Oleg
@@ -155,4 +140,3 @@ export default {
     this.page = 1;
   }
 };
-
