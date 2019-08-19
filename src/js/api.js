@@ -16,7 +16,7 @@ export function getSingleFilmActors(id) {
 }
 
 export function getSingleFilm(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}`;
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
   return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
@@ -95,6 +95,14 @@ export function getSinglePosterLittle(id) {
     .catch(error => console.warn(error));
 }
 
+export function getSingleDataRealise(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=release_date`;
+  return fetch(url).then(res => res.json())
+}
+export function getSingleDirector(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
 
 // ======================================
 // Oleg
@@ -126,9 +134,4 @@ export default {
     this.page = 1;
   }
 };
-
-export function getSingleDirector(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
-}
 
