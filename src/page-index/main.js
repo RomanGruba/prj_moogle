@@ -120,8 +120,16 @@ class Mooogle {
     this.fill = document.querySelector('.fill-color');
     this.iconStar = document.querySelector('.icon-star');
     this.filmsList = document.querySelector(".films-list");
+    this.buttonStar = document.querySelector(".button_icon-star");
+    this.buttonBell = document.querySelector(".button_icon-bell");
+    this.Star = document.querySelector(".icon-star");
+    this.Bell = document.querySelector(".icon-bell");
+    this.fill = document.querySelector(".fill-color");
+    this.iconStar = document.querySelector(".icon-star");
+    this.renderFilms();
     this.buttonTvShow = document.querySelector(".menu-items-click--tv");
     this.buttonFilm = document.querySelector(".menu-items-click--film");
+
 
     this.renderPopularFilms();
 
@@ -219,6 +227,8 @@ class Mooogle {
 
   // Olecsey
   // ===============
+
+
 }
 
 const newMooogle = new Mooogle();
@@ -233,3 +243,5 @@ function show() {
 }
 // Vica
 // ======================
+
+//hidden-by-click
