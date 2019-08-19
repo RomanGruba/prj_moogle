@@ -84,10 +84,10 @@ td {
   }
 
   .image-mov_but {
-    background-color: brown;
+background-color: none;
     width: 30px;
     height: 30px;
-    border-style: none;
+
     margin: 0;
     padding: 0;
   }
@@ -145,10 +145,10 @@ td {
   }
 
   .image-mov_but {
-    background-color: brown;
+   background-color: none;
     width: 30px;
     height: 30px;
-    border-style: none;
+
     margin: 0;
     padding: 0;
   }
@@ -174,6 +174,8 @@ td {
 
   .image-mov_but_items {
     display: flex;
+    margin-bottom: 10px;
+    fill: white;
   }
 
   .image-mov_but {

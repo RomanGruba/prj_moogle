@@ -8,6 +8,7 @@ import feedbacks from "../page-about/feedbacks.hbs";
 import $ from "jquery";
 import slick from "slick-carousel";
 
+
 class FilmData {
   constructor(id) {
     this.filmId = id;

@@ -68,3 +68,8 @@ export function getSinglePosterLittle(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
   return fetch(url).then(res => res.json());
 }
+
+export function getSingleDirector(id) {
+  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  return fetch(url).then(res => res.json());
+}
