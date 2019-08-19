@@ -8,7 +8,8 @@ import {
   getSingleOwerview,
   getSinglePoster,
   getSinglePosterLittle,
-  getSingleDirector
+  getSingleDirector,
+  getSingleDataRealise
 } from '../js/api';
 
 
@@ -48,10 +49,12 @@ class FilmInfo2 {
 
   renderTitle(data) {
     const titleMov = data.original_title;
-  
+    const titleRelease = data.release_date;
+    console.log(data.release_date.setFullYear);
     this.refs.filmTitle.insertAdjacentHTML('afterbegin', titleMov);
-    
   }
+
+
   renderContries(data) {
     const contryMov = data.production_countries.reduce((contries, el, indx) => {
       if (indx > 0) {
@@ -75,7 +78,7 @@ class FilmInfo2 {
       }
       return g + el.name
     }, '');
- 
+
     this.refs.filmGenres.textContent = genreMov;
 
   }
@@ -111,12 +114,10 @@ class FilmInfo2 {
     console.log(this.refs.filmPoster);
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
-
-renderDirector(data){
-console.log(data.credits);
+renderDirector(data) {
+  console.log('res data', data);
 }
 }
-
 
 
 
