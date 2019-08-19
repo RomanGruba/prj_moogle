@@ -29,6 +29,8 @@ class FilmData {
     this.renderFeedbacks();
   }
 
+  // movieOrTV
+
   lazyLoad(targt) {
     const options = {};
     const io = new IntersectionObserver((entries, options) => {
@@ -128,4 +130,4 @@ class FilmData {
 // const filmdata = new FilmData(localStorage.getItem("id"));
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
-const filmdata = new FilmData(384018);
+const filmdata = new FilmData(100);
