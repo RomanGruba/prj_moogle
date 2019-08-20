@@ -103,11 +103,13 @@ class FilmInfo2 {
       }
     }
   }
-  renderOverview(data) {
+  renderOverview() {
+    getSingleOwerview(this.filmId, this.mediaType).then(data =>{
     const overviewMov = data.overview;
     this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
-
+  })
   }
+
   renderPost1() {
     getSinglePosterLittle(this.filmId, this.mediaType).then(data => {
     const posterMov = data.backdrop_path;
