@@ -32,6 +32,7 @@ class FilmInfo2 {
       filmPoster1: document.querySelector('.image-mov1'),
       filmPoster2: document.querySelector('.image-mov2'),
       filmDirector: document.querySelector('[data-field="director"]'),
+      filmCreatedBy: document.querySelector('[data-field="director-created_by"]'),
       filmRealiseFull: document.querySelector('.data-down'),
       fimlScreenPlay: document.querySelector('[data-field="scenario"]'),
     }
@@ -153,7 +154,14 @@ class FilmInfo2 {
         }
         return creater + el.name
       }, '');
-      this.refs.filmDirector.textContent = direct;
+      if (direct == data.credits){
+        this.refs.filmDirector.textContent = direct;
+      } else {
+        const createdBy = "Created by";
+        this.refs.filmDirector.textContent = direct;
+        this.refs.filmCreatedBy.textContent = createdBy;
+      }
+
     })
   }
   renderRealiseFull(data) {
