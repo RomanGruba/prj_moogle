@@ -164,7 +164,7 @@ class FilmInfo2 {
         }
         return creater + el.name
       }, '');
-      if (direct == data.credits){
+      if (data.credits){
         this.refs.filmDirector.textContent = direct;
       } else {
         const createdBy = "Created by";
@@ -181,16 +181,18 @@ class FilmInfo2 {
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
+      console.log('data :', data);
       const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
       function checkProduct() {
-        if (data.in_production == true) {
+        if (data.in_production === true) {
           return "In production";
         } else {
           return "Finish";
         }
       }
-      if (screenPlaeer == data.credits){
+      if (data.credits){
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
+        console.log('work');
       } else {
         const statysTV = "Status";
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
