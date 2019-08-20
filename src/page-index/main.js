@@ -56,7 +56,6 @@ class Mooogle {
 
     //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
-      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -71,7 +70,6 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
-      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -80,12 +78,14 @@ class Mooogle {
         this.renderTvShows();
         localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
+        if (localStorage.getItem("username") === "TV") {
+          this.refs.headerButtonFilm.classList.add("active");
+        }
       }
     });
 
     //listener mobile Oleksii
     this.refs.buttonFilm.addEventListener("click", event => {
-      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -100,7 +100,6 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener("click", event => {
-      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -109,6 +108,10 @@ class Mooogle {
         this.renderPopularFilms();
         localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
+        if (localStorage.getItem("username") === "movie") {
+          this.refs.headerButtonFilm.classList.add("active");
+        }
+
       }
     });
 
@@ -137,6 +140,7 @@ class Mooogle {
           el.classList.toggle("fill-white");
           el.classList.toggle("fill-gold");
         }
+
         if (
           event.target.nodeName === "SVG" ||
           event.target.nodeName === "use"
@@ -360,7 +364,6 @@ class Mooogle {
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
-
   // обработчик на кнопку "scroll up"
   scrollToUpHandler() {
     window.scrollTo({
