@@ -131,11 +131,21 @@ this.refs.filmDirector.textContent = direct;
     const realiseFullData = data.release_date;
     this.refs.filmRealiseFull.textContent = realiseFullData;
   }
-  renderScreenPlay(data) {
-    const screenPlaeer = data.credits.crew.find(crew => crew.job === "Screenplay").name;
+  renderScreenPlay() {
+    getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
+    const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
+    function checkProduct() {
+      if (data.in_production == true){
+        return "In production"
+      } else {
+        return "Finish"
+      }
+    }
+
     this.refs.fimlScreenPlay.textContent = screenPlaeer;
-  }
+  })
+}
 }
 
-// const filmdata = new FilmInfo2(1622, 'TV');
-const filmInfo = new FilmInfo2(122, 'movie');
+const filmdata = new FilmInfo2(1622, 'TV');
+// const filmInfo = new FilmInfo2(122, 'movie');

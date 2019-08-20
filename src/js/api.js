@@ -142,9 +142,15 @@ export function getSingleDirector(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSingleScreenPlay(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
+export function getSingleScreenPlay(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=in_production`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
 }
 
 // ======================================
