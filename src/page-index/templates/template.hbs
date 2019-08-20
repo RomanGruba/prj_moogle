@@ -6,7 +6,11 @@
 <li class="films-item" data-id={{id}} data-mediatype="TV">
 {{/if}}
         <button class="button_icon button_icon-star">
+            {{#if toBeColored}}
+          <svg data-id = {{id}} class="icon icon-star fill-gold">
+            {{else}}
           <svg data-id = {{id}} class="icon icon-star fill-white">
+            {{/if}}
             <use href="../img/icons/sprite.svg#star"></use>
           </svg>
         </button>
