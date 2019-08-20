@@ -1,16 +1,13 @@
-import "../scss/main.scss";
-import "./page.scss";
-import "../scss/header.scss";
-import filmsTemplate from "./templates/template.hbs";
-import api from "../js/api.js";
-import newApp from "../js/app.js";
-import { getPopularTvShows } from "../js/api";
+import '../scss/main.scss';
+import './page.scss';
+import '../scss/header.scss';
+import filmsTemplate from './templates/template.hbs';
+import api from '../js/api.js';
+import newApp from '../js/app.js';
+import { getPopularTvShows } from '../js/api';
 
 class Mooogle {
   constructor() {
-    // при загрузке страницы рендерит популярные фильмы
-    this.renderPopularFilms();
-
     // привязки к HTML
     this.refs = {
       // модальное окно "search"
@@ -30,10 +27,13 @@ class Mooogle {
       buttonTvShow: document.querySelector('.menu-items-click--tv'),
       buttonFilm: document.querySelector('.menu-items-click--film'),
       headerButtonFilm: document.querySelector('.header-items-click--film'),
-      headerButtonTvShow: document.querySelector('.header-items-click--tv')
-      buttonIconStar: document.querySelector(".button_icon-star"),
-      iconStar: document.querySelector(".icon-star")
+      headerButtonTvShow: document.querySelector('.header-items-click--tv'),
+      buttonIconStar: document.querySelector('.button_icon-star'),
+      iconStar: document.querySelector('.icon-star')
     };
+
+    // при загрузке страницы рендерит популярные фильмы
+    this.renderPopularFilms();
 
     // слушатель на кнопку вызова модального окна
     this.refs.btnCallSearchModal.addEventListener(
@@ -115,15 +115,6 @@ class Mooogle {
         localStorage.setItem('mediaType', 'movie');
       }
     });
-    
-    // слушатель на
-    this.refs.buttonIconStar.addEventListener("click", event => {
-      event.preventDefault();
-      if (event.target === event.currentTarget) {
-        localStorage.setItem("status", "favorite");
-        this.iconStar.style.cssText = "fill: gold";
-      }
-    });
 
     // обработчик поиска
     this.searchingHandler = function(e) {
@@ -142,11 +133,32 @@ class Mooogle {
     };
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
+    // скролл button up
+    setTimeout(() => {
+      this.onEnBtnUp = function(e) {
+        if (e[0].isIntersecting) {
+          this.refs.scrollUpBtn.classList.toggle('is-hidden');
+        }
+      };
+      this.onEntryBtnUp = this.onEnBtnUp.bind(this);
+      this.scrlToUp = function() {
+        this.observOptionsBtnUp = {
+          rootMargin: '400px 0px -1100px 0px'
+        };
+        this.observerBtnUp = new IntersectionObserver(
+          this.onEntryBtnUp,
+          this.observOptionsBtnUp
+        );
+        this.observerBtnUp.observe(this.refs.filmsList.firstElementChild);
+      };
+      this.scrollToUp = this.scrlToUp.bind(this);
+      this.scrollToUp();
+    }, 2000);
+
     // бесконечный скролл
-    this.onEnt = function(e) {
+    this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
         if (api.query === '') {
-          this.refs.scrollUpBtn.classList.remove('is-hidden');
           this.renderPopularFilms();
         } else {
           this.renderSearchingFilm();
@@ -154,17 +166,20 @@ class Mooogle {
         this.killInfinityScroll();
       }
     };
-    this.onEntry = this.onEnt.bind(this);
+    this.onEntryByInfScrl = this.onEntInfScr.bind(this);
     this.infScrl = function() {
-      const observOptions = {
+      this.observOptionsInfScrl = {
         rootMargin: '100px'
       };
-      this.observer = new IntersectionObserver(this.onEntry, observOptions);
-      this.observer.observe(this.refs.sentinal);
+      this.observerInfScrl = new IntersectionObserver(
+        this.onEntryByInfScrl,
+        this.observOptionsInfScrl
+      );
+      this.observerInfScrl.observe(this.refs.sentinal);
     };
     this.infinityScroll = this.infScrl.bind(this);
     this.killer = function() {
-      this.observer.disconnect();
+      this.observerInfScrl.disconnect();
     };
     this.killInfinityScroll = this.killer.bind(this);
 
@@ -216,8 +231,8 @@ class Mooogle {
     this.refs.searchBlock.classList.remove('open_search');
     this.refs.searchForm.removeEventListener('submit', this.clickOnSearchBtn);
 
-    window.removeEventListener("keydown", this.clickOnEsc);
-    window.removeEventListener("click", this.clickOnVoid);
+    window.removeEventListener('keydown', this.clickOnEsc);
+    window.removeEventListener('click', this.clickOnVoid);
   }
 
   // Рендеринг найденых фильмов
@@ -284,12 +299,11 @@ new Mooogle();
 // ======================
 // Vica
 
-const sidebarShow = document.querySelector(".toggle-btn");
-sidebarShow.addEventListener("click", show);
+const sidebarShow = document.querySelector('.toggle-btn');
+sidebarShow.addEventListener('click', show);
 function show() {
   document.getElementById('sidebar').classList.toggle('active');
   document.body.classList.toggle('modal-overlay-menu');
 }
 // Vica
 // ======================
-
