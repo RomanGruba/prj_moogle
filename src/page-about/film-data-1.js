@@ -108,10 +108,12 @@ class FilmInfo2 {
     this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
 
   }
-  renderPost1(data) {
+  renderPost1() {
+    getSinglePosterLittle(this.filmId, this.mediaType).then(data => {
     const posterMov = data.backdrop_path;
     this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
-  }
+  })
+}
   renderPost2() {
     getSinglePoster(this.filmId, this.mediaType).then(data => {
     const posterMov2 = data.poster_path;

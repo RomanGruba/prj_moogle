@@ -118,12 +118,17 @@ export function getSinglePoster(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSinglePosterLittle(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
-  return fetch(url)
+export function getSinglePosterLittle(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
+    return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
+
 export function getSingleDataRealise(id, mediaType) {
   let url;
   if (mediaType === "movie") {
