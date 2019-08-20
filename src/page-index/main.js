@@ -7,7 +7,6 @@ import newApp from "../js/app.js";
 import { getPopularTvShows } from "../js/api";
 import { handleFavorite } from "./favorite";
 
-
 class Mooogle {
   constructor() {
     // привязки к HTML
@@ -159,9 +158,10 @@ class Mooogle {
       const markup = filmsTemplate(
         JSON.parse(localStorage.getItem("favorites"))
       );
-
       this.clearList();
       this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+      let allStars = document.querySelectorAll(".icon-star");
+      allStars.forEach(el => el.classList.add("fill-gold"));
     });
 
     // sidebar showup Vika
@@ -287,8 +287,6 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
-
   }
 
   // ТЕЛО КЛАССА
