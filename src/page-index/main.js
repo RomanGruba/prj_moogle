@@ -118,6 +118,7 @@ class Mooogle {
 
     this.renderPopularFilms();
 
+    //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -126,11 +127,12 @@ class Mooogle {
         this.clearList();
         this.killInfinityScroll();
         this.renderTvShows();
-        // localStorage.setItem("mediaType", "TV");
         show();
         newApp.closePreloader();
       }
     });
+
+    //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -140,11 +142,11 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderTvShows();
-        // localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
       }
     });
 
+    //listener mobile Oleksii
     this.refs.buttonFilm.addEventListener("click", event => {
       event.preventDefault();
 
@@ -155,12 +157,12 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderPopularFilms();
-        // localStorage.setItem("mediaType", "movie");
         show();
         newApp.closePreloader();
       }
     });
-
+    
+    //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -170,12 +172,12 @@ class Mooogle {
         this.clearList();
         api.resetPage();
         this.renderPopularFilms();
-        // localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
       }
     });
 
     this.refs.filmsList.addEventListener("click", event => {
+      console.log("event.target.nodeName :", event.target.nodeName);
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
           "id",
@@ -185,15 +187,24 @@ class Mooogle {
           "mediaType",
           event.target.closest(".films-item").dataset.mediatype
         );
+
+        if (
+          event.target.nodeName === "SVG" ||
+          event.target.nodeName === "use"
+        ) {
+          // console.log(event.target.nodeName);
+        }
       }
     });
-    this.refs.buttonIconStar.addEventListener("click", event => {
-      event.preventDefault();
-      if (event.target === event.currentTarget) {
-        localStorage.setItem("status", "favorite");
-        this.iconStar.style.cssText = "fill: gold";
-      }
-    });
+
+    // onclick = this.refs.iconStar.style.fill = "gold";
+    // this.refs.buttonIconStar.addEventListener("click", event => {
+    //   // event.stopPropagation();
+    //   if (event.target.dataset.id === event.currentTarget) {
+    //     localStorage.setItem("statusFavorite", "event.target.dataset.id");
+    //     console.log("object :", event.target.dataset.id);
+    //   }
+    // });
     // Olecsey
   }
   // ТЕЛО КЛАССА
