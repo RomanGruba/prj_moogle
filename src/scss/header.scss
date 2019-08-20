@@ -4,6 +4,13 @@
   margin: 0;
 }
 
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 .nav-header{
   background-color: #77c1bb;
   padding: 20px;
@@ -76,25 +83,6 @@
   width: 20px;
   height: 20px;
   align-self: center;
-  // &.active {
-  //   .menu-list {
-  //     visibility: visible;
-  //     transform: translate(90%, 0%);
-  //     transition: transform 500ms ease-in-out;
-  //     left: -300px;
-  //     top: 45px;
-  //     z-index: 111;
-  //     width: 300px;
-  //   }
-  // }
-  // &.active{
-  //   transition: .4s linear;
-  //   transform: translate(100%, 0%);
-  //   z-index: 112;
-  //   left: -20px;
-  //   top: 45px;
-  //   transform: translate(0, 0);
-  // }
 }
 
 .menu-list {
@@ -103,7 +91,9 @@
   height: 100vh;
   left: -20px;
   top: 45px;
-  transform: translate(-100%, 0);
+  transform:translate(-100%, 0%);
+  transition: transform 500ms ease-in-out;
+  // transform: translate(-100%, 0);
   z-index: 111;
   background-color: #fff;
   .menu-items-click{
@@ -123,15 +113,22 @@
   top: 70px;
   left: 0;
   z-index: 1;
+  transform:translate(-100%, 0%);
+  transition: transform 500ms ease-in-out;
+  // visibility: hidden;
+}
+
+.modal-overlay-menu {
+  .sidebar::after {
+    transform: translate(0%, 0%);
+  }
 }
 
 .active{
-  // transform: translate(100%, 0%);
   z-index: 112;
   left: -20px;
   top: 45px;
-  transform: translate(0, 0);
-  transition: transform 500ms ease-in-out;
+  transform: translate(0%, 0%);
 }
 //end of menu for mobile
 
@@ -157,6 +154,11 @@
     display: none;
     visibility: hidden;
   }
+  .menu-list{
+    display: none;
+    visibility: hidden;
+  }
+
   .header__menu-big{
   visibility: visible;
   display: flex;
