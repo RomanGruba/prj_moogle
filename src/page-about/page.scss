@@ -4,13 +4,21 @@
   box-sizing: border-box;
   height: auto;
 }
+.green-line{
+  display: block;
+  max-width: 3000px;
+}
+.white-line {
+  display: block;
+  max-width: 3000px;
+}
 
 .in-hidden {
   display: none;
 }
 
 table {
-  max-width: 1300px;
+  width: 500px;
 }
 
 .green-line {
@@ -127,7 +135,6 @@ td {
     display: flex;
     max-width: 1023px;
     margin: 10px auto;
-
   }
 
   .image-mov1 {

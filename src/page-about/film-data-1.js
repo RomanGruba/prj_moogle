@@ -57,6 +57,7 @@ class FilmInfo2 {
       this.renderScreenPlay(data);
     })
   }
+  
   renderTitle() {
     getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
       const title = data.original_name || data.original_title;
@@ -64,13 +65,14 @@ class FilmInfo2 {
         const titleRelease = data.release_date;
         const titleReleaseAct = new Date (titleRelease).getFullYear();
         this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${title} (${titleReleaseAct})`)
-      }else {
+      } else {
         const titleTVRelease = data.first_air_date;
         const titleTVReleaseAct = new Date (titleTVRelease).getFullYear();
         this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${title} (${titleTVReleaseAct})`);
       }
     })
   }
+
   renderContries() {
     getSingleFilmContries(this.filmId, this.mediaType).then(data => {
       const contryMov = data.production_countries && data.production_countries.reduce((contries, el, indx) => {
@@ -82,6 +84,7 @@ class FilmInfo2 {
       this.refs.filmContries.textContent = contryMov;
     })
   }
+
   renderTagline() {
     getSingleFilmTagline(this.filmId, this.mediaType).then(data => {
       const taglineMov = data.tagline || data.vote_average;
@@ -107,12 +110,12 @@ class FilmInfo2 {
       console.log(data);
     })
   }
+
   renderRuntime() {
     getSingleRuntime(this.filmId, this.mediaType).then(data => {
       const runtimeMov = data.runtime || data.number_of_seasons;
       if (runtimeMov === data.runtime) {
         this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
-
         function getTimeFromMins(runtimeMov) {
           let hours = pad(Math.trunc(runtimeMov / 60));
           let minutes = pad(runtimeMov % 60);
@@ -144,12 +147,14 @@ class FilmInfo2 {
       this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
     })
   }
+
   renderPost2() {
     getSinglePoster(this.filmId, this.mediaType).then(data => {
       const posterMov2 = data.poster_path;
       this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
     })
   }
+
   renderDirector() {
     getSingleDirector(this.filmId, this.mediaType).then(data => {
       const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name
@@ -159,7 +164,6 @@ class FilmInfo2 {
         }
         return creater + el.name
       }, '');
-
       if (direct == data.credits){
         this.refs.filmDirector.textContent = direct;
       } else {
@@ -167,17 +171,17 @@ class FilmInfo2 {
         this.refs.filmDirector.textContent = direct;
         this.refs.filmCreatedBy.textContent = createdBy;
       }
-
     })
   }
+
   renderRealiseFull(data) {
     const realiseFullData = data.release_date;
     this.refs.filmRealiseFull.textContent = realiseFullData;
   }
+
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
       const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
-
       function checkProduct() {
         if (data.in_production == true) {
           return "In production";
@@ -185,7 +189,6 @@ class FilmInfo2 {
           return "Finish";
         }
       }
-
       if (screenPlaeer == data.credits){
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {
@@ -193,7 +196,6 @@ class FilmInfo2 {
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
         this.refs.filmStatus.textContent = statysTV;
       }
-
     })
   }
 }
