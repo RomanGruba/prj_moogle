@@ -4,27 +4,37 @@
   box-sizing: border-box;
   height: auto;
 }
+.green-line{
+  display: block;
+  max-width: 3000px;
+}
+.white-line {
+  display: block;
+  max-width: 3000px;
+}
+
+.movie-descr {
+  max-width: 400px;
+}
 
 .in-hidden {
   display: none;
 }
 
 table {
-  max-width: 1300px;
+  width: 450px;
 }
 
 .green-line {
   background-color: #addad6;
 }
-
-
-.table-answ {
-  padding-left: 40px;
+.table-quest {
+  width: 90px;
 }
 
 td {
   font-weight: normal;
-  color: #bfbfbf;
+  color: #313030;
   padding: 5px 15px;
 }
 
@@ -78,6 +88,7 @@ td {
     color: white;
     font-size: 20px;
     text-align: center;
+    max-width: 350px;
   }
 
   .image-mov_butData {
@@ -125,9 +136,11 @@ td {
 @media screen and (min-width: 768px) {
   .page-about_part1 {
     display: flex;
-    max-width: 1023px;
+    max-width: 800px;
     margin: 10px auto;
-
+  }
+  table {
+    width: 400px;
   }
 
   .image-mov1 {
@@ -140,8 +153,8 @@ td {
 
   .image-mov2 {
     display: block;
-    width: 450px;
-    height: auto;
+    width: 340px;
+    height: 600px;
     // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 100px;
   }
@@ -149,6 +162,7 @@ td {
   .image-mov_section {
     display: flex;
   }
+ 
 
   .image-mov_but {
     background: none;
