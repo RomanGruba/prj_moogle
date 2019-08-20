@@ -73,19 +73,19 @@ class FilmInfo2 {
   renderTagline(data) {
     const taglineMov = data.tagline;
     this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
-
   }
 
-  renderGenre(data) {
-    const genreMov = data.genres.reduce((g, el, indx) => {
-      if (indx > 0) {
-        return g + ', ' + el.name
-      }
-      return g + el.name
-    }, '');
-
-    this.refs.filmGenres.textContent = genreMov;
-
+  renderGenre() {
+    getSingleGenres(this.filmId, this.mediaType).then(data => {
+      const genreMov = data.genres.reduce((g, el, indx) => {
+        if (indx > 0) {
+          return g + ', ' + el.name
+        }
+        return g + el.name
+      }, '');
+      this.refs.filmGenres.textContent = genreMov;
+      console.log(data);
+    })
   }
   renderRuntime(data) {
     const runtimeMov = data.runtime;

@@ -76,8 +76,13 @@ export function getSingleFeedback(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSingleGenres(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
+export function getSingleGenres(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=genres`;
+
   return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
