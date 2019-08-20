@@ -30,7 +30,7 @@ class Mooogle {
       buttonTvShow: document.querySelector('.menu-items-click--tv'),
       buttonFilm: document.querySelector('.menu-items-click--film'),
       headerButtonFilm: document.querySelector('.header-items-click--film'),
-      headerButtonTvShow: document.querySelector('.header-items-click--tv')
+      headerButtonTvShow: document.querySelector('.header-items-click--tv'),
       buttonIconStar: document.querySelector(".button_icon-star"),
       iconStar: document.querySelector(".icon-star")
     };
@@ -115,7 +115,7 @@ class Mooogle {
         localStorage.setItem('mediaType', 'movie');
       }
     });
-    
+
     // слушатель на
     this.refs.buttonIconStar.addEventListener("click", event => {
       event.preventDefault();
