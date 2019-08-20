@@ -3,9 +3,10 @@
   padding: 0;
   text-decoration: none;
 }
-// .fill-gold{
-// fill: gold;
-// }
+
+.fill-gold{
+fill: gold;
+}
 .imbd {
   color: white;
   padding: 10px;
@@ -19,7 +20,7 @@
   height: 15px;
   width: 15px;
 
-  z-index: 11111;
+  z-index:2;
   border: none;
   outline: none;
   cursor: pointer;
@@ -129,9 +130,12 @@
 //   }
 // }
 .icon {
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   // fill: white;
+}
+.fill-white {
+  fill: white;
 }
 
 .gradient {
@@ -153,10 +157,7 @@
 .films-item:hover {
   filter: brightness(1.5);
 }
-.fill-white{
-  fill: white;
-}
-.fill-gold {
+.fill-color {
   fill: gold;
 }
 .img-sample,
@@ -164,20 +165,21 @@
 .img-container {
   width: 346px;
   height: 178px;
+  border-radius: 3px;
   filter: brightness(0.9);
 }
 .films-item:not(:last-child) {
   margin-bottom: 6px;
 }
 .films-list {
-  padding-top: 30px;
+  padding-top: 100px;
   list-style: none;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .films-name {
-  z-index: 2;
+  z-index: 1;
   position: relative;
   top: -40px;
   left: 8px;
@@ -198,7 +200,12 @@
   .films-item:nth-of-type(odd) {
     margin-right: 16px;
   }
-
+  .films-list {
+    padding-top: 170px;
+  }
+  .button_icon {
+    top: 15px;
+  }
   .films-item:not(:nth-last-child(-n + 2)) {
     margin-bottom: 16px;
   }
@@ -239,6 +246,6 @@
     top: -40px;
   }
   .films-list {
-    padding-top: 40px;
+    padding-top: 180px;
   }
 }
