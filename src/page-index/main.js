@@ -101,9 +101,9 @@ class Mooogle {
         this.renderTvShows().then(() => this.scrollToUp());
         localStorage.setItem('mediaType', 'TV');
         newApp.closePreloader();
-        if (localStorage.getItem("mediaType") === "TV") {
-          this.refs.headerButtonFilm.classList.add("active-focus");
-        }
+        // if (localStorage.getItem("mediaType") === "TV") {
+        //   this.refs.headerButtonFilm.classList.add("active-focus");
+        // }
       }
     });
 
@@ -132,9 +132,9 @@ class Mooogle {
         this.renderPopularFilms().then(() => this.scrollToUp());
         localStorage.setItem('mediaType', 'movie');
         newApp.closePreloader();
-        if (localStorage.getItem("username") === "movie") {
-          this.refs.headerButtonFilm.classList.add("active-focus");
-        }
+        // if (localStorage.getItem("username") === "movie") {
+        //   this.refs.headerButtonFilm.classList.add("active-focus");
+        // }
 
       }
     });
