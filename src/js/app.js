@@ -4,6 +4,7 @@ class App {
       pageWrapper: document.querySelector('#page_wrapper'),
       preloader: document.querySelector('#preloader')
     };
+
     document.addEventListener('DOMContentLoaded', this.renderApp.bind(this));
   }
 
