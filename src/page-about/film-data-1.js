@@ -39,9 +39,8 @@ class FilmInfo2 {
 
   renderAll() {
     getSingleFilm(this.filmId, this.mediaType).then(data => {
-      // console.log('single data:', data);
       this.renderTitle();
-      this.renderContries(data);
+      this.renderContries();
       this.renderTagline(data);
       this.renderGenre(data);
       this.renderRuntime(data);
@@ -53,29 +52,22 @@ class FilmInfo2 {
       this.renderScreenPlay(data);
     })
   }
-  renderTitle(){
-  getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
-    const title = data.original_name;
-    console.log(title);
-    console.log(data);
-    this.refs.filmTitle.insertAdjacentHTML('afterbegin', title);
-  })
-
-  // renderTitle(data) {
-  //   const titleMov = data.original_title;
-  //   const titleRelease = data.release_date;
-  //   const titleReleaseOK = new Date(titleRelease).getFullYear();
-  //   console.log(titleReleaseOK);
-  //   this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${titleMov} (${titleReleaseOK})`);
-}
-  renderContries(data) {
-    const contryMov = data.production_countries.reduce((contries, el, indx) => {
-      if (indx > 0) {
-        return contries + ', ' + el.name
-      }
-      return contries + el.name
-    }, '');
-    this.refs.filmContries.textContent = contryMov;
+  renderTitle() {
+    getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
+      const title = data.original_name || data.original_title;
+      this.refs.filmTitle.insertAdjacentHTML('afterbegin', title);
+    })
+  }
+  renderContries() {
+    getSingleFilmContries(this.filmId, this.mediaType).then(data => {
+      const contryMov = data.production_countries && data.production_countries.reduce((contries, el, indx) => {
+        if (indx > 0) {
+          return contries + ', ' + el.name
+        }
+        return contries + el.name
+      }, '') || data.origin_country[0];
+      this.refs.filmContries.textContent = contryMov;
+    })
 
   }
   renderTagline(data) {
@@ -97,7 +89,6 @@ class FilmInfo2 {
   }
   renderRuntime(data) {
     const runtimeMov = data.runtime;
-    console.log(runtimeMov);
     this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
 
     function getTimeFromMins(runtimeMov) {
@@ -117,14 +108,10 @@ class FilmInfo2 {
   }
   renderPost1(data) {
     const posterMov = data.backdrop_path;
-    console.log(`https://image.tmdb.org/t/p/original${posterMov}`);
-    console.log(this.refs.filmPoster);
     this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
   }
   renderPost2(data) {
     const posterMov2 = data.poster_path;
-    console.log(`https://image.tmdb.org/t/p/original${posterMov2}`);
-    console.log(this.refs.filmPoster);
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
   }
   renderDirector(data) {
@@ -134,7 +121,6 @@ class FilmInfo2 {
   }
   renderRealiseFull(data) {
     const realiseFullData = data.release_date;
-    console.log(realiseFullData);
     this.refs.filmRealiseFull.textContent = realiseFullData;
   }
   renderScreenPlay(data) {
@@ -144,4 +130,4 @@ class FilmInfo2 {
 }
 
 const filmdata = new FilmInfo2(1622, 'TV');
-// const filmInfo = new FilmInfo2(1233, 'MOVIE')
+// const filmInfo = new FilmInfo2(122, 'movie');

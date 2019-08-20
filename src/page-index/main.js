@@ -30,6 +30,7 @@ class Mooogle {
       headerButtonTvShow: document.querySelector('.header-items-click--tv'),
       buttonIconStar: document.querySelector('.button_icon-star'),
       iconStar: document.querySelector('.icon-star')
+
     };
 
     // при загрузке страницы рендерит популярные фильмы
@@ -113,6 +114,16 @@ class Mooogle {
         localStorage.setItem('id', event.target.dataset.id);
 
         localStorage.setItem('mediaType', 'movie');
+      }
+    });
+
+
+    // слушатель на
+    this.refs.buttonIconStar.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        localStorage.setItem("status", "favorite");
+        this.iconStar.style.cssText = "fill: gold";
       }
     });
 
