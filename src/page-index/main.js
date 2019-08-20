@@ -24,8 +24,39 @@ class Mooogle {
       // страж для скрола
       sentinal: document.querySelector('#sentinal'),
       // список "ul" в "grid"
-      filmsList: document.querySelector('.films-list')
+      filmsList: document.querySelector('.films-list'),
+      // toggle-btn + Sidebar
+      buttonShowSidebar: document.querySelector(".toggle-btn"),
+      sidebarItem: document.querySelector('.sidebar'),
+      menuList: document.getElementById('menu-list')
     };
+
+    // sidebar showup Vika
+    this.show = function () {
+      this.refs.menuList.classList.add('active');
+      document.body.classList.add('modal-overlay-menu');
+      // this.refs.sidebarItem.classList.toggle('active');
+    }
+    this.showSidebar = this.show.bind(this);
+    
+    this.showDont = function () {
+      this.refs.menuList.classList.remove('active');
+      document.body.classList.remove('modal-overlay-menu');
+      // this.refs.sidebarItem.classList.toggle('active');
+    }
+    this.showDontSidebar = this.showDont.bind(this);
+
+    this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+  //   targetElement.ontouchend = (e) => {
+  //     e.preventDefault();
+  // };
+
+/*
+
+*/
+
+    // Vika
+    // ================
 
     // слушатель на кнопку вызова модального окна
     this.refs.btnCallSearchModal.addEventListener(
@@ -48,6 +79,7 @@ class Mooogle {
       input.value = '';
       newApp.closePreloader();
     };
+
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // бесконечный скролл
@@ -231,15 +263,3 @@ class Mooogle {
 
 const newMooogle = new Mooogle();
 // ======================
-// Vica
-
-const sidebarShow = document.querySelector(".toggle-btn");
-sidebarShow.addEventListener("click", show);
-function show() {
-  document.getElementById('sidebar').classList.toggle('active');
-  document.body.classList.toggle('modal-overlay-menu');
-}
-// Vica
-// ======================
-
-//hidden-by-click

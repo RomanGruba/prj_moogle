@@ -70,31 +70,41 @@
   margin-right: 30px;
 }
 
+//sidebar menu to showUp for mobile
 .sidebar {
   position: relative;
   width: 20px;
   height: 20px;
   align-self: center;
-  &.active {
-    .menu-list {
-      visibility: visible;
-      transform: translate(90%, 0%);
-      transition: transform 500ms ease-in-out;
-      left: -300px;
-      top: 45px;
-      z-index: 111;
-      width: 300px;
-    }
-  }
+  // &.active {
+  //   .menu-list {
+  //     visibility: visible;
+  //     transform: translate(90%, 0%);
+  //     transition: transform 500ms ease-in-out;
+  //     left: -300px;
+  //     top: 45px;
+  //     z-index: 111;
+  //     width: 300px;
+  //   }
+  // }
+  // &.active{
+  //   transition: .4s linear;
+  //   transform: translate(100%, 0%);
+  //   z-index: 112;
+  //   left: -20px;
+  //   top: 45px;
+  //   transform: translate(0, 0);
+  // }
 }
 
 .menu-list {
-  visibility: hidden;
   position: absolute;
-  width: -300px;
+  width: 300px;
   height: 100vh;
   left: -20px;
-  top: 50px;
+  top: 45px;
+  transform: translate(-100%, 0);
+  z-index: 111;
   background-color: #fff;
   .menu-items-click{
       display: flex;
@@ -104,23 +114,27 @@
       line-height: 25px;
   }
 }
-
 .sidebar::after {
   content: '';
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
-  // position: absolute;
   position: fixed;
-  visibility: hidden;
   top: 70px;
   left: 0;
   z-index: 1;
 }
 
-.sidebar.active::after {
-  visibility: visible;
+.active{
+  // transform: translate(100%, 0%);
+  z-index: 112;
+  left: -20px;
+  top: 45px;
+  transform: translate(0, 0);
+  transition: transform 500ms ease-in-out;
 }
+//end of menu for mobile
+
 
 /*tablet-laptop menu*/
 .header__menu-big {
