@@ -13,13 +13,16 @@
   max-width: 3000px;
 }
 
+.movie-descr {
+  max-width: 400px;
+}
+
 .in-hidden {
   display: none;
 }
 
 table {
   width: 450px;
-  overflow: hidden;
 }
 
 .green-line {
@@ -133,8 +136,11 @@ td {
 @media screen and (min-width: 768px) {
   .page-about_part1 {
     display: flex;
-    max-width: 1023px;
+    max-width: 800px;
     margin: 10px auto;
+  }
+  table {
+    width: 400px;
   }
 
   .image-mov1 {
@@ -147,8 +153,8 @@ td {
 
   .image-mov2 {
     display: block;
-    width: 450px;
-    height: auto;
+    width: 340px;
+    height: 600px;
     // background: url('../img/img_test_first1/Dark_time.png') no-repeat;
     background-size: 350px, 100px;
   }
@@ -156,6 +162,7 @@ td {
   .image-mov_section {
     display: flex;
   }
+ 
 
   .image-mov_but {
     background: none;

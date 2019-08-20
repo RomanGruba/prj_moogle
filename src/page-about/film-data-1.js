@@ -107,7 +107,7 @@ class FilmInfo2 {
         return g + el.name
       }, '');
       this.refs.filmGenres.textContent = genreMov;
-      console.log(data);
+
     })
   }
 
@@ -181,7 +181,6 @@ class FilmInfo2 {
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
-      console.log('data :', data);
       const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
       function checkProduct() {
         if (data.in_production === true) {
@@ -192,7 +191,6 @@ class FilmInfo2 {
       }
       if (data.credits){
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
-        console.log('work');
       } else {
         const statysTV = "Status";
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
@@ -202,5 +200,4 @@ class FilmInfo2 {
   }
 }
 
-// const filmdata = new FilmInfo2(1622, 'TV');
-const filmInfo = new FilmInfo2(122, 'movie');
+
