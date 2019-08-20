@@ -1,10 +1,12 @@
-import "../scss/main.scss";
-import "./page.scss";
-import "../scss/header.scss";
-import filmsTemplate from "./templates/template.hbs";
-import api from "../js/api.js";
-import newApp from "../js/app.js";
-import { getPopularTvShows } from "../js/api";
+
+import '../scss/main.scss';
+import './page.scss';
+import '../scss/header.scss';
+import filmsTemplate from './templates/template.hbs';
+import api from '../js/api.js';
+import newApp from '../js/app.js';
+import { handleFavorite } from "./favorite";
+
 
 class Mooogle {
   constructor() {
@@ -22,20 +24,32 @@ class Mooogle {
       sentinal: document.querySelector("#sentinal"),
       // список "ul" в "grid"
       filmsList: document.querySelector(".films-list"),
-
+      // кнопка "btn sort by name"
+      btnSortName: document.querySelector('#btn_sort_by_name'),
+      // paragraf "film name"
+      filmName: document.querySelector('#film_name'),
+      // кнопка "btn sort by date"
+      btnSortDate: document.querySelector('#btn_sort_by_date'),
+      // span "film date"
+      filmDate: document.querySelectorAll('#film_date'),
       // кнопка "scroll up"
       scrollUpBtn: document.querySelector("#scroll_up"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
       buttonFilm: document.querySelector(".menu-items-click--film"),
+      buttonFavorite: document.querySelector(".header-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
+       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
       menuList: document.getElementById("menu-list")
     };
 
+    this.renderedData = [];
+    this.favoriteArr = [];
+
     // при загрузке страницы рендерит популярные фильмы
-    this.renderPopularFilms();
+    this.renderPopularFilms().then(() => this.scrollToUp());
 
     // слушатель на кнопку вызова модального окна
     this.refs.btnCallSearchModal.addEventListener(
@@ -49,6 +63,18 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
+    // слушатель на кнопке "btn sort by name"
+    this.refs.btnSortName.addEventListener(
+      'click',
+      this.clickOnBtnName.bind(this)
+    );
+
+    // слушатель на кнопке "btn sort by date"
+    this.refs.btnSortDate.addEventListener(
+      'click',
+      this.clickOnBtnDate.bind(this)
+    );
+
     //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
 
@@ -57,8 +83,8 @@ class Mooogle {
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
-        this.renderTvShows();
-        localStorage.setItem("mediaType", "TV");
+        this.renderTvShows().then(() => this.scrollToUp());
+        localStorage.setItem('mediaType', 'TV');
         show();
         newApp.closePreloader();
       }
@@ -72,8 +98,8 @@ class Mooogle {
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
-        this.renderTvShows();
-        localStorage.setItem("mediaType", "TV");
+        this.renderTvShows().then(() => this.scrollToUp());
+        localStorage.setItem('mediaType', 'TV');
         newApp.closePreloader();
         if (localStorage.getItem("mediaType") === "TV") {
           this.refs.headerButtonFilm.classList.add("active-focus");
@@ -88,8 +114,8 @@ class Mooogle {
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
-        this.renderPopularFilms();
-        localStorage.setItem("mediaType", "movie");
+        this.renderPopularFilms().then(() => this.scrollToUp());
+        localStorage.setItem('mediaType', 'movie');
         show();
         newApp.closePreloader();
       }
@@ -103,8 +129,8 @@ class Mooogle {
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
-        this.renderPopularFilms();
-        localStorage.setItem("mediaType", "movie");
+        this.renderPopularFilms().then(() => this.scrollToUp());
+        localStorage.setItem('mediaType', 'movie');
         newApp.closePreloader();
         if (localStorage.getItem("username") === "movie") {
           this.refs.headerButtonFilm.classList.add("active-focus");
@@ -115,21 +141,22 @@ class Mooogle {
 
     // слушатель на click on image and star
     this.refs.filmsList.addEventListener("click", event => {
-      console.log("event.target.nodeName :", event.target.nodeName);
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
-          "id",
-          event.target.closest(".films-item").dataset.id
+          'id',
+          event.target.closest('.films-item').dataset.id
         );
         localStorage.setItem(
-          "mediaType",
-          event.target.closest(".films-item").dataset.mediatype
+          'mediaType',
+          event.target.closest('.films-item').dataset.mediatype
         );
 
         if (
-          event.target.nodeName === "SVG" ||
-          event.target.nodeName === "use"
+          event.target.nodeName === 'SVG' ||
+          event.target.nodeName === 'use'
         ) {
+          handleFavorite.call(this, event);
+
           let el = event.target;
           if (!el.classList.contains("icon-star")) {
             el = el.closest(".icon-star");
@@ -137,18 +164,32 @@ class Mooogle {
           el.classList.toggle("fill-white");
           el.classList.toggle("fill-gold");
         }
-        // if (
-        //   event.target.nodeName === "SVG" ||
-        //   event.target.nodeName === "use"
-        // ) {
-        //   let el = event.target;
-        //   if (!el.classList.contains("icon-bell")) {
-        //     el = el.closest(".icon-bell");
-        //   }
-        //   el.classList.toggle("fill-white");
-        //   el.classList.toggle("fill-gold");
-        // }
+
+        if (
+          event.target.nodeName === "SVG" ||
+          event.target.nodeName === "use"
+        ) {
+          let el = event.target;
+          if (!el.classList.contains("icon-bell")) {
+            el = el.closest(".icon-bell");
+          }
+          // el.classList.toggle("fill-white");
+          // el.classList.toggle("fill-gold");
+        }
       }
+    });
+
+    // слушатель на click favorites Roman
+    this.refs.buttonFavorite.addEventListener("click", event => {
+      event.preventDefault();
+      this.killInfinityScroll();
+      const markup = filmsTemplate(
+        JSON.parse(localStorage.getItem("favorites"))
+      );
+      this.clearList();
+      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+      let allStars = document.querySelectorAll(".icon-star");
+      allStars.forEach(el => el.classList.add("fill-gold"));
     });
 
     // sidebar showup Vika
@@ -167,6 +208,7 @@ class Mooogle {
     this.showDontSidebar = this.showDont.bind(this);
 
     this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+
     // end of sidebar showUp
 
     // обработчик поиска
@@ -179,43 +221,40 @@ class Mooogle {
       api.resetPage();
       this.clearList();
       this.killInfinityScroll();
-      this.renderSearchingFilm();
+      this.renderSearchingFilm().then(() => this.scrollToUp());
       this.closeSearchBlockHandler();
       input.value = "";
       newApp.closePreloader();
     };
-
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // скролл button up
-    setTimeout(() => {
-      this.onEnBtnUp = function(e) {
-        if (e[0].isIntersecting) {
-          this.refs.scrollUpBtn.classList.toggle("is-hidden");
-        }
+    this.onEnBtnUp = function(e) {
+      if (e[0].isIntersecting) {
+        this.refs.scrollUpBtn.classList.toggle('is-hidden');
+      }
+    };
+    this.onEntryBtnUp = this.onEnBtnUp.bind(this);
+    this.scrlToUp = function() {
+      this.observOptionsBtnUp = {
+        rootMargin: '0px',
+        threshold: 1
       };
-      this.onEntryBtnUp = this.onEnBtnUp.bind(this);
-      this.scrlToUp = function() {
-        this.observOptionsBtnUp = {
-          rootMargin: "400px 0px -1100px 0px"
-        };
-        this.observerBtnUp = new IntersectionObserver(
-          this.onEntryBtnUp,
-          this.observOptionsBtnUp
-        );
-        this.observerBtnUp.observe(this.refs.filmsList.firstElementChild);
-      };
-      this.scrollToUp = this.scrlToUp.bind(this);
-      this.scrollToUp();
-    }, 2000);
+      this.observerBtnUp = new IntersectionObserver(
+        this.onEntryBtnUp,
+        this.observOptionsBtnUp
+      );
+      this.observerBtnUp.observe(this.refs.filmsList.children[6]);
+    };
+    this.scrollToUp = this.scrlToUp.bind(this);
 
     // бесконечный скролл
     this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
-        if (api.query === "") {
-          this.renderPopularFilms();
+        if (api.query === '') {
+          this.renderPopularFilms().then(() => this.scrollToUp());
         } else {
-          this.renderSearchingFilm();
+          this.renderSearchingFilm().then(() => this.scrollToUp());
         }
         this.killInfinityScroll();
       }
@@ -240,12 +279,21 @@ class Mooogle {
     // строитель списка фильмов на "page-index"
     this.insertListItem = function(objData) {
       this.newArrRes = objData.results.map(el => {
+        let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
+          }
+        });
+
         el.release_date = new Date(el.release_date).getFullYear();
+        this.renderedData.push(el);
         return el;
       });
-      const markup = filmsTemplate(this.newArrRes);
-      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+      this.markup = filmsTemplate(this.newArrRes);
+      this.refs.filmsList.insertAdjacentHTML('beforeend', this.markup);
       api.increment();
+      // this.arraySortDate = objData.results.map(elem => elem.release_date);
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
 
@@ -266,6 +314,15 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+    // // обработчик на клик по "btn sort by name"
+    // this.clickByName = function(e) {
+    //   console.log(e);
+    //   console.log('object');
+    // };
+    // this.clickOnBtnName = this.clickByName.bind(this);
+
+    // this.sortString = '';
   }
 
   // ТЕЛО КЛАССА
@@ -291,7 +348,7 @@ class Mooogle {
 
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
-    api
+    return api
       .getSearching()
       .then(data => {
         if (data.total_pages < api.page) {
@@ -308,7 +365,7 @@ class Mooogle {
 
   // Рендеринг популярных фильмов
   renderPopularFilms() {
-    api
+    return api
       .getPopularFilms()
       .then(data => {
         if (data.total_pages < api.page) {
@@ -323,7 +380,8 @@ class Mooogle {
 
   // Рендеринг TV сериалов
   renderTvShows() {
-    getPopularTvShows()
+    return api
+      .getPopularTvShows()
       .then(data => {
         if (data.total_pages < api.page) {
           this.killInfinityScroll();
@@ -346,7 +404,20 @@ class Mooogle {
       behavior: "smooth"
     });
   }
-}
 
+  // // обработчик на клик по "btn sort by name"
+  // clickOnBtnName() {
+  //   console.log('name');
+  // }
+
+  // // обработчик на клик по "btn sort by date"
+  // clickOnBtnDate(e) {
+  //   console.log('date');
+  //   // this.sortString += this.markup;
+  //   // localStorage.setItem('onBtnDate', 'light');
+  //   // console.log('not Sort :', this.arraySortDate);
+  //   // console.log('Sort a-z:', this.arraySortDate.sort());
+  //   // console.log('Sort z-a:', this.arraySortDate.sort((a,z) => z-a));
+  // }
+}
 new Mooogle();
-// ======================
