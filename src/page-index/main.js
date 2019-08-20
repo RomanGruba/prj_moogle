@@ -22,6 +22,7 @@ class Mooogle {
       sentinal: document.querySelector('#sentinal'),
       // список "ul" в "grid"
       filmsList: document.querySelector('.films-list'),
+
       // кнопка "scroll up"
       scrollUpBtn: document.querySelector('#scroll_up'),
       buttonTvShow: document.querySelector('.menu-items-click--tv'),
@@ -35,6 +36,7 @@ class Mooogle {
 
     // при загрузке страницы рендерит популярные фильмы
     this.renderPopularFilms();
+
 
     // слушатель на кнопку вызова модального окна
     this.refs.btnCallSearchModal.addEventListener(
@@ -142,6 +144,7 @@ class Mooogle {
       input.value = '';
       newApp.closePreloader();
     };
+
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // скролл button up
@@ -308,6 +311,7 @@ class Mooogle {
 
 new Mooogle();
 // ======================
+
 // Vica
 
 const sidebarShow = document.querySelector('.toggle-btn');

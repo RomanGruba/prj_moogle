@@ -1,10 +1,12 @@
 .footer_div{
   display: flex;
   background-color: #77c1bb;
+  background-size: cover;
   padding: 20px 0;
   justify-content: center;
   align-items: center;
   flex-flow: column;
+  min-width: 100%;
 }
 
 .footer_svg{
@@ -37,7 +39,7 @@ border: 1px solid #fff;
 }
 .footer_nav{
   display: block;
-  padding: 10px 0;
+  padding: 2px 0;
 }
 .footer_nav_links{
   color: #000;
