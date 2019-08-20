@@ -10,6 +10,7 @@ import {
   getSinglePosterLittle,
   getSingleDirector,
   getSingleDataRealise,
+  getSingleNumberOfEpisodes,
   getSingleScreenPlay
 } from '../js/api';
 
@@ -71,11 +72,11 @@ class FilmInfo2 {
   }
   renderTagline() {
     getSingleFilmTagline(this.filmId, this.mediaType).then(data => {
-    const taglineMov = data.tagline || data.vote_average;
-    console.log(taglineMov);
-    this.refs.filmTagline.textContent = taglineMov;
-  })
-}
+      const taglineMov = data.tagline || data.vote_average;
+      console.log(taglineMov);
+      this.refs.filmTagline.textContent = taglineMov;
+    })
+  }
 
   renderGenre() {
     getSingleGenres(this.filmId, this.mediaType).then(data => {
@@ -89,67 +90,80 @@ class FilmInfo2 {
       console.log(data);
     })
   }
-  renderRuntime(data) {
-    const runtimeMov = data.runtime;
-    this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
+  renderRuntime() {
+    getSingleRuntime(this.filmId, this.mediaType).then(data => {
+      const runtimeMov = data.runtime || data.number_of_seasons;
+      if (runtimeMov === data.runtime) {
+        this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
 
-    function getTimeFromMins(runtimeMov) {
-      let hours = pad(Math.trunc(runtimeMov / 60));
-      let minutes = pad(runtimeMov % 60);
-      return hours + ':' + minutes;
+        function getTimeFromMins(runtimeMov) {
+          let hours = pad(Math.trunc(runtimeMov / 60));
+          let minutes = pad(runtimeMov % 60);
+          return hours + ':' + minutes;
 
-      function pad(value) {
-        return String(value).padStart(2, '0');
+          function pad(value) {
+            return String(value).padStart(2, '0');
+          }
+        }
+      } else {
+        const numberOfEpisodes = data.number_of_episodes;
+        this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov} seasons / ${numberOfEpisodes} episodes`);
+
+
       }
-    }
+    })
   }
+
+
+
   renderOverview() {
-    getSingleOwerview(this.filmId, this.mediaType).then(data =>{
-    const overviewMov = data.overview;
-    this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
-  })
+    getSingleOwerview(this.filmId, this.mediaType).then(data => {
+      const overviewMov = data.overview;
+      this.refs.filmOverview.insertAdjacentHTML('afterbegin', overviewMov);
+    })
   }
 
   renderPost1() {
     getSinglePosterLittle(this.filmId, this.mediaType).then(data => {
-    const posterMov = data.backdrop_path;
-    this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
-  })
-}
+      const posterMov = data.backdrop_path;
+      this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
+    })
+  }
   renderPost2() {
     getSinglePoster(this.filmId, this.mediaType).then(data => {
-    const posterMov2 = data.poster_path;
-    this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
-  })
-}
+      const posterMov2 = data.poster_path;
+      this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
+    })
+  }
   renderDirector() {
     getSingleDirector(this.filmId, this.mediaType).then(data => {
-    const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name || data.created_by.reduce((creater, el, indx) => {
-      if (indx > 0) {
-        return creater + ', ' + el.name
-      }
-      return creater + el.name
-    }, '');
-this.refs.filmDirector.textContent = direct;
-  })
-}
+      const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name || data.created_by.reduce((creater, el, indx) => {
+        if (indx > 0) {
+          return creater + ', ' + el.name
+        }
+        return creater + el.name
+      }, '');
+      this.refs.filmDirector.textContent = direct;
+    })
+  }
   renderRealiseFull(data) {
     const realiseFullData = data.release_date;
     this.refs.filmRealiseFull.textContent = realiseFullData;
   }
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
-    const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
-    function checkProduct() {
-      if (data.in_production == true){
-        return "In production";
-      } else {
-        return "Finish";
+      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
+
+      function checkProduct() {
+        if (data.in_production == true) {
+          return "In production";
+        } else {
+          return "Finish";
+        }
       }
-    }
-    this.refs.fimlScreenPlay.textContent = screenPlaeer;
-  })
-}
+      this.refs.fimlScreenPlay.textContent = screenPlaeer;
+    })
+  }
 }
 
 const filmdata = new FilmInfo2(1622, 'TV');
