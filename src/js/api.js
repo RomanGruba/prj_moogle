@@ -48,12 +48,17 @@ export function getSingleFilmContries(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSingleFilmTagline(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=tagline`;
-  return fetch(url)
+export function getSingleFilmTagline(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=tagline`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=vote_average`;
+    return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
+
 
 export function getPopularTvShows() {
   const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;

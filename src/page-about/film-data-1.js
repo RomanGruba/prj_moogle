@@ -68,12 +68,14 @@ class FilmInfo2 {
       }, '') || data.origin_country[0];
       this.refs.filmContries.textContent = contryMov;
     })
-
   }
-  renderTagline(data) {
-    const taglineMov = data.tagline;
-    this.refs.filmTagline.insertAdjacentHTML('afterbegin', taglineMov);
-  }
+  renderTagline() {
+    getSingleFilmTagline(this.filmId, this.mediaType).then(data => {
+    const taglineMov = data.tagline || data.vote_average;
+    console.log(taglineMov);
+    this.refs.filmTagline.textContent = taglineMov;
+  })
+}
 
   renderGenre() {
     getSingleGenres(this.filmId, this.mediaType).then(data => {
