@@ -25,7 +25,7 @@ class FilmData {
       trailer: document.querySelector(".trailer")
     };
     this.defineMovieOrTv();
-    setIdToLocalSotage();
+
   }
 
   defineMovieOrTv() {
@@ -67,10 +67,12 @@ class FilmData {
       this.refs.ulActors.insertAdjacentHTML("afterbegin", markup);
       this.refs.actors.forEach(image => lazyLoad(image));
 
-      $(".actors-list").slick({
-        slidesToShow: 3,
-        slidesToScroll: 1
-      });
+      setTimeout(() =>
+        $(".actors-list").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1
+        })
+      , 1000)
     });
   }
 
@@ -79,11 +81,12 @@ class FilmData {
       const markup = frames(data.backdrops);
       this.refs.ulFrames.insertAdjacentHTML("afterbegin", markup);
       this.refs.frames.forEach(image => lazyLoad(image));
-
-      $(".frames-list").slick({
-        slidesToShow: 3,
-        slidesToScroll: 1
-      });
+      setTimeout(() =>
+        $(".frames-list").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1
+        })
+      , 1000)
     });
   }
 

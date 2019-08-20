@@ -2,7 +2,10 @@ const api_key = "ed5781108818e96397f9efe7bddd0923";
 const baseUrl = `https://api.themoviedb.org/3`;
 
 export function getSingleFilmTrailer(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}/videos?api_key=${api_key}`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/videos?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/videos?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -10,7 +13,11 @@ export function getSingleFilmTrailer(id, mediaType) {
 }
 
 export function getSingleFilmActors(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}?api_key=${api_key}&append_to_response=credits`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=credits`;
 
   return fetch(url)
     .then(res => res.json())
@@ -61,7 +68,10 @@ export function getPopularTvShows() {
 }
 
 export function getSingleFilmFrames(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}/images?api_key=${api_key}`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/images?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -69,7 +79,10 @@ export function getSingleFilmFrames(id, mediaType) {
 }
 
 export function getSingleFeedback(id, mediaType) {
- const url = `${baseUrl}/${mediaType}/${id}/reviews?api_key=${api_key}`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/reviews?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
