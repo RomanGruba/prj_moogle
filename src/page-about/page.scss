@@ -24,10 +24,8 @@ table {
 .green-line {
   background-color: #addad6;
 }
-
-
-.table-answ {
-  padding-left: 40px;
+.table-quest {
+  width: 70px;
 }
 
 td {
@@ -86,6 +84,7 @@ td {
     color: white;
     font-size: 20px;
     text-align: center;
+    max-width: 350px;
   }
 
   .image-mov_butData {

@@ -57,7 +57,7 @@ class FilmInfo2 {
       this.renderScreenPlay(data);
     })
   }
-  
+
   renderTitle() {
     getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
       const title = data.original_name || data.original_title;
@@ -115,7 +115,7 @@ class FilmInfo2 {
     getSingleRuntime(this.filmId, this.mediaType).then(data => {
       const runtimeMov = data.runtime || data.number_of_seasons;
       if (runtimeMov === data.runtime) {
-        this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov}мин / ${getTimeFromMins(runtimeMov)} `);
+        this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov} min / ${getTimeFromMins(runtimeMov)} `);
         function getTimeFromMins(runtimeMov) {
           let hours = pad(Math.trunc(runtimeMov / 60));
           let minutes = pad(runtimeMov % 60);
