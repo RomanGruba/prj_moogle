@@ -25,6 +25,7 @@ class FilmInfo2 {
       filmTitle: document.querySelector('.image-mov_title'),
       filmContries: document.querySelector('[data-field="country"]'),
       filmTagline: document.querySelector('[data-field="tagline"]'),
+      filmINDB: document.querySelector('[data-field="tagline-idb"]'),
       filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
       filmOverview: document.querySelector('.movie-descr'),
@@ -32,7 +33,7 @@ class FilmInfo2 {
       filmPoster2: document.querySelector('.image-mov2'),
       filmDirector: document.querySelector('[data-field="director"]'),
       filmRealiseFull: document.querySelector('.data-down'),
-      fimlScreenPlay: document.querySelector('[data-field="scenario"]')
+      fimlScreenPlay: document.querySelector('[data-field="scenario"]'),
     }
 
     this.renderAll()
@@ -81,8 +82,13 @@ class FilmInfo2 {
   renderTagline() {
     getSingleFilmTagline(this.filmId, this.mediaType).then(data => {
       const taglineMov = data.tagline || data.vote_average;
-      console.log(taglineMov);
+      if (taglineMov == data.tagline){
       this.refs.filmTagline.textContent = taglineMov;
+    } else {
+      const iMDB = "Rating";
+      this.refs.filmTagline.textContent = taglineMov;
+      this.refs.filmINDB.textContent = iMDB;
+    }
     })
   }
 
