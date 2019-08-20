@@ -9,6 +9,10 @@
   z-index: 666;
 }
 
+.search_modal {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
 .search_box {
   width: 100vw;
   height: 70vh;
@@ -28,6 +32,7 @@
 
 .open_search {
   transform: translate(0, 0) scale(1, 1);
+  position: fixed;
 }
 
 .icon_logo {

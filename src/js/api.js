@@ -1,4 +1,4 @@
-const api_key = "ed5781108818e96397f9efe7bddd0923";
+const api_key = 'ed5781108818e96397f9efe7bddd0923';
 const baseUrl = `https://api.themoviedb.org/3`;
 
 export function getSingleFilmTrailer(id, mediaType) {
@@ -33,7 +33,7 @@ export function getSingleFilm(id) {
 
 export function getSingleFilmTitle(id, mediaType) {
   let url;
-  if (mediaType === "movie") {
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_title`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=original_name`;
@@ -45,7 +45,7 @@ export function getSingleFilmTitle(id, mediaType) {
 
 export function getSingleFilmContries(id, mediaType) {
   let url;
-  if (mediaType === "movie") {
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=production_countries`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=origin_country`;
@@ -66,12 +66,6 @@ export function getSingleFilmTagline(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-
-export function getPopularTvShows() {
-  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
-}
-
 export function getSingleFilmFrames(id, mediaType) {
   let url;
   if (mediaType === "movie") {
@@ -84,6 +78,7 @@ export function getSingleFilmFrames(id, mediaType) {
 }
 
 export function getSingleFeedback(id, mediaType) {
+
   let url;
   if (mediaType === "movie") {
     url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
@@ -158,7 +153,7 @@ export function getSinglePosterLittle(id, mediaType) {
 
 export function getSingleDataRealise(id, mediaType) {
   let url;
-  if (mediaType === "movie") {
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=release_date`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=first_air_date`;
@@ -194,7 +189,7 @@ export function getSingleScreenPlay(id, mediaType) {
 
 export default {
   page: 1,
-  query: "",
+  query: '',
   getPopularFilms() {
     const url = `${baseUrl}/movie/popular?api_key=${api_key}&append_to_response=credits&page=${
       this.page
@@ -207,6 +202,12 @@ export default {
     const url = `${baseUrl}/search/movie?api_key=${api_key}&query=${
       this.query
     }&page=${this.page}`;
+    return fetch(url)
+      .then(res => res.json())
+      .catch(error => console.warn(error));
+  },
+  getPopularTvShows() {
+    const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
     return fetch(url)
       .then(res => res.json())
       .catch(error => console.warn(error));

@@ -2,7 +2,7 @@
 
 {{#if title}}
 <li class="films-item" data-id={{id}} data-mediatype="movie">
-   {{else}}
+  {{else}}
 <li class="films-item" data-id={{id}} data-mediatype="TV">
 {{/if}}
         <button class="button_icon button_icon-star">
@@ -27,12 +27,12 @@
       </div>
     </div>
     {{#if title}}
-    <p class="films-name">{{title}} ({{release_date}})</p>
+    <p id="film_name" class="films-name">{{title}} <span id="film_date">({{release_date}})</span></p>
     {{else}}
-    <p class="films-name">{{original_name}} ({{first_air_date}}) </p>
+    <p id="film_name" class="films-name">{{original_name}} <span id="film_date">({{first_air_date}})</span> </p>
     {{/if}}
     {{!-- <p class="films-name">{{title}} ({{release_date}})</p> --}}
   </a>
 </li>
+
 {{/each}}
-{{!-- http://localhost:8080/about.html --}}
