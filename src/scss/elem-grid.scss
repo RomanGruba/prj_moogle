@@ -19,6 +19,7 @@
   height: 15px;
   width: 15px;
 
+  z-index: 11111;
   border: none;
   outline: none;
   cursor: pointer;
@@ -151,7 +152,7 @@
   top: 0;
   left: 0;
 }
-.fils_item {
+.films_item {
   position: relative;
 }
 .films-item:hover {
@@ -165,7 +166,6 @@
 .img-container {
   width: 346px;
   height: 178px;
-  border-radius: 3px;
   filter: brightness(0.9);
 }
 .films-item:not(:last-child) {

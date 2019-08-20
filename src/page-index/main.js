@@ -50,7 +50,7 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
-    // слушатель на
+    //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener('click', event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -65,7 +65,7 @@ class Mooogle {
       }
     });
 
-    // слушатель на
+    //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener('click', event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -79,7 +79,7 @@ class Mooogle {
       }
     });
 
-    // слушатель на
+    //listener mobile Oleksii
     this.refs.buttonFilm.addEventListener('click', event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -94,7 +94,7 @@ class Mooogle {
       }
     });
 
-    // слушатель на
+    //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener('click', event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
@@ -108,26 +108,37 @@ class Mooogle {
       }
     });
 
-    // слушатель на
-    this.refs.filmsList.addEventListener('click', event => {
-      preventDefault();
+    // слушатель на click on image and star
+    this.refs.filmsList.addEventListener("click", event => {
+      console.log("event.target.nodeName :", event.target.nodeName);
       if (event.target !== event.currentTarget) {
-        console.log(event.target.dataset.id);
-        localStorage.setItem('id', event.target.dataset.id);
+        localStorage.setItem(
+          "id",
+          event.target.closest(".films-item").dataset.id
+        );
+        localStorage.setItem(
+          "mediaType",
+          event.target.closest(".films-item").dataset.mediatype
+        );
 
-        localStorage.setItem('mediaType', 'movie');
+        if (
+          event.target.nodeName === "SVG" ||
+          event.target.nodeName === "use"
+        ) {
+          // console.log(event.target.nodeName);
+        }
       }
     });
 
 
     // слушатель на
-    this.refs.buttonIconStar.addEventListener("click", event => {
-      event.preventDefault();
-      if (event.target === event.currentTarget) {
-        localStorage.setItem("status", "favorite");
-        this.iconStar.style.cssText = "fill: gold";
-      }
-    });
+//     this.refs.buttonIconStar.addEventListener("click", event => {
+//       event.preventDefault();
+//       if (event.target === event.currentTarget) {
+//         localStorage.setItem("status", "favorite");
+//         this.iconStar.style.cssText = "fill: gold";
+//       }
+//     });
 
     // обработчик поиска
     this.searchingHandler = function(e) {
@@ -226,6 +237,7 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
   }
 
   // ТЕЛО КЛАССА
