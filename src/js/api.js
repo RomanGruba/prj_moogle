@@ -131,10 +131,17 @@ export function getSingleDataRealise(id, mediaType) {
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
-export function getSingleDirector(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
+export function getSingleDirector(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=created_by`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
 }
+
 export function getSingleScreenPlay(id) {
   const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
   return fetch(url).then(res => res.json());
