@@ -112,10 +112,12 @@ class FilmInfo2 {
     const posterMov = data.backdrop_path;
     this.refs.filmPoster1.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov}")`;
   }
-  renderPost2(data) {
+  renderPost2() {
+    getSinglePoster(this.filmId, this.mediaType).then(data => {
     const posterMov2 = data.poster_path;
     this.refs.filmPoster2.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${posterMov2}")`;
-  }
+  })
+}
   renderDirector() {
     getSingleDirector(this.filmId, this.mediaType).then(data => {
     const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name || data.created_by.reduce((creater, el, indx) => {
@@ -136,12 +138,11 @@ this.refs.filmDirector.textContent = direct;
     const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
     function checkProduct() {
       if (data.in_production == true){
-        return "In production"
+        return "In production";
       } else {
-        return "Finish"
+        return "Finish";
       }
     }
-
     this.refs.fimlScreenPlay.textContent = screenPlaeer;
   })
 }
