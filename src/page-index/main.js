@@ -51,6 +51,7 @@ class Mooogle {
 
     //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
+
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -65,6 +66,7 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -73,8 +75,8 @@ class Mooogle {
         this.renderTvShows();
         localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
-        if (localStorage.getItem("username") === "TV") {
-          this.refs.headerButtonFilm.classList.add("active");
+        if (localStorage.getItem("mediaType") === "TV") {
+          this.refs.headerButtonFilm.classList.add("active-focus");
         }
       }
     });
@@ -95,6 +97,7 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener("click", event => {
+        event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
@@ -104,7 +107,7 @@ class Mooogle {
         localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
         if (localStorage.getItem("username") === "movie") {
-          this.refs.headerButtonFilm.classList.add("active");
+          this.refs.headerButtonFilm.classList.add("active-focus");
         }
 
       }
