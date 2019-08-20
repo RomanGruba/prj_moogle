@@ -30,7 +30,13 @@ class Mooogle {
       headerButtonFilm: document.querySelector('.header-items-click--film'),
       headerButtonTvShow: document.querySelector('.header-items-click--tv'),
       buttonIconStar: document.querySelector('.button_icon-star'),
-      iconStar: document.querySelector('.icon-star')
+      iconStar: document.querySelector('.icon-star'),
+
+      // toggle-btn + Sidebar
+      buttonShowSidebar: document.querySelector(".toggle-btn"),
+      sidebarItem: document.querySelector('.sidebar'),
+      menuList: document.getElementById('menu-list')
+
 
     };
 
@@ -139,6 +145,24 @@ class Mooogle {
 //         this.iconStar.style.cssText = "fill: gold";
 //       }
 //     });
+
+// sidebar showup Vika
+this.show = function () {
+  this.refs.menuList.classList.add('active');
+  document.body.classList.add('modal-overlay-menu');
+  // this.refs.sidebarItem.classList.toggle('active');
+}
+this.showSidebar = this.show.bind(this);
+
+this.showDont = function () {
+  this.refs.menuList.classList.remove('active');
+  document.body.classList.remove('modal-overlay-menu');
+  // this.refs.sidebarItem.classList.toggle('active');
+}
+this.showDontSidebar = this.showDont.bind(this);
+
+this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+// end of sidebar showUp
 
     // обработчик поиска
     this.searchingHandler = function(e) {
