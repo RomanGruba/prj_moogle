@@ -7,7 +7,7 @@ import './film-data-1';
 import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.scss';
 // import '../page-index/main.js';
-import './favorites';
+
 
 
 

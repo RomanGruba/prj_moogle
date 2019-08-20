@@ -5,6 +5,8 @@ import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import newApp from "../js/app.js";
 import { getPopularTvShows } from "../js/api";
+import { handleFavorite } from "./favorite";
+
 
 class Mooogle {
   constructor() {
@@ -27,12 +29,16 @@ class Mooogle {
       scrollUpBtn: document.querySelector("#scroll_up"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
       buttonFilm: document.querySelector(".menu-items-click--film"),
+      buttonFavorite: document.querySelector(".header-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
       menuList: document.getElementById("menu-list")
     };
+
+    this.renderedData = [];
+    this.favoriteArr = [];
 
     // при загрузке страницы рендерит популярные фильмы
     this.renderPopularFilms();
@@ -109,7 +115,6 @@ class Mooogle {
 
     // слушатель на click on image and star
     this.refs.filmsList.addEventListener("click", event => {
-      console.log("event.target.nodeName :", event.target.nodeName);
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
           "id",
@@ -124,6 +129,8 @@ class Mooogle {
           event.target.nodeName === "SVG" ||
           event.target.nodeName === "use"
         ) {
+          handleFavorite.call(this, event);
+
           let el = event.target;
           if (!el.classList.contains("icon-star")) {
             el = el.closest(".icon-star");
@@ -139,10 +146,22 @@ class Mooogle {
           if (!el.classList.contains("icon-bell")) {
             el = el.closest(".icon-bell");
           }
-          el.classList.toggle("fill-white");
-          el.classList.toggle("fill-gold");
+          // el.classList.toggle("fill-white");
+          // el.classList.toggle("fill-gold");
         }
       }
+    });
+
+    // слушатель на click favorites Roman
+    this.refs.buttonFavorite.addEventListener("click", event => {
+      event.preventDefault();
+      this.killInfinityScroll();
+      const markup = filmsTemplate(
+        JSON.parse(localStorage.getItem("favorites"))
+      );
+
+      this.clearList();
+      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
     });
 
     // sidebar showup Vika
@@ -234,7 +253,15 @@ class Mooogle {
     // строитель списка фильмов на "page-index"
     this.insertListItem = function(objData) {
       this.newArrRes = objData.results.map(el => {
+        let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
+          }
+        });
+
         el.release_date = new Date(el.release_date).getFullYear();
+        this.renderedData.push(el);
         return el;
       });
       const markup = filmsTemplate(this.newArrRes);
@@ -260,6 +287,8 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+
   }
 
   // ТЕЛО КЛАССА
