@@ -28,6 +28,7 @@ class FilmInfo2 {
       filmINDB: document.querySelector('[data-field="tagline-idb"]'),
       filmGenres: document.querySelector('[data-field="genre"]'),
       filmRuntime: document.querySelector('[data-field="time"]'),
+      filmEpisodes: document.querySelector('[data-field="timeline-episodes"]'),
       filmOverview: document.querySelector('.movie-descr'),
       filmPoster1: document.querySelector('.image-mov1'),
       filmPoster2: document.querySelector('.image-mov2'),
@@ -122,8 +123,10 @@ class FilmInfo2 {
           }
         }
       } else {
+        const numberEpisodes = "Seasons / Episodes"
         const numberOfEpisodes = data.number_of_episodes;
         this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov} seasons / ${numberOfEpisodes} episodes`);
+        this.refs.filmEpisodes.textContent = numberEpisodes;
       }
     })
   }
@@ -195,5 +198,5 @@ class FilmInfo2 {
   }
 }
 
-// const filmdata = new FilmInfo2(1622, 'TV');
-const filmInfo = new FilmInfo2(122, 'movie');
+const filmdata = new FilmInfo2(1622, 'TV');
+// const filmInfo = new FilmInfo2(122, 'movie');
