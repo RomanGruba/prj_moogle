@@ -7,6 +7,7 @@ import frames from "../page-about/frames.hbs";
 import feedbacks from "../page-about/feedbacks.hbs";
 import $ from "jquery";
 import slick from "slick-carousel";
+import {setIdToLocalSotage} from './favorites';
 
 class FilmData {
   constructor(id, mediaType) {
@@ -24,6 +25,7 @@ class FilmData {
       trailer: document.querySelector(".trailer")
     };
     this.defineMovieOrTv();
+    setIdToLocalSotage();
   }
 
   defineMovieOrTv() {
@@ -128,12 +130,12 @@ class FilmData {
   }
 }
 
-// const filmdata = new FilmData(
-//   localStorage.getItem("id"),
-//   localStorage.getItem("mediaType")
-// );
+const filmdata = new FilmData(
+  localStorage.getItem("id"),
+  localStorage.getItem("mediaType")
+);
 
 // const filmdata = new FilmData(429203);
 // const filmdata = new FilmData(384018);
-const filmdata = new FilmData(1622, 'TV');
+// const filmdata = new FilmData(363088, 'movie');
 // const filmdata = new FilmData(448358);
