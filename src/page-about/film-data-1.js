@@ -56,7 +56,15 @@ class FilmInfo2 {
   renderTitle() {
     getSingleFilmTitle(this.filmId, this.mediaType).then(data => {
       const title = data.original_name || data.original_title;
-      this.refs.filmTitle.insertAdjacentHTML('afterbegin', title);
+      if (title == data.original_title) {
+        const titleRelease = data.release_date;
+        const titleReleaseAct = new Date (titleRelease).getFullYear();
+        this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${title} (${titleReleaseAct})`)
+      }else {
+        const titleTVRelease = data.first_air_date;
+        const titleTVReleaseAct = new Date (titleTVRelease).getFullYear();
+        this.refs.filmTitle.insertAdjacentHTML('afterbegin', `${title} (${titleTVReleaseAct})`);
+      }
     })
   }
   renderContries() {
@@ -108,13 +116,9 @@ class FilmInfo2 {
       } else {
         const numberOfEpisodes = data.number_of_episodes;
         this.refs.filmRuntime.insertAdjacentHTML('afterbegin', `${runtimeMov} seasons / ${numberOfEpisodes} episodes`);
-
-
       }
     })
   }
-
-
 
   renderOverview() {
     getSingleOwerview(this.filmId, this.mediaType).then(data => {
