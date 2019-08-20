@@ -2,19 +2,19 @@
 
 {{#if title}}
 <li class="films-item" data-id={{id}} data-mediatype="movie">
-   {{else}}
+  {{else}}
 <li class="films-item" data-id={{id}} data-mediatype="TV">
-{{/if}}
-        <button class="button_icon button_icon-star">
-          <svg data-id = {{id}} class="icon icon-star">
-            <use href="../img/icons/sprite.svg#star"></use>
-          </svg>
-        </button>
-        <button class="button_icon button_icon-bell">
-          <svg class="icon icon-bell">
-            <use href="../img/icons/sprite.svg#bell"></use>
-          </svg>
-        </button>
+  {{/if}}
+  <button class="button_icon button_icon-star">
+    <svg data-id={{id}} class="icon icon-star">
+      <use href="../img/icons/sprite.svg#star"></use>
+    </svg>
+  </button>
+  <button class="button_icon button_icon-bell">
+    <svg class="icon icon-bell">
+      <use href="../img/icons/sprite.svg#bell"></use>
+    </svg>
+  </button>
   <a href="/about.html">
     <div class="img-container">
       <img class="img-sample" src="https://image.tmdb.org/t/p/original/{{backdrop_path}}" alt="movie" />
@@ -23,9 +23,9 @@
       </div>
     </div>
     {{#if title}}
-    <p class="films-name">{{title}} ({{release_date}})</p>
+    <p id="film_name" class="films-name">{{title}} <span id="film_date">({{release_date}})</span></p>
     {{else}}
-    <p class="films-name">{{original_name}} ({{first_air_date}}) </p>
+    <p id="film_name" class="films-name">{{original_name}} <span id="film_date">({{first_air_date}})</span> </p>
     {{/if}}
   </a>
 </li>
