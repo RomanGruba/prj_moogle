@@ -35,6 +35,7 @@ class FilmInfo2 {
       filmCreatedBy: document.querySelector('[data-field="director-created_by"]'),
       filmRealiseFull: document.querySelector('.data-down'),
       fimlScreenPlay: document.querySelector('[data-field="scenario"]'),
+      filmStatus: document.querySelector('[data-field="screenplay-status"]')
     }
 
     this.renderAll()
@@ -148,12 +149,14 @@ class FilmInfo2 {
   }
   renderDirector() {
     getSingleDirector(this.filmId, this.mediaType).then(data => {
-      const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name || data.created_by.reduce((creater, el, indx) => {
+      const direct = data.credits && data.credits.crew.find(crew => crew.job === "Director").name
+      || data.created_by && data.created_by.reduce((creater, el, indx) => {
         if (indx > 0) {
           return creater + ', ' + el.name
         }
         return creater + el.name
       }, '');
+
       if (direct == data.credits){
         this.refs.filmDirector.textContent = direct;
       } else {
@@ -179,10 +182,18 @@ class FilmInfo2 {
           return "Finish";
         }
       }
-      this.refs.fimlScreenPlay.textContent = screenPlaeer;
+
+      if (screenPlaeer == data.credits){
+        this.refs.fimlScreenPlay.textContent = screenPlaeer;
+      } else {
+        const statysTV = "Status";
+        this.refs.fimlScreenPlay.textContent = screenPlaeer;
+        this.refs.filmStatus.textContent = statysTV;
+      }
+
     })
   }
 }
 
-const filmdata = new FilmInfo2(1622, 'TV');
-// const filmInfo = new FilmInfo2(122, 'movie');
+// const filmdata = new FilmInfo2(1622, 'TV');
+const filmInfo = new FilmInfo2(122, 'movie');
