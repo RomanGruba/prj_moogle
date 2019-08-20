@@ -7,7 +7,7 @@ import frames from "../page-about/frames.hbs";
 import feedbacks from "../page-about/feedbacks.hbs";
 import $ from "jquery";
 import slick from "slick-carousel";
-import {setIdToLocalSotage} from './favorites';
+
 
 class FilmData {
   constructor(id, mediaType) {
