@@ -193,6 +193,16 @@ color: #736b7f;
       transform: translate(0, -2px);
       border: 1px solid black;
     }
+    .active-focus {
+      color: black;
+      font-size: 18px;
+      &::after{
+        visibility: visible;
+        transform: translate(0, -1px) scale(1.2, 1);
+        // transform: translate(0, -1px);
+        transition: 0.4s ease-in;
+      }
+    }
     .header__menu-links:hover::after{
       visibility: visible;
       transform: translate(0, -1px) scale(1.2, 1);
