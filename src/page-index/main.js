@@ -325,25 +325,27 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
     this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
-          }
-        });
+        //   let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        // itemsToColor.forEach(element => {
+        //   if (element.id == el.id) {
+        //     el.toBeColored = true;
+        //   }
+        // });
           el.release_date = new Date(el.release_date).getFullYear();
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
-          }
-        });
+        //   let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        // itemsToColor.forEach(element => {
+        //   if (element.id == el.id) {
+        //     el.toBeColored = true;
+        //   }
+        // });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -357,11 +359,11 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
 // //           }
 // //         });
 
-//         el.release_date = new Date(el.release_date).getFullYear();
-//         this.renderedData.push(el);
-//         return el;
-//       });
-//       this.markup = filmsTemplate(this.newArrRes);
+      //   el.release_date = new Date(el.release_date).getFullYear();
+      //   this.renderedData.push(el);
+      //   return el;
+      // });
+      // this.markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
     };
