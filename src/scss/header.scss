@@ -137,12 +137,13 @@
 .header__menu-big {
   visibility: hidden;
   display: none;
-  background:white;
+  background:#fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .header__sort-movies{
   visibility: hidden;
   display: none;
-  background:white;
+  // background:white;
 }
 .search_btn-form{
   visibility: hidden;
@@ -207,15 +208,20 @@ color: #736b7f;
       visibility: visible;
       display: flex;
       flex-flow: row;
-      justify-content: space-between;
+      justify-content:flex-end;
       align-items: center;
       padding: 10px 20px;
       line-height: 30px;
       font-family: 'Roboto', sans-serif;
+      // background-color: rgba(255, 255, 255, 0.322);
     }
     .sort-movies-nav{
       display: flex;
       flex-flow: row;
+      background-color:#fff;
+    }
+    .sort-movies{
+      background-color: rgba(255, 255, 255, 0.5);
     }
     .sort-btn-svg{
       display: block;
@@ -225,11 +231,13 @@ color: #736b7f;
     .sort-movies-btn{
       display: flex;
       flex-flow: row;
+
       fill: #77c1bb;
       border: none;
       background: none;
       cursor: pointer;
-      margin-left: 20px;
+      &:not(:last-child){
+        margin-right: 20px;}
     }
 /*search button*/
     .search-engine{
