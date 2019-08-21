@@ -1,43 +1,52 @@
 class App {
   constructor() {
+    // привязки к HTML
     this.refs = {
-      pageWrapper: document.querySelector('#page_wrapper'),
-      preloader: document.querySelector('#preloader'),
-      filmsListKill: document.querySelector('#killUL')
+      // коробка для "preloader"
+      pageWrapper: document.querySelector("#page_wrapper"),
+      // "preloader"
+      preloader: document.querySelector("#preloader"),
+      // список "ul" в "grid"
+      filmsList: document.querySelector(".films-list")
     };
 
-    document.addEventListener('DOMContentLoaded', this.renderApp.bind(this));
+    // слушатель на DOM
+    document.addEventListener("DOMContentLoaded", this.closestPreloader.bind(this));
   }
 
-  renderApp() {
+  // закрытие "preloader" через setTimeout
+  closestPreloader() {
     this.closePreloader();
     this.closePreloaderUL();
-
   }
 
+  // открытие "preloader"
   openPreloader() {
-    this.refs.pageWrapper.style.display = 'none';
-    this.refs.preloader.style.display = 'block';
+    this.refs.pageWrapper.style.display = "none";
+    this.refs.preloader.style.display = "block";
   }
 
+  // закрытие "preloader"
   closePreloader() {
     setTimeout(() => {
-      this.refs.pageWrapper.style.display = 'block';
-      this.refs.preloader.style.display = 'none';
+      this.refs.pageWrapper.style.display = "block";
+      this.refs.preloader.style.display = "none";
     }, 1000);
   }
 
+  // открытие "preloader" на "ul"
   /*♥*/
   openPreloaderUL() {
-    this.refs.filmsListKill.style.display = 'none';
-    this.refs.preloader.style.display = 'block';
+    this.refs.filmsList.style.display = "none";
+    this.refs.preloader.style.display = "block";
   }
 
+  // закрытие "preloader" на "ul"
   /*♥*/
   closePreloaderUL() {
     setTimeout(() => {
-      this.refs.filmsListKill.style.display = 'flex';
-      this.refs.preloader.style.display = 'none';
+      this.refs.filmsList.style.display = "flex";
+      this.refs.preloader.style.display = "none";
     }, 1000);
   }
 }
