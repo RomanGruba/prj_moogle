@@ -5,6 +5,114 @@
   height: auto;
 }
 
+.image-mov_but:hover {
+  fill: #9a9a9a;
+}
+
+.bell:hover {
+  display: block;
+  animation: ring 7s 0.3s ease-in-out;
+  transform-origin: 50% 4px;
+
+  @keyframes ring {
+    0% {
+      transform: rotate(0);
+    }
+
+    1% {
+      transform: rotate(30deg);
+    }
+
+    3% {
+      transform: rotate(-28deg);
+    }
+
+    5% {
+      transform: rotate(34deg);
+    }
+
+    7% {
+      transform: rotate(-32deg);
+    }
+
+    9% {
+      transform: rotate(30deg);
+    }
+
+    11% {
+      transform: rotate(-28deg);
+    }
+
+    13% {
+      transform: rotate(26deg);
+    }
+
+    15% {
+      transform: rotate(-24deg);
+    }
+
+    17% {
+      transform: rotate(22deg);
+    }
+
+    19% {
+      transform: rotate(-20deg);
+    }
+
+    21% {
+      transform: rotate(18deg);
+    }
+
+    23% {
+      transform: rotate(-16deg);
+    }
+
+    25% {
+      transform: rotate(14deg);
+    }
+
+    27% {
+      transform: rotate(-12deg);
+    }
+
+    29% {
+      transform: rotate(10deg);
+    }
+
+    31% {
+      transform: rotate(-8deg);
+    }
+
+    33% {
+      transform: rotate(6deg);
+    }
+
+    35% {
+      transform: rotate(-4deg);
+    }
+
+    37% {
+      transform: rotate(2deg);
+    }
+
+    39% {
+      transform: rotate(-1deg);
+    }
+
+    41% {
+      transform: rotate(1deg);
+    }
+
+    43% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(0);
+    }
+  }
+}
+
 .green-line {
   display: block;
   max-width: 3000px;
@@ -49,8 +157,17 @@ td {
     padding: 60px 5px 0px 5px;
   }
 
+  .bell:hover {
+    fill: #addad6;
+  }
+
   .movie-descr_title {
     display: none;
+  }
+
+  .image-mov_but_items {
+    display: flex;
+    flex-flow: row;
   }
 
   .image-mov_section {
@@ -106,9 +223,10 @@ td {
     width: 20px;
     height: 20px;
     fill: black;
-    margin: 0;
+    margin: 0px 5px 0px 0px;
     padding: 0px 4px 0px 0px;
   }
+
 
   .data-down {
     font-size: 13px;
@@ -198,6 +316,7 @@ td {
 
   .image-mov_but_items {
     display: flex;
+    flex-flow: row;
     margin-bottom: 10px;
     fill: white;
   }
