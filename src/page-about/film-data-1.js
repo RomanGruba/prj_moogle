@@ -197,7 +197,7 @@ class FilmData1 {
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
-      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name
+      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay" || "Writer").name
       || checkProduct(data.in_production);
       function checkProduct() {
         if (data.in_production === true) {
