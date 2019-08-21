@@ -182,7 +182,7 @@ class FilmData1 {
     const realiseFullDataYear = new Date(realiseFullData).getFullYear();
     const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
     const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
-    const realData = realiseFullDataYear + ". " + realiseFullDataMonth + ". " + realiseFullDataDay;
+    const realData = realiseFullDataYear + "." + realiseFullDataMonth + "." + realiseFullDataDay;
     if (data.release_date) {
     this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Release data: ${realData}`);
     } else {
