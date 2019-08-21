@@ -196,9 +196,13 @@
     border: 1px solid black;
   }
   .active-focus {
-    display: block;
-    transform: translate(0, -2px);
-    border: 1px solid black;
+    text-align: center;
+    padding-left:25px;
+
+    height: 50px;
+    width: 135px;
+    background: gray;
+    color: white;
   }
   .header__menu-links:hover::after {
     visibility: visible;

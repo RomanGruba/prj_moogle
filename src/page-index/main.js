@@ -1,12 +1,10 @@
-
-import '../scss/main.scss';
-import './page.scss';
-import '../scss/header.scss';
-import filmsTemplate from './templates/template.hbs';
-import api from '../js/api.js';
-import newApp from '../js/app.js';
+import "../scss/main.scss";
+import "./page.scss";
+import "../scss/header.scss";
+import filmsTemplate from "./templates/template.hbs";
+import api from "../js/api.js";
+import newApp from "../js/app.js";
 import { handleFavorite } from "./favorite";
-
 
 class Mooogle {
   constructor() {
@@ -25,13 +23,13 @@ class Mooogle {
       // список "ul" в "grid"
       filmsList: document.querySelector(".films-list"),
       // кнопка "btn sort by name"
-      btnSortName: document.querySelector('#btn_sort_by_name'),
+      btnSortName: document.querySelector("#btn_sort_by_name"),
       // paragraf "film name"
-      filmName: document.querySelector('#film_name'),
+      filmName: document.querySelector("#film_name"),
       // кнопка "btn sort by date"
-      btnSortDate: document.querySelector('#btn_sort_by_date'),
+      btnSortDate: document.querySelector("#btn_sort_by_date"),
       // span "film date"
-      filmDate: document.querySelectorAll('#film_date'),
+      filmDate: document.querySelectorAll("#film_date"),
       // кнопка "scroll up"
       scrollUpBtn: document.querySelector("#scroll_up"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
@@ -39,7 +37,7 @@ class Mooogle {
       buttonFavorite: document.querySelector(".header-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
-       // toggle-btn + Sidebar
+      // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
       menuList: document.getElementById("menu-list")
@@ -64,27 +62,26 @@ class Mooogle {
     );
 
     // слушатель на кнопке "btn sort by name"
-    this.refs.btnSortName.addEventListener(
-      'click',
-      this.clickOnBtnName.bind(this)
-    );
+    // this.refs.btnSortName.addEventListener(
+    //   "click",
+    //   this.clickOnBtnName.bind(this)
+    // );
 
     // слушатель на кнопке "btn sort by date"
-    this.refs.btnSortDate.addEventListener(
-      'click',
-      this.clickOnBtnDate.bind(this)
-    );
+    // this.refs.btnSortDate.addEventListener(
+    //   "click",
+    //   this.clickOnBtnDate.bind(this)
+    // );
 
     //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
-
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.renderTvShows().then(() => this.scrollToUp());
-        localStorage.setItem('mediaType', 'TV');
+        localStorage.setItem("mediaType", "TV");
         show();
         newApp.closePreloader();
       }
@@ -92,18 +89,19 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
-      event.preventDefault();
-      if (event.target === event.currentTarget) {
+        event.preventDefault();
+        if (event.target === event.currentTarget) {
         newApp.openPreloader();
-        api.resetPage();
+        // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.renderTvShows().then(() => this.scrollToUp());
-        localStorage.setItem('mediaType', 'TV');
+        localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
-        // if (localStorage.getItem("mediaType") === "TV") {
-        //   this.refs.headerButtonFilm.classList.add("active-focus");
-        // }
+        if (localStorage.getItem("mediaType") === "TV") {
+          this.refs.headerButtonFilm.classList.remove("active-focus");
+          this.refs.headerButtonTvShow.classList.add("active-focus");
+        }
       }
     });
 
@@ -115,7 +113,7 @@ class Mooogle {
         this.clearList();
         this.killInfinityScroll();
         this.renderPopularFilms().then(() => this.scrollToUp());
-        localStorage.setItem('mediaType', 'movie');
+        localStorage.setItem("mediaType", "movie");
         show();
         newApp.closePreloader();
       }
@@ -123,19 +121,19 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener("click", event => {
-        event.preventDefault();
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
-        api.resetPage();
+        // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.renderPopularFilms().then(() => this.scrollToUp());
-        localStorage.setItem('mediaType', 'movie');
+        localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
-        // if (localStorage.getItem("username") === "movie") {
-        //   this.refs.headerButtonFilm.classList.add("active-focus");
-        // }
-
+        if (localStorage.getItem("mediaType") === "movie") {
+          this.refs.headerButtonTvShow.classList.remove("active-focus");
+          this.refs.headerButtonFilm.classList.add("active-focus");
+        }
       }
     });
 
@@ -143,17 +141,17 @@ class Mooogle {
     this.refs.filmsList.addEventListener("click", event => {
       if (event.target !== event.currentTarget) {
         localStorage.setItem(
-          'id',
-          event.target.closest('.films-item').dataset.id
+          "id",
+          event.target.closest(".films-item").dataset.id
         );
         localStorage.setItem(
-          'mediaType',
-          event.target.closest('.films-item').dataset.mediatype
+          "mediaType",
+          event.target.closest(".films-item").dataset.mediatype
         );
 
         if (
-          event.target.nodeName === 'SVG' ||
-          event.target.nodeName === 'use'
+          event.target.nodeName === "SVG" ||
+          event.target.nodeName === "use"
         ) {
           handleFavorite.call(this, event);
 
@@ -231,13 +229,13 @@ class Mooogle {
     // скролл button up
     this.onEnBtnUp = function(e) {
       if (e[0].isIntersecting) {
-        this.refs.scrollUpBtn.classList.toggle('is-hidden');
+        this.refs.scrollUpBtn.classList.toggle("is-hidden");
       }
     };
     this.onEntryBtnUp = this.onEnBtnUp.bind(this);
     this.scrlToUp = function() {
       this.observOptionsBtnUp = {
-        rootMargin: '0px',
+        rootMargin: "0px",
         threshold: 1
       };
       this.observerBtnUp = new IntersectionObserver(
@@ -251,7 +249,7 @@ class Mooogle {
     // бесконечный скролл
     this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
-        if (api.query === '') {
+        if (api.query === "") {
           this.renderPopularFilms().then(() => this.scrollToUp());
         } else {
           this.renderSearchingFilm().then(() => this.scrollToUp());
@@ -291,7 +289,7 @@ class Mooogle {
         return el;
       });
       this.markup = filmsTemplate(this.newArrRes);
-      this.refs.filmsList.insertAdjacentHTML('beforeend', this.markup);
+      this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
       // this.arraySortDate = objData.results.map(elem => elem.release_date);
     };
@@ -420,4 +418,5 @@ class Mooogle {
   //   // console.log('Sort z-a:', this.arraySortDate.sort((a,z) => z-a));
   // }
 }
+
 new Mooogle();
