@@ -9,6 +9,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index:111;
 }
 
 .nav-header{
@@ -136,10 +137,12 @@
 .header__menu-big {
   visibility: hidden;
   display: none;
+  background:white;
 }
 .header__sort-movies{
   visibility: hidden;
   display: none;
+  background:white;
 }
 .search_btn-form{
   visibility: hidden;
