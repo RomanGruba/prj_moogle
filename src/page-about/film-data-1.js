@@ -196,32 +196,22 @@ class FilmData1 {
 
   renderRealiseFull() {
     getSingleDataRealise(this.filmId, this.mediaType).then(data => {
-      const realiseFullData = data.release_date || data.last_air_date;
-      const realiseFullDataYear = new Date(realiseFullData).getFullYear();
-      const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
-      const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
-      const realData =
-        realiseFullDataYear +
-        ". " +
-        realiseFullDataMonth +
-        ". " +
-        realiseFullDataDay;
-      if (data.release_date) {
-        this.refs.filmRealiseFull.insertAdjacentHTML(
-          "afterbegin",
-          `Release data: ${realData}`
-        );
-      } else {
-        this.refs.filmRealiseFull.insertAdjacentHTML(
-          "afterbegin",
-          `Last episode: ${realData}`
-        );
-      }
-      function pad(value) {
-        return String(value).padStart(2, "0");
-      }
-    });
-  }
+    const realiseFullData = data.release_date || data.last_air_date;
+    const realiseFullDataYear = new Date(realiseFullData).getFullYear();
+    const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
+    const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
+    const realData = realiseFullDataYear + "." + realiseFullDataMonth + "." + realiseFullDataDay;
+    if (data.release_date) {
+    this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Release data: ${realData}`);
+    } else {
+      this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Last episode: ${realData}`);
+    }
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+  })
+}
+
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {

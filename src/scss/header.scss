@@ -35,17 +35,29 @@
   display: flex;
   flex-flow: row;
   width: 75%;
+  text-decoration: none;
+  color: #000;
+  &:hover{
+    color: #fff;
+    transform: scale(1.05, 1.05) translate(2%, 0);
+    transition: .4s ease-in;
+  }
 }
 
 .logo-img{
   display: block;
   width: 30px;
   height: 30px;
+  // &:hover{
+  //   transform: scale(1.2, 1.2);
+  //   transition: transform .4s linear;
+  // }
 }
 .logo-title{
   line-height: 30px;
   padding-left: 15px;
   font-size: 20px;
+
 }
 
 .search-engine{
@@ -191,7 +203,7 @@ color: #736b7f;
       display: block;
       visibility: hidden;
       transform: translate(0, -2px);
-      border: 1px solid black;
+      border: 1px solid #000;
     }
     .active-focus {
       color: black;

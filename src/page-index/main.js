@@ -64,11 +64,11 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
-    // // слушатель на кнопке "btn sort by name"
-    // this.refs.btnSortName.addEventListener(
-    //   "click",
-    //   this.clickOnBtnName.bind(this)
-    // );
+    // слушатель на кнопке "btn sort by name"
+    this.refs.btnSortName.addEventListener(
+      "click",
+      this.clickOnBtnName.bind(this)
+    );
 
     // слушатель на кнопке "btn sort by date"
     this.refs.btnSortDate.addEventListener(
@@ -332,19 +332,17 @@ class Mooogle {
 
     // строитель списка фильмов на "page-index"
     this.sortArray = [];
-    this.insertListItem = function(objData) {
+    this.flagSortName = true;
+    this.flagSortDate = true;
+    this.insertListItem = function (objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-          let fav = localStorage.getItem("favorites");
-          if(fav) {
-            let itemsToColor = JSON.parse(fav);
-            itemsToColor.forEach(element => {
-              if (element.id == el.id) {
-                el.toBeColored = true;
-              }
-            });
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
           }
-
+        });
           el.release_date = new Date(el.release_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -352,15 +350,12 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-          let fav = localStorage.getItem("favorites");
-          if(fav) {
-          let itemsToColor = JSON.parse(fav);
-          itemsToColor.forEach(element => {
-            if (element.id == el.id) {
-              el.toBeColored = true;
-            }
-          });
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
           }
+        });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -403,8 +398,6 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
-    this.flagSortDate = true;
   }
 
   // ТЕЛО КЛАССА
@@ -450,6 +443,7 @@ class Mooogle {
     return api
       .getPopularFilms()
       .then(data => {
+        console.log(data);
         if (data.total_pages < api.page) {
           this.killInfinityScroll();
           return;
@@ -481,6 +475,7 @@ class Mooogle {
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
+
   // обработчик на кнопку "scroll up"
   scrollToUpHandler() {
     window.scrollTo({
@@ -489,51 +484,81 @@ class Mooogle {
     });
   }
 
-  // // обработчик на клик по "btn sort by name"
-  // clickOnBtnName() {
-  //   console.log('name');
-  // }
+  // обработчик на клик по "btn sort by name"
+  clickOnBtnName() {
+    newApp.openPreloader();
+    this.killInfinityScroll();
+    if (this.flagSortName) {
+      if (localStorage.getItem("mediaType") === "movie") {
+        this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
+          let nameA = a.title.toLowerCase();
+          let nameZ = z.title.toLowerCase();
+          if (nameA < nameZ) return -1;
+          if (nameA > nameZ) return 1;
+        });
+      } else if (localStorage.getItem("mediaType") === "TV") {
+        this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
+          let nameA = a.original_name.toLowerCase();
+          let nameZ = z.original_name.toLowerCase();
+          if (nameA < nameZ) return -1;
+          if (nameA > nameZ) return 1;
+        });
+      }
+      this.sortMarkupName = filmsTemplate(this.sortArrayNameAZ);
+      this.flagSortName = false;
+    } else {
+      if (localStorage.getItem("mediaType") === "movie") {
+        this.sortArrayNameZA = this.sortArray.sort((a, z) => {
+          let nameA = a.title.toLowerCase();
+          let nameZ = z.title.toLowerCase();
+          if (nameA > nameZ) return -1;
+          if (nameA < nameZ) return 1;
+        });
+      } else if (localStorage.getItem("mediaType") === "TV") {
+        this.sortArrayNameZA = this.sortArray.sort((a, z) => {
+          let nameA = a.original_name.toLowerCase();
+          let nameZ = z.original_name.toLowerCase();
+          if (nameA > nameZ) return -1;
+          if (nameA < nameZ) return 1;
+        });
+      }
+      this.sortMarkupName = filmsTemplate(this.sortArrayNameZA);
+      this.flagSortName = true;
+    }
+    this.refs.filmsList.innerHTML = this.sortMarkupName;
+    newApp.closePreloader();
+  }
 
   // обработчик на клик по "btn sort by date"
   clickOnBtnDate() {
-    console.log("date");
     newApp.openPreloader();
     this.killInfinityScroll();
     if (this.flagSortDate) {
       if (localStorage.getItem("mediaType") === "movie") {
-        this.sortArrayAZ = this.sortArray.sort(
-          (a, z) =>
-            new Date(a.release_date).getTime() -
-            new Date(z.release_date).getTime()
+        this.sortArrayDateAZ = this.sortArray.sort(
+          (a, z) => new Date(a.release_date) - new Date(z.release_date)
         );
       } else if (localStorage.getItem("mediaType") === "TV") {
-        this.sortArrayAZ = this.sortArray.sort(
-          (a, z) =>
-            new Date(a.first_air_date).getTime() -
-            new Date(z.first_air_date).getTime()
+        this.sortArrayDateAZ = this.sortArray.sort(
+          (a, z) => new Date(a.first_air_date) - new Date(z.first_air_date)
         );
       }
-      this.sortMarkup = filmsTemplate(this.sortArrayAZ);
+      this.sortMarkupDate = filmsTemplate(this.sortArrayDateAZ);
       this.flagSortDate = false;
     } else {
       if (localStorage.getItem("mediaType") === "movie") {
-        console.log("reverse");
-        this.sortArrayZA = this.sortArray.sort(
-          (a, z) =>
-            new Date(z.release_date).getTime() -
-            new Date(a.release_date).getTime()
+        this.sortArrayDateZA = this.sortArray.sort(
+          (a, z) => new Date(z.release_date) - new Date(a.release_date)
         );
       } else if (localStorage.getItem("mediaType") === "TV") {
-        this.sortArrayZA = this.sortArray.sort(
-          (a, z) =>
-            new Date(z.first_air_date).getTime() -
-            new Date(a.first_air_date).getTime()
+        this.sortArrayDateZA = this.sortArray.sort(
+          (a, z) => new Date(z.first_air_date) - new Date(a.first_air_date)
         );
       }
-      this.sortMarkup = filmsTemplate(this.sortArrayZA);
+      this.sortMarkupDate = filmsTemplate(this.sortArrayDateZA);
       this.flagSortDate = true;
     }
-    this.refs.filmsList.innerHTML = this.sortMarkup;
+    this.refs.filmsList.innerHTML = this.sortMarkupDate;
     newApp.closePreloader();
   }
 }
