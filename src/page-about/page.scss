@@ -44,7 +44,6 @@ td {
 @media screen and (max-width: 767px) {
   .page-about_part1 {
     margin: 10px auto;
-    margin-bottom: 180px;
     max-width: 767px;
     max-height: auto;
     padding: 60px 5px 0px 5px;
@@ -57,7 +56,6 @@ td {
   .image-mov_section {
     margin: 0 auto;
     display: block;
-    max-height: 178px;
     max-width: 400px;
     position: relative;
 
@@ -169,7 +167,6 @@ td {
     display: flex;
   }
 
-
   .image-mov_but {
     background: none;
     border: none;
@@ -212,6 +209,7 @@ td {
   .image-mov_title {
     margin: 5px 0;
   }
+
 }
 
 button {
