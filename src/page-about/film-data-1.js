@@ -16,7 +16,8 @@ import {
 
 
 
-class FilmInfo2 {
+
+class FilmData {
   constructor(id, mediaType) {
     this.filmId = id;
     this.mediaType = mediaType;
@@ -201,3 +202,11 @@ class FilmInfo2 {
 }
 
 
+// const filmInfo = new FilmData(localStorage.getItem("id"),
+//   localStorage.getItem("mediaType")
+// );
+  
+const filmdata = new FilmInfo2(
+  localStorage.getItem("id"),
+  localStorage.getItem("mediaType")
+);
