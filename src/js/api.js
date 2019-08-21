@@ -1,8 +1,11 @@
-const api_key = "ed5781108818e96397f9efe7bddd0923";
+const api_key = 'ed5781108818e96397f9efe7bddd0923';
 const baseUrl = `https://api.themoviedb.org/3`;
 
 export function getSingleFilmTrailer(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}/videos?api_key=${api_key}`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/videos?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/videos?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -10,7 +13,11 @@ export function getSingleFilmTrailer(id, mediaType) {
 }
 
 export function getSingleFilmActors(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}?api_key=${api_key}&append_to_response=credits`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=credits`;
 
   return fetch(url)
     .then(res => res.json())
@@ -26,7 +33,7 @@ export function getSingleFilm(id) {
 
 export function getSingleFilmTitle(id, mediaType) {
   let url;
-  if (mediaType === "movie") {
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=original_title`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=original_name`;
@@ -38,7 +45,7 @@ export function getSingleFilmTitle(id, mediaType) {
 
 export function getSingleFilmContries(id, mediaType) {
   let url;
-  if (mediaType === "movie") {
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=production_countries`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=origin_country`;
@@ -48,20 +55,22 @@ export function getSingleFilmContries(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSingleFilmTagline(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=tagline`;
-  return fetch(url)
+export function getSingleFilmTagline(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=tagline`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=vote_average`;
+    return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
 
-export function getPopularTvShows() {
-  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
-}
-
 export function getSingleFilmFrames(id, mediaType) {
-  const url = `${baseUrl}/${mediaType}/${id}/images?api_key=${api_key}`;
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/images?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/images?api_key=${api_key}`;
 
   return fetch(url)
     .then(res => res.json())
@@ -69,50 +78,82 @@ export function getSingleFilmFrames(id, mediaType) {
 }
 
 export function getSingleFeedback(id, mediaType) {
- const url = `${baseUrl}/${mediaType}/${id}/reviews?api_key=${api_key}`;
 
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-
-export function getSingleGenres(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-
-export function getSingleRuntime(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=runtime`;
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-
-export function getSingleOwerview(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=overview`;
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-
-export function getSinglePoster(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=poster_path`;
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-
-export function getSinglePosterLittle(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
-  return fetch(url)
-    .then(res => res.json())
-    .catch(error => console.warn(error));
-}
-export function getSingleDataRealise(id, mediaType) {
   let url;
   if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}/reviews?api_key=${api_key}`;
+  } else url = `${baseUrl}/tv/${id}/reviews?api_key=${api_key}`;
+
+  return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+
+export function getSingleGenres(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=genres`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=genres`;
+
+  return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+
+export function getSingleRuntime(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=runtime`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=number_of_seasons`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+export function getSingleNumberOfEpisodes() {
+  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=number_of_episodes`;
+  return fetch(url).then(res => res.json());
+}
+
+
+export function getSingleOwerview(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=overview`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=overview`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+
+
+export function getSinglePoster(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=poster_path`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=poster_path`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+
+export function getSinglePosterLittle(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=backdrop_path`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
+}
+
+export function getSingleDataRealise(id, mediaType) {
+  let url;
+  if (mediaType === 'movie') {
     url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=release_date`;
   } else
     url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=first_air_date`;
@@ -121,13 +162,26 @@ export function getSingleDataRealise(id, mediaType) {
     .then(res => res.json())
     .catch(error => console.warn(error));
 }
-export function getSingleDirector(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
+export function getSingleDirector(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=created_by`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
 }
-export function getSingleScreenPlay(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  return fetch(url).then(res => res.json());
+
+export function getSingleScreenPlay(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  } else
+    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=in_production`;
+    return fetch(url)
+    .then(res => res.json())
+    .catch(error => console.warn(error));
 }
 
 // ======================================
@@ -135,7 +189,7 @@ export function getSingleScreenPlay(id) {
 
 export default {
   page: 1,
-  query: "",
+  query: '',
   getPopularFilms() {
     const url = `${baseUrl}/movie/popular?api_key=${api_key}&append_to_response=credits&page=${
       this.page
@@ -148,6 +202,12 @@ export default {
     const url = `${baseUrl}/search/movie?api_key=${api_key}&query=${
       this.query
     }&page=${this.page}`;
+    return fetch(url)
+      .then(res => res.json())
+      .catch(error => console.warn(error));
+  },
+  getPopularTvShows() {
+    const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
     return fetch(url)
       .then(res => res.json())
       .catch(error => console.warn(error));
