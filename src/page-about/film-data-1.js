@@ -16,6 +16,7 @@ import {
 
 
 
+
 class FilmData {
   constructor(id, mediaType) {
     this.filmId = id;
