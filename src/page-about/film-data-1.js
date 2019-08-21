@@ -196,22 +196,32 @@ class FilmData1 {
 
   renderRealiseFull() {
     getSingleDataRealise(this.filmId, this.mediaType).then(data => {
-    const realiseFullData = data.release_date || data.last_air_date;
-    const realiseFullDataYear = new Date(realiseFullData).getFullYear();
-    const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
-    const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
-    const realData = realiseFullDataYear + "." + realiseFullDataMonth + "." + realiseFullDataDay;
-    if (data.release_date) {
-    this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Release data: ${realData}`);
-    } else {
-      this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Last episode: ${realData}`);
-    }
-    function pad(value) {
-      return String(value).padStart(2, '0');
-    }
-  })
-}
-
+      const realiseFullData = data.release_date || data.last_air_date;
+      const realiseFullDataYear = new Date(realiseFullData).getFullYear();
+      const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
+      const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
+      const realData =
+        realiseFullDataYear +
+        "." +
+        realiseFullDataMonth +
+        "." +
+        realiseFullDataDay;
+      if (data.release_date) {
+        this.refs.filmRealiseFull.insertAdjacentHTML(
+          "afterbegin",
+          `Release data: ${realData}`
+        );
+      } else {
+        this.refs.filmRealiseFull.insertAdjacentHTML(
+          "afterbegin",
+          `Last episode: ${realData}`
+        );
+      }
+      function pad(value) {
+        return String(value).padStart(2, "0");
+      }
+    });
+  }
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
@@ -226,7 +236,7 @@ class FilmData1 {
           return "Finish";
         }
       }
-      console.log(data);
+      // console.log(data);
       if (data.credits) {
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {
@@ -238,18 +248,20 @@ class FilmData1 {
   }
 
   handleFavorites() {
-    let favorites = JSON.parse(localStorage.getItem("favorites"));
-    favorites.forEach(element => {
-      if (element.id == this.filmId) {
-        this.refs.starBtn.classList.add("fill-gold");
-      }
-    });
-    this.refs.starBtn.addEventListener("click", event => {
-      if (this.refs.starBtn.classList.contains("fill-gold")) {
-        favorites = favorites.filter(el => el !== this.filmId);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-      }
-    });
+    if (localStorage.getItem("favorites")) {
+      let favorites = JSON.parse(localStorage.getItem("favorites"));
+      favorites.forEach(element => {
+        if (element.id == this.filmId) {
+          this.refs.starBtn.classList.add("fill-gold");
+        }
+      });
+      this.refs.starBtn.addEventListener("click", event => {
+        if (this.refs.starBtn.classList.contains("fill-gold")) {
+          favorites = favorites.filter(el => el !== this.filmId);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+        }
+      });
+    }
   }
 }
 

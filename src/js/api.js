@@ -24,8 +24,12 @@ export function getSingleFilmActors(id, mediaType) {
     .catch(error => console.warn(error));
 }
 
-export function getSingleFilm(id) {
-  const url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+export function getSingleFilm(id, mediaType) {
+  let url;
+  if (mediaType === "movie") {
+   url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
+  }
+   url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=credits`;
   return fetch(url)
     .then(res => res.json())
     .catch(error => console.warn(error));
