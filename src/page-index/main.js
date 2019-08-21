@@ -189,25 +189,59 @@ class Mooogle {
       });
     });
 
-    // sidebar showup Vika
-    this.show = function() {
-      this.refs.menuList.classList.add("active");
-      document.body.classList.add("modal-overlay-menu");
-      // this.refs.sidebarItem.classList.toggle('active');
-    };
-    this.showSidebar = this.show.bind(this);
+    // слушатель на
+//     this.refs.buttonIconStar.addEventListener("click", event => {
+//       event.preventDefault();
+//       if (event.target === event.currentTarget) {
+//         localStorage.setItem("status", "favorite");
+//         this.iconStar.style.cssText = "fill: gold";
+//       }
+//     });
 
-    this.showDont = function() {
-      this.refs.menuList.classList.remove("active");
-      document.body.classList.remove("modal-overlay-menu");
-      // this.refs.sidebarItem.classList.toggle('active');
-    };
-    this.showDontSidebar = this.showDont.bind(this);
+// sidebar showup Vika
+this.showBurger = function () {
+  this.refs.menuList.classList.add('active');
+  window.addEventListener('keydown', this.clickOnEscape);
+  window.addEventListener('click', this.clickOnModal);
+  document.body.classList.add('modal-overlay-menu');
+  // this.refs.sidebarItem.classList.toggle('active');
+}
+this.showSidebar = this.showBurger.bind(this);
 
-    this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+this.hideBurger = function () {
+  this.refs.menuList.classList.remove('active');
+  window.removeEventListener('keydown', this.clickOnEscape);
+  window.removeEventListener('click', this.clickOnModal);
+  document.body.classList.remove('modal-overlay-menu');
+  // this.refs.sidebarItem.classList.toggle('active');
+}
+this.hideSidebar = this.hideBurger.bind(this);
 
-    // end of sidebar showUp
+//close BURGER on Escape
+this.closeBurgerEscape = function(e) {
+  if (e.code !== 'Escape') {
+    return;
+  }
+  this.hideSidebar();
+};
+this.clickOnEscape = this.closeBurgerEscape.bind(this);
 
+//close BURGER on Modal
+this.closeBurgerModal = function(e) {
+  if (e.target.className !== 'sidebar') {
+    return;
+  }
+  this.hideSidebar();
+};
+this.clickOnModal = this.closeBurgerModal.bind(this);
+
+
+// this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+
+
+
+// end of sidebar showUp
     // обработчик поиска
     this.searchingHandler = function(e) {
       e.preventDefault();
@@ -419,3 +453,4 @@ class Mooogle {
 }
 
 new Mooogle();
+// ======================

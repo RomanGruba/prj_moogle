@@ -3,11 +3,12 @@
   padding: 0;
   margin: 0;
 }
+
 .header{
   position: fixed;
-  top:0;
-  width:100%;
-  z-index: 22222;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .nav-header{
@@ -82,25 +83,6 @@
   width: 20px;
   height: 20px;
   align-self: center;
-  // &.active {
-  //   .menu-list {
-  //     visibility: visible;
-  //     transform: translate(90%, 0%);
-  //     transition: transform 500ms ease-in-out;
-  //     left: -300px;
-  //     top: 45px;
-  //     z-index: 111;
-  //     width: 300px;
-  //   }
-  // }
-  // &.active{
-  //   transition: .4s linear;
-  //   transform: translate(100%, 0%);
-  //   z-index: 112;
-  //   left: -20px;
-  //   top: 45px;
-  //   transform: translate(0, 0);
-  // }
 }
 
 .menu-list {
@@ -109,7 +91,9 @@
   height: 100vh;
   left: -20px;
   top: 45px;
-  transform: translate(-100%, 0);
+  transform:translate(-100%, 0%);
+  transition: transform 500ms ease-in-out;
+  // transform: translate(-100%, 0);
   z-index: 111;
   background-color: #fff;
   .menu-items-click{
@@ -120,39 +104,42 @@
       line-height: 25px;
   }
 }
-// .sidebar::after {
-//   content: '';
-//   background-color: rgba(0, 0, 0, 0.5);
-//   width: 100%;
-//   height: 100%;
-//   position: fixed;
-//   top: 70px;
-//   left: 0;
-//   z-index: 1;
-// }
+.sidebar::after {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  z-index: 1;
+  transform:translate(-100%, 0%);
+  transition: transform 500ms ease-in-out;
+  // visibility: hidden;
+}
+
+.modal-overlay-menu {
+  .sidebar::after {
+    transform: translate(0%, 0%);
+  }
+}
 
 .active{
-  // transform: translate(100%, 0%);
   z-index: 112;
   left: -20px;
   top: 45px;
-  transform: translate(0, 0);
-  transition: transform 500ms ease-in-out;
+  transform: translate(0%, 0%);
 }
 //end of menu for mobile
 
-
 /*tablet-laptop menu*/
 .header__menu-big {
-  z-index:1111;
   visibility: hidden;
   display: none;
-  background:white;
 }
 .header__sort-movies{
   visibility: hidden;
   display: none;
-  background:white;
 }
 .search_btn-form{
   visibility: hidden;
@@ -166,6 +153,11 @@
     display: none;
     visibility: hidden;
   }
+  .menu-list{
+    display: none;
+    visibility: hidden;
+  }
+
   .header__menu-big{
   visibility: visible;
   display: flex;
@@ -196,13 +188,7 @@ color: #736b7f;
       transform: translate(0, -2px);
       border: 1px solid black;
     }
-    .active {
-      visibility: visible;
-      transform: translate(0, -1px) scale(1.2, 1);
-      // transform: translate(0, -1px);
-      transition: 0.4s ease-in;
-    }
-    .header__menu-links:hover::after  {
+    .header__menu-links:hover::after{
       visibility: visible;
       transform: translate(0, -1px) scale(1.2, 1);
       // transform: translate(0, -1px);
@@ -211,7 +197,6 @@ color: #736b7f;
 
     .sidebar::after {
      top: 120px;
-     display:none;
     }
 
     /* sort movies*/
@@ -264,8 +249,5 @@ color: #736b7f;
     .logotype{
       padding-left: 30px;
     }
-
-/*menu activated by a click*/
-
-/*end of menu*/
   }
+/*menu activated by a click*/
