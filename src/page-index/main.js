@@ -100,11 +100,14 @@ class Mooogle {
         this.killInfinityScroll();
         this.sortArray = [];
         this.renderTvShows().then(() => this.scrollToUp());
-        newApp.closePreloaderUL();
-        if (localStorage.getItem("mediaType") === "TV") {
-          this.refs.headerButtonFilm.classList.remove("active-focus");
-          this.refs.headerButtonTvShow.classList.add("active-focus");
-        }
+        newApp.closePreloader();
+        setTimeout(() => {
+          if (localStorage.getItem("mediaType") === "TV") {
+            this.refs.buttonFavorite.classList.remove("active-focus");
+            this.refs.headerButtonFilm.classList.remove("active-focus");
+            this.refs.headerButtonTvShow.classList.add("active-focus");
+          }
+        }, 1000)
       }
     });
 
@@ -133,11 +136,14 @@ class Mooogle {
         this.killInfinityScroll();
         this.sortArray = [];
         this.renderPopularFilms().then(() => this.scrollToUp());
-        newApp.closePreloaderUL();
-        if (localStorage.getItem("mediaType") === "movie") {
-          this.refs.headerButtonTvShow.classList.remove("active-focus");
-          this.refs.headerButtonFilm.classList.add("active-focus");
-        }
+        newApp.closePreloader();
+        setTimeout(() => {
+          if (localStorage.getItem("mediaType") === "movie") {
+            this.refs.buttonFavorite.classList.remove("active-focus");
+            this.refs.headerButtonTvShow.classList.remove("active-focus");
+            this.refs.headerButtonFilm.classList.add("active-focus");
+          }
+        }, 1000)
       }
     });
 
@@ -166,24 +172,13 @@ class Mooogle {
           el.classList.toggle("fill-white");
           el.classList.toggle("fill-gold");
         }
-
-        if (
-          event.target.nodeName === "SVG" ||
-          event.target.nodeName === "use"
-        ) {
-          let el = event.target;
-          if (!el.classList.contains("icon-bell")) {
-            el = el.closest(".icon-bell");
-          }
-          // el.classList.toggle("fill-white");
-          // el.classList.toggle("fill-gold");
-        }
       }
     });
 
     // слушатель на click favorites Roman
     this.refs.buttonFavorite.addEventListener("click", event => {
       event.preventDefault();
+      localStorage.setItem("mediaType", "favorites");
       this.killInfinityScroll();
       const markup = filmsTemplate(
         JSON.parse(localStorage.getItem("favorites"))
@@ -195,6 +190,11 @@ class Mooogle {
         el.classList.remove("fill-white");
         el.classList.add("fill-gold");
       });
+      if (localStorage.getItem("mediaType") === "favorites") {
+        this.refs.headerButtonFilm.classList.remove("active-focus");
+        this.refs.headerButtonTvShow.classList.remove("active-focus");
+        this.refs.buttonFavorite.classList.add("active-focus");
+      }
       removeFavoriteItem.call(this);
     });
 
@@ -335,7 +335,6 @@ class Mooogle {
     this.insertListItem = function (objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-
           let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
         itemsToColor.forEach(element => {
           if (element.id == el.id) {
@@ -350,7 +349,6 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-
           let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
         itemsToColor.forEach(element => {
           if (element.id == el.id) {
@@ -399,7 +397,6 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
 
     this.flagSortDate = true;
   }
@@ -499,24 +496,32 @@ class Mooogle {
     if (this.flagSortDate) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.sortArrayAZ = this.sortArray.sort(
-          (a, z) => new Date(a.release_date).getTime() - new Date(z.release_date).getTime()
+          (a, z) =>
+            new Date(a.release_date).getTime() -
+            new Date(z.release_date).getTime()
         );
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.sortArrayAZ = this.sortArray.sort(
-          (a, z) => new Date(a.first_air_date).getTime() - new Date(z.first_air_date).getTime()
+          (a, z) =>
+            new Date(a.first_air_date).getTime() -
+            new Date(z.first_air_date).getTime()
         );
       }
       this.sortMarkup = filmsTemplate(this.sortArrayAZ);
       this.flagSortDate = false;
     } else {
       if (localStorage.getItem("mediaType") === "movie") {
-        console.log('reverse');
+        console.log("reverse");
         this.sortArrayZA = this.sortArray.sort(
-          (a, z) => new Date(z.release_date).getTime() - new Date(a.release_date).getTime()
+          (a, z) =>
+            new Date(z.release_date).getTime() -
+            new Date(a.release_date).getTime()
         );
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.sortArrayZA = this.sortArray.sort(
-          (a, z) => new Date(z.first_air_date).getTime() - new Date(a.first_air_date).getTime()
+          (a, z) =>
+            new Date(z.first_air_date).getTime() -
+            new Date(a.first_air_date).getTime()
         );
       }
       this.sortMarkup = filmsTemplate(this.sortArrayZA);
