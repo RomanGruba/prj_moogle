@@ -6,14 +6,15 @@
   right: 20px;
   margin: 0;
   padding: 0;
+  z-index: 667;
 }
 
 #div_scroll_up {
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  box-shadow: 0 1px 1px #fbfaf9, 1px 1px 0 #fbfaf9 inset;
-  background: #75000a;
+  // box-shadow: 0 2px 2px #fbfaf9, 2px 2px 0 #fbfaf9 inset;
+  background: #77c1bb;
   margin: 0 20px;
   transition: box-shadow 0.2s ease, transform 0.5s ease, margin-top 0.2s ease;
   cursor: pointer;
@@ -29,11 +30,11 @@
 }
 #div_scroll_up:hover {
   transform: scale(1.1, 1.1);
-  box-shadow: 0 0 10px #e03849, 1px 1px 150px #fbfaf9 inset;
+  box-shadow: 0 0 10px #95f0e8, 1px 1px 150px #fbfaf9 inset;
 }
 #div_scroll_up:hover svg {
   transform: scale(1.1, 1.1);
-  fill: #e03849;
+  fill: #77c1bb;
   transition: transform 0.2s ease, fill 0.2s ease;
 }
 #div_scroll_up:active {
