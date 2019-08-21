@@ -8,7 +8,7 @@ export function handleFavorite(event) {
     addToFavorite = this.renderedData.find(
       el => el.id == event.target.closest(".films-item").dataset.id
     );
-    console.log(addToFavorite);
+    // console.log(addToFavorite);
     if (JSON.parse(localStorage.getItem("favorites")) == null) {
       localStorage.setItem("favorites", JSON.stringify(addToFavorite));
       this.favoriteArr.push(addToFavorite);

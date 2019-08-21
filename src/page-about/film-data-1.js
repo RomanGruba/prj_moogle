@@ -17,6 +17,7 @@ import {
 
 class FilmData1 {
   constructor(id, mediaType) {
+    this.film = [];
     this.filmId = id;
     this.mediaType = mediaType;
     this.apy_key = "ed5781108818e96397f9efe7bddd0923";
@@ -236,7 +237,7 @@ class FilmData1 {
           return "Finish";
         }
       }
-      
+
       if (data.credits) {
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {
@@ -250,6 +251,7 @@ class FilmData1 {
   handleFavorites() {
     if (localStorage.getItem("favorites")) {
       let favorites = JSON.parse(localStorage.getItem("favorites"));
+      let addToFavorite = {};
       favorites.forEach(element => {
         if (element.id == this.filmId) {
           this.refs.starBtn.classList.add("fill-gold");
@@ -257,8 +259,10 @@ class FilmData1 {
       });
       this.refs.starBtn.addEventListener("click", event => {
         if (this.refs.starBtn.classList.contains("fill-gold")) {
-          favorites = favorites.filter(el => el !== this.filmId);
+          favorites = favorites.filter(el => el.id !== Number(this.filmId));
           localStorage.setItem("favorites", JSON.stringify(favorites));
+          this.refs.starBtn.classList.remove("fill-gold");
+        } else {
         }
       });
     }

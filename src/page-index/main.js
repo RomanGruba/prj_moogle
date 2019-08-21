@@ -181,20 +181,22 @@ class Mooogle {
       event.preventDefault();
       localStorage.setItem("mediaType", "favorites");
       this.killInfinityScroll();
-      const markup = filmsTemplate(
-        JSON.parse(localStorage.getItem("favorites"))
-      );
-      this.clearList();
-      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
-      let allStars = document.querySelectorAll(".icon-star");
-      allStars.forEach(el => {
-        el.classList.remove("fill-white");
-        el.classList.add("fill-gold");
-      });
-      if (localStorage.getItem("mediaType") === "favorites") {
-        this.refs.headerButtonFilm.classList.remove("active-focus");
-        this.refs.headerButtonTvShow.classList.remove("active-focus");
-        this.refs.buttonFavorite.classList.add("active-focus");
+      if (localStorage.getItem("favorites")) {
+        const markup = filmsTemplate(
+          JSON.parse(localStorage.getItem("favorites"))
+        );
+        this.clearList();
+        this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+        let allStars = document.querySelectorAll(".icon-star");
+        allStars.forEach(el => {
+          el.classList.remove("fill-white");
+          el.classList.add("fill-gold");
+        });
+        if (localStorage.getItem("mediaType") === "favorites") {
+          this.refs.headerButtonFilm.classList.remove("active-focus");
+          this.refs.headerButtonTvShow.classList.remove("active-focus");
+          this.refs.buttonFavorite.classList.add("active-focus");
+        }
       }
     });
 
@@ -301,10 +303,10 @@ class Mooogle {
       if (e[0].isIntersecting) {
         if (api.query === "") {
           if (localStorage.getItem("mediaType") === "movie") {
-            console.log(localStorage.getItem("mediaType"));
+            // console.log(localStorage.getItem("mediaType"));
             this.renderPopularFilms().then(() => this.scrollToUp());
           } else if (localStorage.getItem("mediaType") === "TV") {
-            console.log(localStorage.getItem("mediaType"));
+            // console.log(localStorage.getItem("mediaType"));
             this.renderTvShows().then(() => this.scrollToUp());
           }
         } else {
@@ -447,7 +449,7 @@ class Mooogle {
     return api
       .getPopularFilms()
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.total_pages < api.page) {
           this.killInfinityScroll();
           return;
