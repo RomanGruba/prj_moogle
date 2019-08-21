@@ -12,7 +12,8 @@ import {
   getSingleDataRealise,
   getSingleNumberOfEpisodes,
   getSingleScreenPlay,
-  getSingleLastEpisode
+  getSingleLastEpisode,
+  getDetailsById
 } from "../js/api";
 
 class FilmData1 {
@@ -48,6 +49,7 @@ class FilmData1 {
 
   renderAll() {
     getSingleFilm(this.filmId, this.mediaType).then(data => {
+      // localStorage.setItem("current obj", JSON.stringify(data));
       this.renderTitle();
       this.renderContries();
       this.renderTagline(data);
@@ -263,8 +265,14 @@ class FilmData1 {
           localStorage.setItem("favorites", JSON.stringify(favorites));
           this.refs.starBtn.classList.remove("fill-gold");
         } else {
+          // getDetailsById(this.filmId, this.mediaType).then( data => console.log(data))
+          // if (localStorage.getItem("current obj")) {
+          //   addToFavorite = localStorage.getItem("current obj");
+          //   favorites.push(addToFavorite);
+          //   localStorage.setItem("favorites", JSON.stringify(favorites));
+          }
         }
-      });
+      );
     }
   }
 }

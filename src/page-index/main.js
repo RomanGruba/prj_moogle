@@ -369,19 +369,6 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       }
       this.markup = filmsTemplate(this.arrRes);
-      //       this.newArrRes = objData.results.map(el => {
-      // //         let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-      // //         itemsToColor.forEach(element => {
-      // //           if (element.id == el.id) {
-      // //             el.toBeColored = true;
-      // //           }
-      // //         });
-
-      //   el.release_date = new Date(el.release_date).getFullYear();
-      //   this.renderedData.push(el);
-      //   return el;
-      // });
-      // this.markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
     };
@@ -404,6 +391,8 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+    // console.log(handleFavorites);
   }
 
   // ТЕЛО КЛАССА
