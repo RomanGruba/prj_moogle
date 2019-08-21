@@ -6,7 +6,6 @@ import api from "../js/api.js";
 import newApp from "../js/app.js";
 import { handleFavorite } from "./favorite";
 
-
 class Mooogle {
   constructor() {
     // привязки к HTML
@@ -199,55 +198,55 @@ class Mooogle {
     });
 
     // слушатель на
-//     this.refs.buttonIconStar.addEventListener("click", event => {
-//       event.preventDefault();
-//       if (event.target === event.currentTarget) {
-//         localStorage.setItem("status", "favorite");
-//         this.iconStar.style.cssText = "fill: gold";
-//       }
-//     });
+    //     this.refs.buttonIconStar.addEventListener("click", event => {
+    //       event.preventDefault();
+    //       if (event.target === event.currentTarget) {
+    //         localStorage.setItem("status", "favorite");
+    //         this.iconStar.style.cssText = "fill: gold";
+    //       }
+    //     });
 
-// sidebar showup Vika
-this.showBurger = function () {
-  this.refs.menuList.classList.add('active');
-  window.addEventListener('keydown', this.clickOnEscape);
-  window.addEventListener('click', this.clickOnModal);
-  document.body.classList.add('modal-overlay-menu');
-  // this.refs.sidebarItem.classList.toggle('active');
-}
-this.showSidebar = this.showBurger.bind(this);
+    // sidebar showup Vika
+    this.showBurger = function() {
+      this.refs.menuList.classList.add("active");
+      window.addEventListener("keydown", this.clickOnEscape);
+      window.addEventListener("click", this.clickOnModal);
+      document.body.classList.add("modal-overlay-menu");
+      // this.refs.sidebarItem.classList.toggle('active');
+    };
+    this.showSidebar = this.showBurger.bind(this);
 
-this.hideBurger = function () {
-  this.refs.menuList.classList.remove('active');
-  window.removeEventListener('keydown', this.clickOnEscape);
-  window.removeEventListener('click', this.clickOnModal);
-  document.body.classList.remove('modal-overlay-menu');
-  // this.refs.sidebarItem.classList.toggle('active');
-}
-this.hideSidebar = this.hideBurger.bind(this);
+    this.hideBurger = function() {
+      this.refs.menuList.classList.remove("active");
+      window.removeEventListener("keydown", this.clickOnEscape);
+      window.removeEventListener("click", this.clickOnModal);
+      document.body.classList.remove("modal-overlay-menu");
+      // this.refs.sidebarItem.classList.toggle('active');
+    };
+    this.hideSidebar = this.hideBurger.bind(this);
 
-//close BURGER on Escape
-this.closeBurgerEscape = function(e) {
-  if (e.code !== 'Escape') {
-    return;
-  }
-  this.hideSidebar();
-};
-this.clickOnEscape = this.closeBurgerEscape.bind(this);
+    //close BURGER on Escape
+    this.closeBurgerEscape = function(e) {
+      if (e.code !== "Escape") {
+        return;
+      }
+      this.hideSidebar();
+    };
+    this.clickOnEscape = this.closeBurgerEscape.bind(this);
 
-//close BURGER on Modal
-this.closeBurgerModal = function(e) {
-  if (e.target.className !== 'sidebar') {
-    return;
-  }
-  this.hideSidebar();
-};
-this.clickOnModal = this.closeBurgerModal.bind(this);
+    //close BURGER on Modal
+    this.closeBurgerModal = function(e) {
+      if (e.target.className !== "sidebar") {
+        return;
+      }
+      this.hideSidebar();
+    };
+    this.clickOnModal = this.closeBurgerModal.bind(this);
 
-// this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
-this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+    // this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
+    this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
 
-// end of sidebar showUp
+    // end of sidebar showUp
     // обработчик поиска
     this.searchingHandler = function(e) {
       e.preventDefault();
@@ -386,6 +385,9 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+
+    this.flagSortDate = true;
   }
 
   // ТЕЛО КЛАССА
@@ -480,19 +482,33 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
     console.log("date");
     newApp.openPreloader();
     this.killInfinityScroll();
-    if (localStorage.getItem("mediaType") === "movie") {
-      this.sortArrayAZ = this.sortArray.sort(
-        (a, z) => a.release_date - z.release_date
-      );
-    } else if (localStorage.getItem("mediaType") === "TV") {
-      this.sortArrayAZ = this.sortArray.sort(
-        (a, z) => a.first_air_date - z.first_air_date
-      );
+    if (this.flagSortDate) {
+      if (localStorage.getItem("mediaType") === "movie") {
+        this.sortArrayAZ = this.sortArray.sort(
+          (a, z) => new Date(a.release_date).getTime() - new Date(z.release_date).getTime()
+        );
+      } else if (localStorage.getItem("mediaType") === "TV") {
+        this.sortArrayAZ = this.sortArray.sort(
+          (a, z) => new Date(a.first_air_date).getTime() - new Date(z.first_air_date).getTime()
+        );
+      }
+      this.sortMarkup = filmsTemplate(this.sortArrayAZ);
+      this.flagSortDate = false;
+    } else {
+      if (localStorage.getItem("mediaType") === "movie") {
+        console.log('reverse');
+        this.sortArrayZA = this.sortArray.sort(
+          (a, z) => new Date(z.release_date).getTime() - new Date(a.release_date).getTime()
+        );
+      } else if (localStorage.getItem("mediaType") === "TV") {
+        this.sortArrayZA = this.sortArray.sort(
+          (a, z) => new Date(z.first_air_date).getTime() - new Date(a.first_air_date).getTime()
+        );
+      }
+      this.sortMarkup = filmsTemplate(this.sortArrayZA);
+      this.flagSortDate = true;
     }
-    this.sortMarkup = filmsTemplate(this.sortArrayAZ);
     this.refs.filmsList.innerHTML = this.sortMarkup;
-    // console.log('Sort a-z:', this.arraySortDate.sort());
-    // console.log('Sort z-a:', this.arraySortDate.sort((a,z) => z-a));
     newApp.closePreloader();
   }
 }
