@@ -25,7 +25,16 @@ export function handleFavorite(event) {
     this.favoriteArr = this.favoriteArr.filter(
       el => el.id !== Number(event.target.closest(".films-item").dataset.id)
     );
+    let itemToRemove = event.target.closest(".films-item");
+    console.log(itemToRemove);
+    // itemToRemove.remove();
   }
 
   localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
+}
+
+export function removeFavoriteItem() {
+  this.refs.filmsList.addEventListener('click', event => {
+    
+  })
 }
