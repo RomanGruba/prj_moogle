@@ -6,6 +6,16 @@
   font-family: "Roboto", sans-serif;
 }
 
+.movie-descr_title {
+  font-weight: 800;
+  font-family: Arial, Helvetica, FreeSans, sans-serif;
+}
+
+.image-mov_title {
+  font-weight: 800;
+  font-family: Arial, Helvetica, FreeSans, sans-serif;
+}
+
 .icon-star:hover {
   fill: gold;
 }
@@ -266,6 +276,8 @@ td {
 
   .movie-descr_title {
     margin: 50px 0px 10px 0px;
+    font-weight: 800;
+
   }
 
   table {
