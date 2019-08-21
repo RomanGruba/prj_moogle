@@ -11,7 +11,8 @@ import {
   getSingleDirector,
   getSingleDataRealise,
   getSingleNumberOfEpisodes,
-  getSingleScreenPlay
+  getSingleScreenPlay,
+  getSingleLastEpisode
 } from '../js/api';
 
 
@@ -175,10 +176,18 @@ class FilmData1 {
     })
   }
 
-  renderRealiseFull(data) {
-    const realiseFullData = data.release_date;
-    this.refs.filmRealiseFull.textContent = realiseFullData;
-  }
+  renderRealiseFull() {
+    getSingleDataRealise(this.filmId, this.mediaType).then(data => {
+    const realiseFullData = data.release_date || data.last_air_date;
+    console.log(realiseFullData);
+    if (data.release_date) {
+    this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Release data: ${realiseFullData}`);
+    } else {
+      this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Last episode: ${realiseFullData}`);
+    }
+  })
+}
+
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
@@ -191,6 +200,7 @@ class FilmData1 {
           return "Finish";
         }
       }
+      console.log(data);
       if (data.credits){
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {

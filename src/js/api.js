@@ -116,6 +116,11 @@ export function getSingleNumberOfEpisodes() {
   return fetch(url).then(res => res.json());
 }
 
+export function getSingleLastEpisode() {
+  const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=last_air_date`;
+  return fetch(url).then(res => res.json());
+}
+
 
 export function getSingleOwerview(id, mediaType) {
   let url;

@@ -4,10 +4,12 @@
   box-sizing: border-box;
   height: auto;
 }
-.green-line{
+
+.green-line {
   display: block;
   max-width: 3000px;
 }
+
 .white-line {
   display: block;
   max-width: 3000px;
@@ -28,6 +30,7 @@ table {
 .green-line {
   background-color: #addad6;
 }
+
 .table-quest {
   width: 90px;
 }
@@ -139,8 +142,9 @@ td {
     display: flex;
     max-width: 800px;
     margin: 10px auto;
-padding: 160px 0px 0px 0px;
+    padding: 160px 0px 0px 0px;
   }
+
   table {
     width: 400px;
   }
