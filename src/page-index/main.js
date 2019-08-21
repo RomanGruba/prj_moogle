@@ -6,6 +6,7 @@ import api from "../js/api.js";
 import newApp from "../js/app.js";
 import { handleFavorite } from "./favorite";
 
+
 class Mooogle {
   constructor() {
     // привязки к HTML
@@ -22,6 +23,8 @@ class Mooogle {
       sentinal: document.querySelector("#sentinal"),
       // список "ul" в "grid"
       filmsList: document.querySelector(".films-list"),
+      // кнопка "scroll up"
+      scrollUpBtn: document.querySelector("#scroll_up"),
       // кнопка "btn sort by name"
       btnSortName: document.querySelector("#btn_sort_by_name"),
       // paragraf "film name"
@@ -30,13 +33,13 @@ class Mooogle {
       btnSortDate: document.querySelector("#btn_sort_by_date"),
       // span "film date"
       filmDate: document.querySelectorAll("#film_date"),
-      // кнопка "scroll up"
-      scrollUpBtn: document.querySelector("#scroll_up"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
       buttonFilm: document.querySelector(".menu-items-click--film"),
-      buttonFavorite: document.querySelector(".header-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
+      buttonIconStar: document.querySelector(".button_icon-star"),
+      iconStar: document.querySelector(".icon-star"),
+      buttonFavorite: document.querySelector(".header-items-click--favorite"),
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
@@ -61,38 +64,28 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
-    // слушатель на кнопке "btn sort by name"
+    // // слушатель на кнопке "btn sort by name"
     // this.refs.btnSortName.addEventListener(
     //   "click",
     //   this.clickOnBtnName.bind(this)
     // );
 
     // слушатель на кнопке "btn sort by date"
-    // this.refs.btnSortDate.addEventListener(
-    //   "click",
-
-    // // слушатель на кнопке "btn sort by name"
-    // this.refs.btnSortName.addEventListener(
-    //   'click',
-    //   this.clickOnBtnName.bind(this)
-    // );
-
-    // // слушатель на кнопке "btn sort by date"
-    // this.refs.btnSortDate.addEventListener(
-    //   'click',
-
-    //   this.clickOnBtnDate.bind(this)
-    // );
+    this.refs.btnSortDate.addEventListener(
+      "click",
+      this.clickOnBtnDate.bind(this)
+    );
 
     //listener mobile Oleksii
     this.refs.buttonTvShow.addEventListener("click", event => {
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
+        this.sortArray = [];
         this.renderTvShows().then(() => this.scrollToUp());
-        localStorage.setItem("mediaType", "TV");
         show();
         newApp.closePreloader();
       }
@@ -100,14 +93,14 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
-        event.preventDefault();
-        if (event.target === event.currentTarget) {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
         newApp.openPreloader();
         // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
+        this.sortArray = [];
         this.renderTvShows().then(() => this.scrollToUp());
-        localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
         if (localStorage.getItem("mediaType") === "TV") {
           this.refs.headerButtonFilm.classList.remove("active-focus");
@@ -118,13 +111,14 @@ class Mooogle {
 
     //listener mobile Oleksii
     this.refs.buttonFilm.addEventListener("click", event => {
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
+        this.sortArray = [];
         this.renderPopularFilms().then(() => this.scrollToUp());
-        localStorage.setItem("mediaType", "movie");
         show();
         newApp.closePreloader();
       }
@@ -138,8 +132,8 @@ class Mooogle {
         // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
+        this.sortArray = [];
         this.renderPopularFilms().then(() => this.scrollToUp());
-        localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
         if (localStorage.getItem("mediaType") === "movie") {
           this.refs.headerButtonTvShow.classList.remove("active-focus");
@@ -250,11 +244,8 @@ this.closeBurgerModal = function(e) {
 };
 this.clickOnModal = this.closeBurgerModal.bind(this);
 
-
 // this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
 this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
-
-
 
 // end of sidebar showUp
     // обработчик поиска
@@ -267,6 +258,7 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
       api.resetPage();
       this.clearList();
       this.killInfinityScroll();
+      this.sortArray = [];
       this.renderSearchingFilm().then(() => this.scrollToUp());
       this.closeSearchBlockHandler();
       input.value = "";
@@ -298,7 +290,13 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
     this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
         if (api.query === "") {
-          this.renderPopularFilms().then(() => this.scrollToUp());
+          if (localStorage.getItem("mediaType") === "movie") {
+            console.log(localStorage.getItem("mediaType"));
+            this.renderPopularFilms().then(() => this.scrollToUp());
+          } else if (localStorage.getItem("mediaType") === "TV") {
+            console.log(localStorage.getItem("mediaType"));
+            this.renderTvShows().then(() => this.scrollToUp());
+          }
         } else {
           this.renderSearchingFilm().then(() => this.scrollToUp());
         }
@@ -323,23 +321,49 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
     this.killInfinityScroll = this.killer.bind(this);
 
     // строитель списка фильмов на "page-index"
+    this.sortArray = [];
     this.insertListItem = function(objData) {
-      this.newArrRes = objData.results.map(el => {
-        let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+      if (localStorage.getItem("mediaType") === "movie") {
+        this.arrRes = objData.results.map(el => {
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
         itemsToColor.forEach(element => {
           if (element.id == el.id) {
             el.toBeColored = true;
           }
         });
+          el.release_date = new Date(el.release_date).getFullYear();
+          return el;
+        });
+        this.sortArray.push(...this.arrRes);
+      } else if (localStorage.getItem("mediaType") === "TV") {
+        this.arrRes = objData.results.map(el => {
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
+          }
+        });
+          el.first_air_date = new Date(el.first_air_date).getFullYear();
+          return el;
+        });
+        this.sortArray.push(...this.arrRes);
+      }
+      this.markup = filmsTemplate(this.arrRes);
+//       this.newArrRes = objData.results.map(el => {
+// //         let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+// //         itemsToColor.forEach(element => {
+// //           if (element.id == el.id) {
+// //             el.toBeColored = true;
+// //           }
+// //         });
 
-        el.release_date = new Date(el.release_date).getFullYear();
-        this.renderedData.push(el);
-        return el;
-      });
-      this.markup = filmsTemplate(this.newArrRes);
+//         el.release_date = new Date(el.release_date).getFullYear();
+//         this.renderedData.push(el);
+//         return el;
+//       });
+//       this.markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
-      // this.arraySortDate = objData.results.map(elem => elem.release_date);
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
 
@@ -360,15 +384,6 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
-    // // обработчик на клик по "btn sort by name"
-    // this.clickByName = function(e) {
-    //   console.log(e);
-    //   console.log('object');
-    // };
-    // this.clickOnBtnName = this.clickByName.bind(this);
-
-    // this.sortString = '';
   }
 
   // ТЕЛО КЛАССА
@@ -418,6 +433,7 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
           this.killInfinityScroll();
           return;
         }
+        localStorage.setItem("mediaType", "movie");
         this.builderListItemOnPageIndex(data);
         this.infinityScroll();
       })
@@ -433,6 +449,7 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
           this.killInfinityScroll();
           return;
         }
+        localStorage.setItem("mediaType", "TV");
         this.builderListItemOnPageIndex(data);
         this.infinityScroll();
       })
@@ -456,16 +473,26 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
   //   console.log('name');
   // }
 
-  // // обработчик на клик по "btn sort by date"
-  // clickOnBtnDate(e) {
-  //   console.log('date');
-  //   // this.sortString += this.markup;
-  //   // localStorage.setItem('onBtnDate', 'light');
-  //   // console.log('not Sort :', this.arraySortDate);
-  //   // console.log('Sort a-z:', this.arraySortDate.sort());
-  //   // console.log('Sort z-a:', this.arraySortDate.sort((a,z) => z-a));
-  // }
+  // обработчик на клик по "btn sort by date"
+  clickOnBtnDate() {
+    console.log("date");
+    newApp.openPreloader();
+    this.killInfinityScroll();
+    if (localStorage.getItem("mediaType") === "movie") {
+      this.sortArrayAZ = this.sortArray.sort(
+        (a, z) => a.release_date - z.release_date
+      );
+    } else if (localStorage.getItem("mediaType") === "TV") {
+      this.sortArrayAZ = this.sortArray.sort(
+        (a, z) => a.first_air_date - z.first_air_date
+      );
+    }
+    this.sortMarkup = filmsTemplate(this.sortArrayAZ);
+    this.refs.filmsList.innerHTML = this.sortMarkup;
+    // console.log('Sort a-z:', this.arraySortDate.sort());
+    // console.log('Sort z-a:', this.arraySortDate.sort((a,z) => z-a));
+    newApp.closePreloader();
+  }
 }
 
 new Mooogle();
-// ======================
