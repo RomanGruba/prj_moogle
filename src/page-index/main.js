@@ -4,7 +4,7 @@ import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import newApp from "../js/app.js";
-import { handleFavorite } from "./favorite";
+import { handleFavorite, removeFavoriteItem } from "./favorite";
 
 class Mooogle {
   constructor() {
@@ -195,6 +195,7 @@ class Mooogle {
         el.classList.remove("fill-white");
         el.classList.add("fill-gold");
       });
+      removeFavoriteItem.call(this);
     });
 
     // слушатель на
@@ -324,12 +325,12 @@ class Mooogle {
     this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-        //   let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        // itemsToColor.forEach(element => {
-        //   if (element.id == el.id) {
-        //     el.toBeColored = true;
-        //   }
-        // });
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
+          }
+        });
           el.release_date = new Date(el.release_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -337,12 +338,12 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-        //   let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        // itemsToColor.forEach(element => {
-        //   if (element.id == el.id) {
-        //     el.toBeColored = true;
-        //   }
-        // });
+          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+        itemsToColor.forEach(element => {
+          if (element.id == el.id) {
+            el.toBeColored = true;
+          }
+        });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           this.renderedData.push(el);
           return el;
