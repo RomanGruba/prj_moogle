@@ -3,10 +3,11 @@
   padding: 0;
   box-sizing: border-box;
   height: auto;
+  font-family: "Roboto", sans-serif;
 }
 
-.image-mov_but:hover {
-  fill: #9a9a9a;
+.icon-star:hover {
+  fill: gold;
 }
 
 .bell:hover {
@@ -124,6 +125,7 @@
 }
 
 .movie-descr {
+  font-family: "Roboto", sans-serif;
   max-width: 400px;
 }
 
@@ -147,6 +149,7 @@ td {
   font-weight: normal;
   color: #313030;
   padding: 5px 15px;
+  font-family: "Roboto", sans-serif;
 }
 
 @media screen and (max-width: 767px) {
@@ -259,6 +262,10 @@ td {
     max-width: 800px;
     margin: 10px auto;
     padding: 160px 0px 0px 0px;
+  }
+
+  .movie-descr_title {
+    margin: 50px 0px 10px 0px;
   }
 
   table {
