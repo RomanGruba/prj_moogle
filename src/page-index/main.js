@@ -61,6 +61,16 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
+    // слушатель на кнопке "btn sort by name"
+    // this.refs.btnSortName.addEventListener(
+    //   "click",
+    //   this.clickOnBtnName.bind(this)
+    // );
+
+    // слушатель на кнопке "btn sort by date"
+    // this.refs.btnSortDate.addEventListener(
+    //   "click",
+
     // // слушатель на кнопке "btn sort by name"
     // this.refs.btnSortName.addEventListener(
     //   'click',
@@ -70,6 +80,7 @@ class Mooogle {
     // // слушатель на кнопке "btn sort by date"
     // this.refs.btnSortDate.addEventListener(
     //   'click',
+
     //   this.clickOnBtnDate.bind(this)
     // );
 
@@ -89,16 +100,18 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
-      if (event.target === event.currentTarget) {
+        event.preventDefault();
+        if (event.target === event.currentTarget) {
         newApp.openPreloader();
-        api.resetPage();
+        // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.renderTvShows().then(() => this.scrollToUp());
         localStorage.setItem("mediaType", "TV");
         newApp.closePreloader();
-        if (localStorage.getItem("username") === "TV") {
-          this.refs.headerButtonFilm.classList.add("active");
+        if (localStorage.getItem("mediaType") === "TV") {
+          this.refs.headerButtonFilm.classList.remove("active-focus");
+          this.refs.headerButtonTvShow.classList.add("active-focus");
         }
       }
     });
@@ -119,16 +132,18 @@ class Mooogle {
 
     //listener desktop Oleksii
     this.refs.headerButtonFilm.addEventListener("click", event => {
+      event.preventDefault();
       if (event.target === event.currentTarget) {
         newApp.openPreloader();
-        api.resetPage();
+        // api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.renderPopularFilms().then(() => this.scrollToUp());
         localStorage.setItem("mediaType", "movie");
         newApp.closePreloader();
-        if (localStorage.getItem("username") === "movie") {
-          this.refs.headerButtonFilm.classList.add("active");
+        if (localStorage.getItem("mediaType") === "movie") {
+          this.refs.headerButtonTvShow.classList.remove("active-focus");
+          this.refs.headerButtonFilm.classList.add("active-focus");
         }
       }
     });
