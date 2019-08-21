@@ -236,7 +236,7 @@ class FilmData1 {
           return "Finish";
         }
       }
-      // console.log(data);
+      
       if (data.credits) {
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {

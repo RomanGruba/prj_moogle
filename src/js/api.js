@@ -28,7 +28,7 @@ export function getSingleFilm(id, mediaType) {
   let url;
   if (mediaType === "movie") {
    url = `${baseUrl}/movie/${id}?api_key=${api_key}&append_to_response=credits`;
-  }
+  } else
    url = `${baseUrl}/tv/${id}?api_key=${api_key}&append_to_response=credits`;
   return fetch(url)
     .then(res => res.json())
