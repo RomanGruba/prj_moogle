@@ -4,11 +4,12 @@ import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import newApp from "../js/app.js";
-import { handleFavorite, removeFavoriteItem } from "./favorite";
+import { handleFavorite } from "./favorite";
 
 class Mooogle {
   constructor() {
     // привязки к HTML
+
     this.refs = {
       // модальное окно "search"
       searchBlock: document.querySelector(".search_block"),
@@ -107,7 +108,7 @@ class Mooogle {
             this.refs.headerButtonFilm.classList.remove("active-focus");
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
-        }, 1000)
+        }, 1000);
       }
     });
 
@@ -143,7 +144,7 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.remove("active-focus");
             this.refs.headerButtonFilm.classList.add("active-focus");
           }
-        }, 1000)
+        }, 1000);
       }
     });
 
@@ -195,7 +196,6 @@ class Mooogle {
         this.refs.headerButtonTvShow.classList.remove("active-focus");
         this.refs.buttonFavorite.classList.add("active-focus");
       }
-      removeFavoriteItem.call(this);
     });
 
     // слушатель на
@@ -210,16 +210,16 @@ class Mooogle {
     // sidebar showup Vika
     this.flagShowBurger = true; //show flag aka hang the flag
 
-    this.showBurger = function () {
-        this.refs.menuList.classList.add("active");
-        window.addEventListener("keydown", this.clickOnEscape);
-        window.addEventListener("click", this.clickOnModal);
-        document.body.classList.add("modal-overlay-menu");
-        this.flagShowBurger = false;
+    this.showBurger = function() {
+      this.refs.menuList.classList.add("active");
+      window.addEventListener("keydown", this.clickOnEscape);
+      window.addEventListener("click", this.clickOnModal);
+      document.body.classList.add("modal-overlay-menu");
+      this.flagShowBurger = false;
     };
     this.showSidebar = this.showBurger.bind(this);
 
-    this.hideBurger = function () {
+    this.hideBurger = function() {
       this.refs.menuList.classList.remove("active");
       window.removeEventListener("keydown", this.clickOnEscape);
       window.removeEventListener("click", this.clickOnModal);
@@ -228,17 +228,17 @@ class Mooogle {
     };
     this.hideSidebar = this.hideBurger.bind(this);
 
-    this.BurgerOnClick = function () {
+    this.BurgerOnClick = function() {
       if (this.flagShowBurger) {
         this.showSidebar();
-      }else {
+      } else {
         this.hideSidebar();
       }
     };
     this.SidebarOnClick = this.BurgerOnClick.bind(this);
 
     //close BURGER on Escape
-    this.closeBurgerEscape = function (e) {
+    this.closeBurgerEscape = function(e) {
       if (e.code !== "Escape") {
         return;
       }
@@ -247,7 +247,7 @@ class Mooogle {
     this.clickOnEscape = this.closeBurgerEscape.bind(this);
 
     //close BURGER on Modal
-    this.closeBurgerModal = function (e) {
+    this.closeBurgerModal = function(e) {
       if (e.target.className !== "sidebar") {
         return;
       }
@@ -259,7 +259,7 @@ class Mooogle {
 
     // end of sidebar showUp
     // обработчик поиска
-    this.searchingHandler = function (e) {
+    this.searchingHandler = function(e) {
       e.preventDefault();
       const form = e.currentTarget;
       const input = form.elements.query;
@@ -277,13 +277,13 @@ class Mooogle {
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
 
     // скролл button up
-    this.onEnBtnUp = function (e) {
+    this.onEnBtnUp = function(e) {
       if (e[0].isIntersecting) {
         this.refs.scrollUpBtn.classList.toggle("is-hidden");
       }
     };
     this.onEntryBtnUp = this.onEnBtnUp.bind(this);
-    this.scrlToUp = function () {
+    this.scrlToUp = function() {
       this.observOptionsBtnUp = {
         rootMargin: "0px",
         threshold: 1
@@ -297,7 +297,7 @@ class Mooogle {
     this.scrollToUp = this.scrlToUp.bind(this);
 
     // бесконечный скролл
-    this.onEntInfScr = function (e) {
+    this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
         if (api.query === "") {
           if (localStorage.getItem("mediaType") === "movie") {
@@ -314,7 +314,7 @@ class Mooogle {
       }
     };
     this.onEntryByInfScrl = this.onEntInfScr.bind(this);
-    this.infScrl = function () {
+    this.infScrl = function() {
       this.observOptionsInfScrl = {
         rootMargin: "100px"
       };
@@ -325,22 +325,22 @@ class Mooogle {
       this.observerInfScrl.observe(this.refs.sentinal);
     };
     this.infinityScroll = this.infScrl.bind(this);
-    this.killer = function () {
+    this.killer = function() {
       this.observerInfScrl.disconnect();
     };
     this.killInfinityScroll = this.killer.bind(this);
 
     // строитель списка фильмов на "page-index"
     this.sortArray = [];
-    this.insertListItem = function (objData) {
+    this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
           let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
-          }
-        });
+          itemsToColor.forEach(element => {
+            if (element.id == el.id) {
+              el.toBeColored = true;
+            }
+          });
 
           el.release_date = new Date(el.release_date).getFullYear();
           this.renderedData.push(el);
@@ -350,11 +350,11 @@ class Mooogle {
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
           let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
-          }
-        });
+          itemsToColor.forEach(element => {
+            if (element.id == el.id) {
+              el.toBeColored = true;
+            }
+          });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -381,7 +381,7 @@ class Mooogle {
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
 
     // обработчик на клик по модалке
-    this.clickCloseSearchBlockHandler = function (e) {
+    this.clickCloseSearchBlockHandler = function(e) {
       if (e.target.className !== "search_modal") {
         return;
       }
@@ -390,7 +390,7 @@ class Mooogle {
     this.clickOnVoid = this.clickCloseSearchBlockHandler.bind(this);
 
     // обработчик на клик по "Esc"
-    this.keyPressHandle = function (e) {
+    this.keyPressHandle = function(e) {
       if (e.code !== "Escape") {
         return;
       }
