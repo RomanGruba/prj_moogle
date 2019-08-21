@@ -11,7 +11,8 @@ import {
   getSingleDirector,
   getSingleDataRealise,
   getSingleNumberOfEpisodes,
-  getSingleScreenPlay
+  getSingleScreenPlay,
+  getSingleLastEpisode
 } from '../js/api';
 
 
@@ -175,14 +176,29 @@ class FilmData1 {
     })
   }
 
-  renderRealiseFull(data) {
-    const realiseFullData = data.release_date;
-    this.refs.filmRealiseFull.textContent = realiseFullData;
-  }
+  renderRealiseFull() {
+    getSingleDataRealise(this.filmId, this.mediaType).then(data => {
+    const realiseFullData = data.release_date || data.last_air_date;
+    const realiseFullDataYear = new Date(realiseFullData).getFullYear();
+    const realiseFullDataMonth = pad(new Date(realiseFullData).getMonth());
+    const realiseFullDataDay = pad(new Date(realiseFullData).getDay());
+    const realData = realiseFullDataYear + ". " + realiseFullDataMonth + ". " + realiseFullDataDay;
+    if (data.release_date) {
+    this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Release data: ${realData}`);
+    } else {
+      this.refs.filmRealiseFull.insertAdjacentHTML('afterbegin', `Last episode: ${realData}`);
+    }
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+  })
+}
+
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
-      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name || checkProduct(data.in_production);
+      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay").name
+      || checkProduct(data.in_production);
       function checkProduct() {
         if (data.in_production === true) {
           return "In production";
@@ -190,6 +206,7 @@ class FilmData1 {
           return "Finish";
         }
       }
+      console.log(data);
       if (data.credits){
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
       } else {
