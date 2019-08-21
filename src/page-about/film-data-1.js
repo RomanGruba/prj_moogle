@@ -42,7 +42,7 @@ class FilmData1 {
     };
 
     this.renderAll();
-    // this.handleFavorites();
+    this.handleFavorites();
   }
 
   renderAll() {
@@ -237,20 +237,20 @@ class FilmData1 {
     });
   }
 
-  // handleFavorites() {
-  //   let favorites = JSON.parse(localStorage.getItem("favorites"));
-  //   favorites.forEach(element => {
-  //     if (element.id == this.filmId) {
-  //       this.refs.starBtn.classList.add("fill-gold");
-  //     }
-  //   });
-  //   this.refs.starBtn.addEventListener("click", event => {
-  //     if (this.refs.starBtn.classList.contains("fill-gold")) {
-  //       favorites = favorites.filter(el => el !== this.filmId);
-  //       localStorage.setItem("favorites", JSON.stringify(favorites));
-  //     }
-  //   });
-  // }
+  handleFavorites() {
+    let favorites = JSON.parse(localStorage.getItem("favorites"));
+    favorites.forEach(element => {
+      if (element.id == this.filmId) {
+        this.refs.starBtn.classList.add("fill-gold");
+      }
+    });
+    this.refs.starBtn.addEventListener("click", event => {
+      if (this.refs.starBtn.classList.contains("fill-gold")) {
+        favorites = favorites.filter(el => el !== this.filmId);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+      }
+    });
+  }
 }
 
 const filmInfo = new FilmData1(

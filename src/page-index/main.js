@@ -334,15 +334,17 @@ class Mooogle {
     this.sortArray = [];
     this.flagSortName = true;
     this.flagSortDate = true;
-    this.insertListItem = function (objData) {
+    this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
           }
-        });
           el.release_date = new Date(el.release_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -350,12 +352,14 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-        itemsToColor.forEach(element => {
-          if (element.id == el.id) {
-            el.toBeColored = true;
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
           }
-        });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           this.renderedData.push(el);
           return el;
