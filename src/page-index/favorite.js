@@ -17,6 +17,7 @@ export function handleFavorite(event) {
       this.favoriteArr.push(addToFavorite);
     }
   }
+  localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
 
   if (
     event.target.closest(".icon").classList.contains("icon-star") &&
@@ -25,11 +26,10 @@ export function handleFavorite(event) {
     this.favoriteArr = this.favoriteArr.filter(
       el => el.id !== Number(event.target.closest(".films-item").dataset.id)
     );
+    localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
     let itemToRemove = event.target.closest(".films-item");
     if (this.refs.buttonFavorite.classList.contains("active-focus")) {
       itemToRemove.remove();
     }
   }
-
-  localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
 }

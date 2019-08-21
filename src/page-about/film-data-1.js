@@ -265,14 +265,17 @@ class FilmData1 {
           localStorage.setItem("favorites", JSON.stringify(favorites));
           this.refs.starBtn.classList.remove("fill-gold");
         } else {
-          // getDetailsById(this.filmId, this.mediaType).then( data => console.log(data))
-          // if (localStorage.getItem("current obj")) {
-          //   addToFavorite = localStorage.getItem("current obj");
-          //   favorites.push(addToFavorite);
-          //   localStorage.setItem("favorites", JSON.stringify(favorites));
-          }
+          getDetailsById(this.filmId, this.mediaType).then(data => {
+            addToFavorite = data;
+            let release_date = new Date(addToFavorite.release_date);
+            addToFavorite.release_date = release_date.getFullYear();
+            favorites = JSON.parse(localStorage.getItem("favorites"));
+            favorites.push(addToFavorite);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            this.refs.starBtn.classList.add("fill-gold");
+          });
         }
-      );
+      });
     }
   }
 }
