@@ -218,7 +218,6 @@ class FilmData1 {
   }
 }
 
-
 const filmInfo = new FilmData1(localStorage.getItem("id"),
   localStorage.getItem("mediaType")
 );
