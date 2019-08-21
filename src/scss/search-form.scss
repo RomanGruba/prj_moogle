@@ -4,13 +4,13 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(100%, -100%) scale(0, 0);
+  transform: translate(100%, 0);
   transition: transform 500ms ease-in-out;
   z-index: 666;
 }
 
 .search_modal {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .search_box {
@@ -31,7 +31,7 @@
 }
 
 .open_search {
-  transform: translate(0, 0) scale(1, 1);
+  transform: translate(0, 0);
   position: fixed;
 }
 
