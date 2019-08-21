@@ -8,8 +8,14 @@ export function handleFavorite(event) {
     addToFavorite = this.renderedData.find(
       el => el.id == event.target.closest(".films-item").dataset.id
     );
-    this.favoriteArr = JSON.parse(localStorage.getItem("favorites"));
-    this.favoriteArr.push(addToFavorite);
+    console.log(addToFavorite);
+    if (JSON.parse(localStorage.getItem("favorites")) == null) {
+      localStorage.setItem("favorites", JSON.stringify(addToFavorite));
+      this.favoriteArr.push(addToFavorite);
+    } else {
+      this.favoriteArr = JSON.parse(localStorage.getItem("favorites"));
+      this.favoriteArr.push(addToFavorite);
+    }
   }
 
   if (
@@ -23,4 +29,3 @@ export function handleFavorite(event) {
 
   localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
 }
-

@@ -332,6 +332,7 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
         //   }
         // });
           el.release_date = new Date(el.release_date).getFullYear();
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -344,6 +345,7 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
         //   }
         // });
           el.first_air_date = new Date(el.first_air_date).getFullYear();
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -357,11 +359,11 @@ this.refs.buttonShowSidebar.addEventListener("click", this.showSidebar);
 // //           }
 // //         });
 
-//         el.release_date = new Date(el.release_date).getFullYear();
-//         this.renderedData.push(el);
-//         return el;
-//       });
-//       this.markup = filmsTemplate(this.newArrRes);
+      //   el.release_date = new Date(el.release_date).getFullYear();
+      //   this.renderedData.push(el);
+      //   return el;
+      // });
+      // this.markup = filmsTemplate(this.newArrRes);
       this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
     };
