@@ -100,7 +100,7 @@ class Mooogle {
         this.killInfinityScroll();
         this.sortArray = [];
         this.renderTvShows().then(() => this.scrollToUp());
-        newApp.closePreloader();
+        newApp.closePreloaderUL();
         setTimeout(() => {
           if (localStorage.getItem("mediaType") === "TV") {
             this.refs.buttonFavorite.classList.remove("active-focus");
@@ -136,7 +136,7 @@ class Mooogle {
         this.killInfinityScroll();
         this.sortArray = [];
         this.renderPopularFilms().then(() => this.scrollToUp());
-        newApp.closePreloader();
+        newApp.closePreloaderUL();
         setTimeout(() => {
           if (localStorage.getItem("mediaType") === "movie") {
             this.refs.buttonFavorite.classList.remove("active-focus");
