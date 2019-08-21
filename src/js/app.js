@@ -2,7 +2,8 @@ class App {
   constructor() {
     this.refs = {
       pageWrapper: document.querySelector('#page_wrapper'),
-      preloader: document.querySelector('#preloader')
+      preloader: document.querySelector('#preloader'),
+      filmsListKill: document.querySelector('#killUL')
     };
 
     document.addEventListener('DOMContentLoaded', this.renderApp.bind(this));
@@ -10,6 +11,13 @@ class App {
 
   renderApp() {
     this.closePreloader();
+    this.closePreloaderUL();
+
+  }
+
+  openPreloader() {
+    this.refs.pageWrapper.style.display = 'none';
+    this.refs.preloader.style.display = 'block';
   }
 
   closePreloader() {
@@ -19,9 +27,18 @@ class App {
     }, 1000);
   }
 
-  openPreloader() {
-    this.refs.pageWrapper.style.display = 'none';
+  /*♥*/
+  openPreloaderUL() {
+    this.refs.filmsListKill.style.display = 'none';
     this.refs.preloader.style.display = 'block';
+  }
+
+  /*♥*/
+  closePreloaderUL() {
+    setTimeout(() => {
+      this.refs.filmsListKill.style.display = 'flex';
+      this.refs.preloader.style.display = 'none';
+    }, 1000);
   }
 }
 

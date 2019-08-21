@@ -195,7 +195,6 @@ color: #736b7f;
     .header__menu-links:hover::after{
       visibility: visible;
       transform: translate(0, -1px) scale(1.2, 1);
-      // transform: translate(0, -1px);
       transition: 0.4s ease-in;
     }
 
@@ -213,7 +212,6 @@ color: #736b7f;
       padding: 10px 20px;
       line-height: 30px;
       font-family: 'Roboto', sans-serif;
-      // background-color: rgba(255, 255, 255, 0.322);
     }
     .sort-movies-nav{
       display: flex;
