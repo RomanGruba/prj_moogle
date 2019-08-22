@@ -472,6 +472,7 @@ class Mooogle {
 
   // обработчик на клик по "btn sort by name"
   clickOnBtnName() {
+
     this.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortName) {
@@ -586,3 +587,4 @@ class Mooogle {
 }
 
 new Mooogle();
+
