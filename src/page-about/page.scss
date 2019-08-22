@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   height: auto;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .image-mov_but{
@@ -12,12 +12,13 @@
 
 .movie-descr_title {
   font-weight: 800;
-  font-family: Arial, Helvetica, FreeSans, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .image-mov_title {
   font-weight: 800;
-  font-family: Arial, Helvetica, FreeSans, sans-serif;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .green-line {
@@ -31,8 +32,9 @@
 }
 
 .movie-descr {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   max-width: 400px;
+  font-size: 18px;
 }
 
 .in-hidden {
@@ -173,7 +175,7 @@ td {
   }
 
   .movie-descr_title {
-    margin: 50px 0px 10px 0px;
+    margin: 25px 0px 10px 0px;
     font-weight: 800;
   }
 
