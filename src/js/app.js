@@ -51,5 +51,14 @@
 //   }
 // }
 
+// closePreloaderUL() {
+//     setTimeout(() => {
+//       if (this.refs.filmsListKill != null) {
+//         this.refs.filmsListKill.style.display = "flex"; // без проверки выдает ошибку в консоль на странице about
+//       }
+//       this.refs.preloader.style.display = "none";
+//     }, 1000);
+//   }
+
 // const newApp = new App();
 // export default newApp;

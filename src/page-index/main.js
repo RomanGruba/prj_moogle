@@ -3,11 +3,12 @@ import "./page.scss";
 import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
-import { handleFavorite, removeFavoriteItem } from "./favorite";
+import { handleFavorite } from "./favorite";
 
 class Mooogle {
   constructor() {
     // привязки к HTML
+
     this.refs = {
       // коробка для "preloader"
       pageWrapper: document.querySelector("#page_wrapper"),
@@ -193,22 +194,23 @@ class Mooogle {
       event.preventDefault();
       localStorage.setItem("mediaType", "favorites");
       this.killInfinityScroll();
-      const markup = filmsTemplate(
-        JSON.parse(localStorage.getItem("favorites"))
-      );
-      this.clearList();
-      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
-      let allStars = document.querySelectorAll(".icon-star");
-      allStars.forEach(el => {
-        el.classList.remove("fill-white");
-        el.classList.add("fill-gold");
-      });
-      if (localStorage.getItem("mediaType") === "favorites") {
-        this.refs.headerButtonFilm.classList.remove("active-focus");
-        this.refs.headerButtonTvShow.classList.remove("active-focus");
-        this.refs.buttonFavorite.classList.add("active-focus");
+      if (localStorage.getItem("favorites")) {
+        const markup = filmsTemplate(
+          JSON.parse(localStorage.getItem("favorites"))
+        );
+        this.clearList();
+        this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+        let allStars = document.querySelectorAll(".icon-star");
+        allStars.forEach(el => {
+          el.classList.remove("fill-white");
+          el.classList.add("fill-gold");
+        });
+        if (localStorage.getItem("mediaType") === "favorites") {
+          this.refs.headerButtonFilm.classList.remove("active-focus");
+          this.refs.headerButtonTvShow.classList.remove("active-focus");
+          this.refs.buttonFavorite.classList.add("active-focus");
+        }
       }
-      removeFavoriteItem.call(this);
     });
 
     // START SIDEBAR SHOWUP VIKA
@@ -320,12 +322,14 @@ class Mooogle {
     this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-          // let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-          // itemsToColor.forEach(element => {
-          //   if (element.id == el.id) {
-          //     el.toBeColored = true;
-          //   }
-          // });
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
+          }
           el.release_date = new Date(el.release_date).getFullYear();
           // this.renderedData.push(el);
           return el;
@@ -334,12 +338,14 @@ class Mooogle {
       } else if (localStorage.getItem("mediaType") === "TV") {
         console.log("this.arrRes :", objData);
         this.arrRes = objData.results.map(el => {
-          // let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-          // itemsToColor.forEach(element => {
-          //   if (element.id == el.id) {
-          //     el.toBeColored = true;
-          //   }
-          // });
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
+          }
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           // this.renderedData.push(el);
           return el;
@@ -369,6 +375,8 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+    // console.log(handleFavorites);
   }
 
   // ТЕЛО КЛАССА
@@ -448,7 +456,7 @@ class Mooogle {
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
-
+  
   // обработчик на слушатель "scroll" для кнопки "button up"
   scrollToUp() {
     console.log("bla-bla");
