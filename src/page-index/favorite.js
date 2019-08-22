@@ -8,7 +8,7 @@ export function handleFavorite(event) {
     addToFavorite = this.renderedData.find(
       el => el.id == event.target.closest(".films-item").dataset.id
     );
-    console.log(addToFavorite);
+    // console.log(addToFavorite);
     if (JSON.parse(localStorage.getItem("favorites")) == null) {
       localStorage.setItem("favorites", JSON.stringify(addToFavorite));
       this.favoriteArr.push(addToFavorite);
@@ -17,6 +17,7 @@ export function handleFavorite(event) {
       this.favoriteArr.push(addToFavorite);
     }
   }
+  localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
 
   if (
     event.target.closest(".icon").classList.contains("icon-star") &&
@@ -25,16 +26,10 @@ export function handleFavorite(event) {
     this.favoriteArr = this.favoriteArr.filter(
       el => el.id !== Number(event.target.closest(".films-item").dataset.id)
     );
+    localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
     let itemToRemove = event.target.closest(".films-item");
-    console.log(itemToRemove);
-    // itemToRemove.remove();
+    if (this.refs.buttonFavorite.classList.contains("active-focus")) {
+      itemToRemove.remove();
+    }
   }
-
-  localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
-}
-
-export function removeFavoriteItem() {
-  this.refs.filmsList.addEventListener('click', event => {
-    
-  })
 }

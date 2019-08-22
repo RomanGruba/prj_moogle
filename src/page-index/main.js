@@ -4,11 +4,12 @@ import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import newApp from "../js/app.js";
-import { handleFavorite, removeFavoriteItem } from "./favorite";
+import { handleFavorite } from "./favorite";
 
 class Mooogle {
   constructor() {
     // привязки к HTML
+
     this.refs = {
       // модальное окно "search"
       searchBlock: document.querySelector(".search_block"),
@@ -108,7 +109,8 @@ class Mooogle {
             this.refs.headerButtonFilm.classList.remove("active-focus");
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
-        }, 0);
+        }, 1000);
+
       }
     });
 
@@ -181,22 +183,23 @@ class Mooogle {
       event.preventDefault();
       localStorage.setItem("mediaType", "favorites");
       this.killInfinityScroll();
-      const markup = filmsTemplate(
-        JSON.parse(localStorage.getItem("favorites"))
-      );
-      this.clearList();
-      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
-      let allStars = document.querySelectorAll(".icon-star");
-      allStars.forEach(el => {
-        el.classList.remove("fill-white");
-        el.classList.add("fill-gold");
-      });
-      if (localStorage.getItem("mediaType") === "favorites") {
-        this.refs.headerButtonFilm.classList.remove("active-focus");
-        this.refs.headerButtonTvShow.classList.remove("active-focus");
-        this.refs.buttonFavorite.classList.add("active-focus");
+      if (localStorage.getItem("favorites")) {
+        const markup = filmsTemplate(
+          JSON.parse(localStorage.getItem("favorites"))
+        );
+        this.clearList();
+        this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+        let allStars = document.querySelectorAll(".icon-star");
+        allStars.forEach(el => {
+          el.classList.remove("fill-white");
+          el.classList.add("fill-gold");
+        });
+        if (localStorage.getItem("mediaType") === "favorites") {
+          this.refs.headerButtonFilm.classList.remove("active-focus");
+          this.refs.headerButtonTvShow.classList.remove("active-focus");
+          this.refs.buttonFavorite.classList.add("active-focus");
+        }
       }
-      removeFavoriteItem.call(this);
     });
 
     // sidebar showup Vika
@@ -293,10 +296,10 @@ class Mooogle {
       if (e[0].isIntersecting) {
         if (api.query === "") {
           if (localStorage.getItem("mediaType") === "movie") {
-            console.log(localStorage.getItem("mediaType"));
+            // console.log(localStorage.getItem("mediaType"));
             this.renderPopularFilms().then(() => this.scrollToUp());
           } else if (localStorage.getItem("mediaType") === "TV") {
-            console.log(localStorage.getItem("mediaType"));
+            // console.log(localStorage.getItem("mediaType"));
             this.renderTvShows().then(() => this.scrollToUp());
           }
         } else {
@@ -329,12 +332,14 @@ class Mooogle {
     this.insertListItem = function(objData) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-          itemsToColor.forEach(element => {
-            if (element.id == el.id) {
-              el.toBeColored = true;
-            }
-          });
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
+          }
           el.release_date = new Date(el.release_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -342,12 +347,14 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.arrRes = objData.results.map(el => {
-          let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
-          itemsToColor.forEach(element => {
-            if (element.id == el.id) {
-              el.toBeColored = true;
-            }
-          });
+          if (localStorage.getItem("favorites")) {
+            let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
+            itemsToColor.forEach(element => {
+              if (element.id == el.id) {
+                el.toBeColored = true;
+              }
+            });
+          }
           el.first_air_date = new Date(el.first_air_date).getFullYear();
           this.renderedData.push(el);
           return el;
@@ -355,7 +362,6 @@ class Mooogle {
         this.sortArray.push(...this.arrRes);
       }
       this.markup = filmsTemplate(this.arrRes);
-
       this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
       api.increment();
     };
@@ -378,6 +384,8 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
+
+    // console.log(handleFavorites);
   }
 
   // ТЕЛО КЛАССА
@@ -423,7 +431,7 @@ class Mooogle {
     return api
       .getPopularFilms()
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.total_pages < api.page) {
           this.killInfinityScroll();
           return;
