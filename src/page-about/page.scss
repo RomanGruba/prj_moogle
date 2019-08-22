@@ -123,9 +123,15 @@ td {
     border: none;
     width: 20px;
     height: 20px;
-    fill: black;
+    fill: none;
+    stroke: gray;
     margin: 0px 5px 0px 0px;
     padding: 0px 4px 0px 0px;
+  }
+
+  .image-mov_but:hover{
+    fill: #addad6;
+    stroke: none;
   }
 
 
@@ -196,9 +202,15 @@ td {
     border: none;
     width: 20px;
     height: 20px;
-    fill: #77c1bb;
+    fill: none;
+    stroke: grey;
     margin: 0;
     padding: 0;
+  }
+
+  .icon-star:hover{
+    fill: #addad6;
+    stroke: none;
   }
 
   .movie-descr_section {
