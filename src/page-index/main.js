@@ -4,7 +4,7 @@ import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import { handleFavorite } from "./favorite";
-import lodashDebounce from 'lodash.debounce';
+import lodashDebounce from "lodash.debounce";
 
 class Mooogle {
   constructor() {
@@ -72,7 +72,10 @@ class Mooogle {
     );
 
     // слушатель для кнопки "button up"
-    window.addEventListener("scroll", lodashDebounce(this.scrollToUp.bind(this), 300));
+    window.addEventListener(
+      "scroll",
+      lodashDebounce(this.scrollToUp.bind(this), 300)
+    );
 
     // слушатель на кнопке "button up"
     this.refs.scrollUpBtn.addEventListener(
@@ -409,7 +412,8 @@ class Mooogle {
           return;
         }
         this.builderListItemOnPageIndex(data);
-        this.infinityScroll();
+        setTimeout(() => this.infinityScroll(), 1000);
+        
       })
       .catch(error => {
         console.warn(error);
@@ -427,7 +431,7 @@ class Mooogle {
         }
         localStorage.setItem("mediaType", "movie");
         this.builderListItemOnPageIndex(data);
-        this.infinityScroll();
+        setTimeout(() => this.infinityScroll(), 1000);;
       })
       .catch(error => console.warn(error));
   }
@@ -443,7 +447,7 @@ class Mooogle {
         }
         localStorage.setItem("mediaType", "TV");
         this.builderListItemOnPageIndex(data);
-        this.infinityScroll();
+        setTimeout(() => this.infinityScroll(), 1000);;
       })
       .catch(error => console.warn(error));
   }
@@ -452,7 +456,7 @@ class Mooogle {
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
-  
+
   // обработчик на слушатель "scroll" для кнопки "button up"
   scrollToUp() {
     if (pageYOffset > document.documentElement.clientHeight) {
@@ -471,24 +475,37 @@ class Mooogle {
   }
 
   // обработчик на клик по "btn sort by name"
+  // clickOnBtnName() {
+  //   this.openPreloaderUL();
+  //   this.killInfinityScroll();
+  //   if (localStorage.getItem("mediaType") === "movie") {
+  //     this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
+  //       if (a.title < z.title) return -1;
+  //       if (a.title > z.title) return 1;
+  //     });
+  //   } else if (localStorage.getItem("mediaType") === "TV") {
+  //     this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
+  //       if (a.original_name < z.original_name) return -1;
+  //       if (a.original_name > z.original_name) return 1;
+  //     });
+  //   }
+  //   this.sortMarkupName = filmsTemplate(this.sortArrayNameAZ);
+  //   this.refs.filmsList.innerHTML = this.sortMarkupName;
+  //   this.closePreloaderUL();
+  // }
   clickOnBtnName() {
-
     this.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortName) {
       if (localStorage.getItem("mediaType") === "movie") {
         this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
-          let nameA = a.title.toLowerCase();
-          let nameZ = z.title.toLowerCase();
-          if (nameA < nameZ) return -1;
-          if (nameA > nameZ) return 1;
+          if (a.title < z.title) return -1;
+          if (a.title > z.title) return 1;
         });
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
-          let nameA = a.original_name.toLowerCase();
-          let nameZ = z.original_name.toLowerCase();
-          if (nameA < nameZ) return -1;
-          if (nameA > nameZ) return 1;
+          if (a.original_name < z.original_name) return -1;
+          if (a.original_name > z.original_name) return 1;
         });
       }
       this.sortMarkupName = filmsTemplate(this.sortArrayNameAZ);
@@ -496,17 +513,13 @@ class Mooogle {
     } else {
       if (localStorage.getItem("mediaType") === "movie") {
         this.sortArrayNameZA = this.sortArray.sort((a, z) => {
-          let nameA = a.title.toLowerCase();
-          let nameZ = z.title.toLowerCase();
-          if (nameA > nameZ) return -1;
-          if (nameA < nameZ) return 1;
+          if (a.title > z.title) return -1;
+          if (a.title < z.title) return 1;
         });
       } else if (localStorage.getItem("mediaType") === "TV") {
         this.sortArrayNameZA = this.sortArray.sort((a, z) => {
-          let nameA = a.original_name.toLowerCase();
-          let nameZ = z.original_name.toLowerCase();
-          if (nameA > nameZ) return -1;
-          if (nameA < nameZ) return 1;
+          if (a.original_name > z.original_name) return -1;
+          if (a.original_name < z.original_name) return 1;
         });
       }
       this.sortMarkupName = filmsTemplate(this.sortArrayNameZA);
@@ -587,4 +600,3 @@ class Mooogle {
 }
 
 new Mooogle();
-
