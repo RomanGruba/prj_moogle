@@ -4,11 +4,11 @@ import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
 import { handleFavorite } from "./favorite";
+import lodashDebounce from 'lodash.debounce';
 
 class Mooogle {
   constructor() {
     // привязки к HTML
-
     this.refs = {
       // коробка для "preloader"
       pageWrapper: document.querySelector("#page_wrapper"),
@@ -68,8 +68,7 @@ class Mooogle {
     );
 
     // слушатель для кнопки "button up"
-    // window.addEventListener("scroll", _.throttle(this.scrollToUp.bind(this), 300));
-    window.addEventListener("scroll", this.scrollToUp.bind(this));
+    window.addEventListener("scroll", lodashDebounce(this.scrollToUp.bind(this), 300));
 
     // слушатель на кнопке "button up"
     this.refs.scrollUpBtn.addEventListener(
@@ -285,7 +284,6 @@ class Mooogle {
     // бесконечный скролл
     this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
-        console.log("pageXOffset :", pageYOffset);
         if (api.query === "") {
           if (localStorage.getItem("mediaType") === "movie") {
             this.renderPopularFilms();
@@ -336,7 +334,6 @@ class Mooogle {
         });
         this.sortArray.push(...this.arrRes);
       } else if (localStorage.getItem("mediaType") === "TV") {
-        console.log("this.arrRes :", objData);
         this.arrRes = objData.results.map(el => {
           if (localStorage.getItem("favorites")) {
             let itemsToColor = JSON.parse(localStorage.getItem("favorites"));
@@ -375,8 +372,6 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
-    // console.log(handleFavorites);
   }
 
   // ТЕЛО КЛАССА
@@ -459,7 +454,6 @@ class Mooogle {
   
   // обработчик на слушатель "scroll" для кнопки "button up"
   scrollToUp() {
-    console.log("bla-bla");
     if (pageYOffset > document.documentElement.clientHeight) {
       this.refs.scrollUpBtn.style.display = "block";
     } else {

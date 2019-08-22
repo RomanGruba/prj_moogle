@@ -4,7 +4,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(100%, 0);
+  transform: translate(100%, 0) scale(0, 1);
   transition: transform 500ms ease-in-out;
   z-index: 666;
 }
@@ -31,7 +31,7 @@
 }
 
 .open_search {
-  transform: translate(0, 0);
+  transform: translate(0, 0) scale(1, 1);
   position: fixed;
 }
 
