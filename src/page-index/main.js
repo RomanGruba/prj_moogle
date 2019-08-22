@@ -46,7 +46,8 @@ class Mooogle {
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
-      menuList: document.getElementById("menu-list")
+      menuList: document.getElementById("menu-list"),
+
     };
 
     this.renderedData = [];
@@ -121,6 +122,7 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
         }, 1000);
+
       }
     });
 
