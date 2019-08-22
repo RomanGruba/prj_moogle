@@ -31,4 +31,5 @@ export function handleFavorite(event) {
       itemToRemove.remove();
     }
   }
+  
 }

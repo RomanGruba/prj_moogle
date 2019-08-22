@@ -374,7 +374,7 @@ body {
 }
 
 .hidden_textbtn {
-  font-family: Arial, Helvetica, FreeSans, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 0.5em;
   font-weight: 700;
   color: rgb(245, 245, 245);
@@ -386,8 +386,8 @@ body {
   outline: none;
   border: none;
   border-radius: 3px;
-  background: #0c9c0d linear-gradient(#82d18d, #0c9c0d);
-  box-shadow: inset #72de26 0 -1px 1px, inset 0 1px 1px #98ff98, #3caa3c 0 0 0 1px, rgba(0, 0, 0, .3) 0 2px 5px;
+  background: #77c1bb93 linear-gradient(#77c1bb, #538682);
+  box-shadow: inset #77c1bb 0 -1px 1px, inset 0 1px 1px #def7f5c2, #77c1bb 0 0 0 1px, rgba(0, 0, 0, .2) 0 2px 5px;
   animation: pulsate 1.2s linear infinite;
 }
 
@@ -430,6 +430,8 @@ body {
 
   .feedback_content {
     width: 650px;
+    font-family: 'Roboto', sans-serif;
+
   }
 
   .actors {
