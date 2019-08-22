@@ -43,7 +43,8 @@ class Mooogle {
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
-      menuList: document.getElementById("menu-list")
+      menuList: document.getElementById("menu-list"),
+
     };
 
     this.renderedData = [];
@@ -109,6 +110,7 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
         }, 1000);
+
       }
     });
 
@@ -199,15 +201,6 @@ class Mooogle {
         }
       }
     });
-
-    // слушатель на
-    //     this.refs.buttonIconStar.addEventListener("click", event => {
-    //       event.preventDefault();
-    //       if (event.target === event.currentTarget) {
-    //         localStorage.setItem("status", "favorite");
-    //         this.iconStar.style.cssText = "fill: gold";
-    //       }
-    //     });
 
     // sidebar showup Vika
     this.flagShowBurger = true; //show flag aka hang the flag
