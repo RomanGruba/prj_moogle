@@ -23,10 +23,12 @@ export function handleFavorite(event) {
     event.target.closest(".icon").classList.contains("icon-star") &&
     event.target.closest(".icon").classList.contains("fill-gold")
   ) {
+    console.log(this.favoriteArr);
     this.favoriteArr = this.favoriteArr.filter(
       el => el.id !== Number(event.target.closest(".films-item").dataset.id)
     );
     localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
+    console.log(this.favoriteArr);
     let itemToRemove = event.target.closest(".films-item");
     if (this.refs.buttonFavorite.classList.contains("active-focus")) {
       itemToRemove.remove();
