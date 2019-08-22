@@ -4,8 +4,8 @@
   text-decoration: none;
 }
 
-.fill-gold{
-fill: gold;
+.fill-gold {
+  fill: gold;
 }
 .imbd {
   color: white;
@@ -17,10 +17,7 @@ fill: gold;
 .button_icon {
   top: 10px;
   position: absolute;
-  height: 15px;
-  width: 15px;
-
-  z-index:2;
+  z-index: 2;
   border: none;
   outline: none;
   cursor: pointer;
@@ -30,112 +27,23 @@ fill: gold;
   background: none;
 }
 
-.films-item{
+.films-item {
   z-index: 1;
 }
 
-.button_icon-bell {
-  right: 12px;
-}
 .button_icon-star {
   right: 40px;
 }
-.button_icon-bell:hover {
-  display: block;
-  animation: ring 7s 0.3s ease-in-out;
-  transform-origin: 50% 4px;
-  @keyframes ring {
-    0% {
-      transform: rotate(0);
-    }
-    1% {
-      transform: rotate(30deg);
-    }
-    3% {
-      transform: rotate(-28deg);
-    }
-    5% {
-      transform: rotate(34deg);
-    }
-    7% {
-      transform: rotate(-32deg);
-    }
-    9% {
-      transform: rotate(30deg);
-    }
-    11% {
-      transform: rotate(-28deg);
-    }
-    13% {
-      transform: rotate(26deg);
-    }
-    15% {
-      transform: rotate(-24deg);
-    }
-    17% {
-      transform: rotate(22deg);
-    }
-    19% {
-      transform: rotate(-20deg);
-    }
-    21% {
-      transform: rotate(18deg);
-    }
-    23% {
-      transform: rotate(-16deg);
-    }
-    25% {
-      transform: rotate(14deg);
-    }
-    27% {
-      transform: rotate(-12deg);
-    }
-    29% {
-      transform: rotate(10deg);
-    }
-    31% {
-      transform: rotate(-8deg);
-    }
-    33% {
-      transform: rotate(6deg);
-    }
-    35% {
-      transform: rotate(-4deg);
-    }
-    37% {
-      transform: rotate(2deg);
-    }
-    39% {
-      transform: rotate(-1deg);
-    }
-    41% {
-      transform: rotate(1deg);
-    }
 
-    43% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(0);
-    }
-  }
-}
-
-// .button_icon-star:hover {
-//   display: block;
-//   animation: spin 0.7s 0.3s ease-in;
-//   @keyframes spin {
-//     from {
-//       transform: rotate(0deg);
-//     }
-//     to {
-//       transform: rotate(360deg);
-//     }
-//   }
-// }
 .icon {
   height: 20px;
   width: 20px;
+  transition: all 0.3s;
+}
+.icon:hover {
+  height: 35px;
+  width: 35px;
+  transform: translate(-5px, -5px);
 }
 .fill-white {
   fill: white;

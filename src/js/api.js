@@ -225,7 +225,9 @@ export default {
       .catch(error => console.warn(error));
   },
   getPopularTvShows() {
-    const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits`;
+    const url = `${baseUrl}/tv/popular?api_key=${api_key}&append_to_response=credits&page=${
+      this.page
+    }`;
     return fetch(url)
       .then(res => res.json())
       .catch(error => console.warn(error));
