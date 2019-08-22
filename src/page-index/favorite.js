@@ -5,10 +5,9 @@ export function handleFavorite(event) {
     event.target.closest(".icon").classList.contains("icon-star") &&
     event.target.closest(".icon").classList.contains("fill-white")
   ) {
-    addToFavorite = this.renderedData.find(
-      el => el.id == event.target.closest(".films-item").dataset.id
+    addToFavorite = this.renderedData.length > 0 && this.renderedData.find(
+      el => el.id === +event.target.closest(".films-item").dataset.id
     );
-    // console.log(addToFavorite);
     if (JSON.parse(localStorage.getItem("favorites")) == null) {
       localStorage.setItem("favorites", JSON.stringify(addToFavorite));
       this.favoriteArr.push(addToFavorite);
@@ -23,12 +22,10 @@ export function handleFavorite(event) {
     event.target.closest(".icon").classList.contains("icon-star") &&
     event.target.closest(".icon").classList.contains("fill-gold")
   ) {
-    console.log(this.favoriteArr);
     this.favoriteArr = this.favoriteArr.filter(
       el => el.id !== Number(event.target.closest(".films-item").dataset.id)
     );
     localStorage.setItem("favorites", JSON.stringify(this.favoriteArr));
-    console.log(this.favoriteArr);
     let itemToRemove = event.target.closest(".films-item");
     if (this.refs.buttonFavorite.classList.contains("active-focus")) {
       itemToRemove.remove();

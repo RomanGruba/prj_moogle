@@ -52,6 +52,8 @@ class Mooogle {
     this.renderedData = [];
     if (localStorage.getItem("favorites")) {
       this.favoriteArr = JSON.parse(localStorage.getItem("favorites"));
+    } else {
+      this.favoriteArr = [];
     }
 
     // при загрузке страницы рендерит популярные фильмы
@@ -331,7 +333,7 @@ class Mooogle {
             });
           }
           el.release_date = new Date(el.release_date).getFullYear();
-          // this.renderedData.push(el);
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -346,7 +348,7 @@ class Mooogle {
             });
           }
           el.first_air_date = new Date(el.first_air_date).getFullYear();
-          // this.renderedData.push(el);
+          this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -399,7 +401,6 @@ class Mooogle {
 
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
-    console.log("renderSearchingFilm :");
     return api
       .getSearching()
       .then(data => {
@@ -417,7 +418,6 @@ class Mooogle {
 
   // Рендеринг популярных фильмов
   renderPopularFilms() {
-    console.log("renderPopularFilms :");
     return api
       .getPopularFilms()
       .then(data => {
@@ -434,7 +434,6 @@ class Mooogle {
 
   // Рендеринг TV сериалов
   renderTvShows() {
-    console.log("renderTvShows :");
     return api
       .getPopularTvShows()
       .then(data => {

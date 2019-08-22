@@ -15,6 +15,10 @@ class FilmData {
     this.mediaType = mediaType;
     this.api_key = "ed5781108818e96397f9efe7bddd0923";
     this.refs = {
+      // коробка для "preloader"
+      pageWrapper: document.querySelector("#page_wrapper"),
+      // "preloader"
+      preloader: document.querySelector("#preloader"),
       iframeTrailer: document.querySelector(".iframe_trailer"),
       ulActors: document.querySelector(".actors-list"),
       ulFrames: document.querySelector(".frames-list"),
@@ -25,7 +29,21 @@ class FilmData {
       trailer: document.querySelector(".trailer")
     };
     this.defineMovieOrTv();
+    // слушатель на DOM для "preloader"
+    document.getElementById('search_engine_btn').style.display = "none";
+    document.addEventListener(
+      "DOMContentLoaded",
+      this.closePreloader.bind(this)
+    );
 
+  }
+
+  // закрытие "preloader"
+  closePreloader() {
+    setTimeout(() => {
+      this.refs.pageWrapper.style.display = "block";
+      this.refs.preloader.style.display = "none";
+    }, 1000);
   }
 
   defineMovieOrTv() {
