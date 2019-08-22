@@ -3,6 +3,10 @@
   padding: 0;
   box-sizing: border-box;
   height: auto;
+
+  user-select: none;
+  outline: none;
+
   font-family: "Roboto", sans-serif;
 }
 
@@ -14,6 +18,7 @@
 .image-mov_title {
   font-weight: 800;
   font-family: Arial, Helvetica, FreeSans, sans-serif;
+
 }
 
 .green-line {
