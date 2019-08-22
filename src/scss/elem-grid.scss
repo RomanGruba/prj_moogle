@@ -174,6 +174,7 @@ fill: gold;
 .films-item:not(:last-child) {
   margin-bottom: 6px;
 }
+
 .films-list {
   padding-top: 100px;
   list-style: none;
@@ -197,7 +198,7 @@ fill: gold;
 
 @media (min-width: 768px) {
   .films-item:not(:last-child) {
-    margin-bottom: 0px;
+    margin-bottom: 16px;
   }
 
   .films-item:nth-of-type(odd) {
@@ -209,7 +210,8 @@ fill: gold;
   .button_icon {
     top: 15px;
   }
-  .films-item:not(:nth-last-child(-n + 2)) {
+
+  .films-item {
     margin-bottom: 16px;
   }
   .img-sample,
