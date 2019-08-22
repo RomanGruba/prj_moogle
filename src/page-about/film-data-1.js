@@ -228,10 +228,15 @@ class FilmData1 {
 
   renderScreenPlay() {
     getSingleScreenPlay(this.filmId, this.mediaType).then(data => {
-      const screenPlaeer =
-        (data.credits &&
-          data.credits.crew.find(crew => crew.job === "Screenplay").name) ||
-        checkProduct(data.in_production);
+
+      const screenPlaeer = data.credits && data.credits.crew.find(crew => crew.job === "Screenplay" || "Writer").name
+      || checkProduct(data.in_production);
+
+//       const screenPlaeer =
+//         (data.credits &&
+//           data.credits.crew.find(crew => crew.job === "Screenplay").name) ||
+//         checkProduct(data.in_production);
+
       function checkProduct() {
         if (data.in_production === true) {
           return "In production";
@@ -239,6 +244,7 @@ class FilmData1 {
           return "Finish";
         }
       }
+
 
       if (data.credits) {
         this.refs.fimlScreenPlay.textContent = screenPlaeer;
@@ -249,6 +255,7 @@ class FilmData1 {
       }
     });
   }
+
 
   handleFavorites() {
     if (localStorage.getItem("favorites")) {
@@ -284,8 +291,3 @@ const filmInfo = new FilmData1(
   localStorage.getItem("id"),
   localStorage.getItem("mediaType")
 );
-
-// const filmdata = new FilmInfo2(
-//   localStorage.getItem("id"),
-//   localStorage.getItem("mediaType")
-// );
