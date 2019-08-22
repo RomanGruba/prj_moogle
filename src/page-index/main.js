@@ -46,12 +46,13 @@ class Mooogle {
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
-      menuList: document.getElementById("menu-list"),
-
+      menuList: document.getElementById("menu-list")
     };
 
     this.renderedData = [];
-    this.favoriteArr = [];
+    if (localStorage.getItem("favorites")) {
+      this.favoriteArr = JSON.parse(localStorage.getItem("favorites"));
+    }
 
     // при загрузке страницы рендерит популярные фильмы
     this.renderPopularFilms();
@@ -122,7 +123,6 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
         }, 1000);
-
       }
     });
 
