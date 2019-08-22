@@ -3,14 +3,17 @@ import "./page.scss";
 import "../scss/header.scss";
 import filmsTemplate from "./templates/template.hbs";
 import api from "../js/api.js";
-import newApp from "../js/app.js";
 import { handleFavorite } from "./favorite";
+import lodashDebounce from 'lodash.debounce';
 
 class Mooogle {
   constructor() {
     // привязки к HTML
-
     this.refs = {
+      // коробка для "preloader"
+      pageWrapper: document.querySelector("#page_wrapper"),
+      // "preloader"
+      preloader: document.querySelector("#preloader"),
       // модальное окно "search"
       searchBlock: document.querySelector(".search_block"),
       // кнопка вызова модального окна
@@ -51,7 +54,13 @@ class Mooogle {
     this.favoriteArr = [];
 
     // при загрузке страницы рендерит популярные фильмы
-    this.renderPopularFilms().then(() => this.scrollToUp());
+    this.renderPopularFilms();
+
+    // слушатель на DOM для "preloader"
+    document.addEventListener(
+      "DOMContentLoaded",
+      this.closestPreloader.bind(this)
+    );
 
     // слушатель на кнопку вызова модального окна
     this.refs.btnCallSearchModal.addEventListener(
@@ -59,7 +68,10 @@ class Mooogle {
       this.openSearchBlockHandler.bind(this)
     );
 
-    // слушатель на кнопке "scroll up"
+    // слушатель для кнопки "button up"
+    window.addEventListener("scroll", lodashDebounce(this.scrollToUp.bind(this), 300));
+
+    // слушатель на кнопке "button up"
     this.refs.scrollUpBtn.addEventListener(
       "click",
       this.scrollToUpHandler.bind(this)
@@ -81,14 +93,14 @@ class Mooogle {
     this.refs.buttonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
-        newApp.openPreloaderUL();
+        this.openPreloaderUL();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.sortArray = [];
-        this.renderTvShows().then(() => this.scrollToUp());
+        this.renderTvShows();
         this.hideSidebar();
-        newApp.closePreloaderUL();
+        this.closePreloaderUL();
       }
     });
 
@@ -96,13 +108,13 @@ class Mooogle {
     this.refs.headerButtonTvShow.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
-        newApp.openPreloaderUL();
+        this.openPreloaderUL();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.sortArray = [];
-        this.renderTvShows().then(() => this.scrollToUp());
-        newApp.closePreloaderUL();
+        this.renderTvShows();
+        this.closePreloaderUL();
         setTimeout(() => {
           if (localStorage.getItem("mediaType") === "TV") {
             this.refs.buttonFavorite.classList.remove("active-focus");
@@ -118,14 +130,14 @@ class Mooogle {
     this.refs.buttonFilm.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
-        newApp.openPreloaderUL();
+        this.openPreloaderUL();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.sortArray = [];
-        this.renderPopularFilms().then(() => this.scrollToUp());
+        this.renderPopularFilms();
         this.hideSidebar();
-        newApp.closePreloaderUL();
+        this.closePreloaderUL();
       }
     });
 
@@ -133,13 +145,13 @@ class Mooogle {
     this.refs.headerButtonFilm.addEventListener("click", event => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
-        newApp.openPreloaderUL();
+        this.openPreloaderUL();
         api.resetPage();
         this.clearList();
         this.killInfinityScroll();
         this.sortArray = [];
-        this.renderPopularFilms().then(() => this.scrollToUp());
-        newApp.closePreloaderUL();
+        this.renderPopularFilms();
+        this.closePreloaderUL();
         setTimeout(() => {
           if (localStorage.getItem("mediaType") === "movie") {
             this.refs.buttonFavorite.classList.remove("active-focus");
@@ -202,7 +214,7 @@ class Mooogle {
       }
     });
 
-    // sidebar showup Vika
+    // START SIDEBAR SHOWUP VIKA
     this.flagShowBurger = true; //show flag aka hang the flag
 
     this.showBurger = function() {
@@ -251,59 +263,37 @@ class Mooogle {
     this.clickOnModal = this.closeBurgerModal.bind(this);
 
     this.refs.buttonShowSidebar.addEventListener("click", this.SidebarOnClick);
+    // END OF SIDEBAR SHOWUP
 
-    // end of sidebar showUp
     // обработчик поиска
     this.searchingHandler = function(e) {
       e.preventDefault();
       const form = e.currentTarget;
       const input = form.elements.query;
       api.searchQuery = input.value;
-      newApp.openPreloader();
+      this.openPreloaderUL();
       api.resetPage();
       this.clearList();
       this.killInfinityScroll();
       this.sortArray = [];
-      this.renderSearchingFilm().then(() => this.scrollToUp());
+      this.renderSearchingFilm();
       this.closeSearchBlockHandler();
       input.value = "";
-      newApp.closePreloader();
+      this.closePreloaderUL();
     };
     this.clickOnSearchBtn = this.searchingHandler.bind(this);
-
-    // скролл button up
-    this.onEnBtnUp = function(e) {
-      if (e[0].isIntersecting) {
-        this.refs.scrollUpBtn.classList.toggle("is-hidden");
-      }
-    };
-    this.onEntryBtnUp = this.onEnBtnUp.bind(this);
-    this.scrlToUp = function() {
-      this.observOptionsBtnUp = {
-        rootMargin: "0px",
-        threshold: 1
-      };
-      this.observerBtnUp = new IntersectionObserver(
-        this.onEntryBtnUp,
-        this.observOptionsBtnUp
-      );
-      this.observerBtnUp.observe(this.refs.filmsList.children[6]);
-    };
-    this.scrollToUp = this.scrlToUp.bind(this);
 
     // бесконечный скролл
     this.onEntInfScr = function(e) {
       if (e[0].isIntersecting) {
         if (api.query === "") {
           if (localStorage.getItem("mediaType") === "movie") {
-            // console.log(localStorage.getItem("mediaType"));
-            this.renderPopularFilms().then(() => this.scrollToUp());
+            this.renderPopularFilms();
           } else if (localStorage.getItem("mediaType") === "TV") {
-            // console.log(localStorage.getItem("mediaType"));
-            this.renderTvShows().then(() => this.scrollToUp());
+            this.renderTvShows();
           }
         } else {
-          this.renderSearchingFilm().then(() => this.scrollToUp());
+          this.renderSearchingFilm();
         }
         this.killInfinityScroll();
       }
@@ -341,7 +331,7 @@ class Mooogle {
             });
           }
           el.release_date = new Date(el.release_date).getFullYear();
-          this.renderedData.push(el);
+          // this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
@@ -356,13 +346,13 @@ class Mooogle {
             });
           }
           el.first_air_date = new Date(el.first_air_date).getFullYear();
-          this.renderedData.push(el);
+          // this.renderedData.push(el);
           return el;
         });
         this.sortArray.push(...this.arrRes);
       }
-      this.markup = filmsTemplate(this.arrRes);
-      this.refs.filmsList.insertAdjacentHTML("beforeend", this.markup);
+      const markup = filmsTemplate(this.arrRes);
+      this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
       api.increment();
     };
     this.builderListItemOnPageIndex = this.insertListItem.bind(this);
@@ -384,8 +374,6 @@ class Mooogle {
       this.closeSearchBlockHandler();
     };
     this.clickOnEsc = this.keyPressHandle.bind(this);
-
-    // console.log(handleFavorites);
   }
 
   // ТЕЛО КЛАССА
@@ -411,6 +399,7 @@ class Mooogle {
 
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
+    console.log("renderSearchingFilm :");
     return api
       .getSearching()
       .then(data => {
@@ -428,10 +417,10 @@ class Mooogle {
 
   // Рендеринг популярных фильмов
   renderPopularFilms() {
+    console.log("renderPopularFilms :");
     return api
       .getPopularFilms()
       .then(data => {
-        // console.log(data);
         if (data.total_pages < api.page) {
           this.killInfinityScroll();
           return;
@@ -445,6 +434,7 @@ class Mooogle {
 
   // Рендеринг TV сериалов
   renderTvShows() {
+    console.log("renderTvShows :");
     return api
       .getPopularTvShows()
       .then(data => {
@@ -463,8 +453,17 @@ class Mooogle {
   clearList() {
     this.refs.filmsList.innerHTML = "";
   }
+  
+  // обработчик на слушатель "scroll" для кнопки "button up"
+  scrollToUp() {
+    if (pageYOffset > document.documentElement.clientHeight) {
+      this.refs.scrollUpBtn.style.display = "block";
+    } else {
+      this.refs.scrollUpBtn.style.display = "none";
+    }
+  }
 
-  // обработчик на кнопку "scroll up"
+  // обработчик на кнопку "button up"
   scrollToUpHandler() {
     window.scrollTo({
       top: 0,
@@ -474,7 +473,7 @@ class Mooogle {
 
   // обработчик на клик по "btn sort by name"
   clickOnBtnName() {
-    newApp.openPreloader();
+    this.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortName) {
       if (localStorage.getItem("mediaType") === "movie") {
@@ -514,12 +513,12 @@ class Mooogle {
       this.flagSortName = true;
     }
     this.refs.filmsList.innerHTML = this.sortMarkupName;
-    newApp.closePreloader();
+    this.closePreloaderUL();
   }
 
   // обработчик на клик по "btn sort by date"
   clickOnBtnDate() {
-    newApp.openPreloader();
+    this.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortDate) {
       if (localStorage.getItem("mediaType") === "movie") {
@@ -547,7 +546,43 @@ class Mooogle {
       this.flagSortDate = true;
     }
     this.refs.filmsList.innerHTML = this.sortMarkupDate;
-    newApp.closePreloader();
+    this.closePreloaderUL();
+  }
+
+  // закрытие "preloader" через setTimeout
+  closestPreloader() {
+    this.closePreloader();
+    this.closePreloaderUL();
+  }
+
+  // открытие "preloader"
+  openPreloader() {
+    this.refs.pageWrapper.style.display = "none";
+    this.refs.preloader.style.display = "block";
+  }
+
+  // закрытие "preloader"
+  closePreloader() {
+    setTimeout(() => {
+      this.refs.pageWrapper.style.display = "block";
+      this.refs.preloader.style.display = "none";
+    }, 1000);
+  }
+
+  // открытие "preloader" на "ul"
+  /*♥*/
+  openPreloaderUL() {
+    this.refs.filmsList.style.display = "none";
+    this.refs.preloader.style.display = "block";
+  }
+
+  // закрытие "preloader" на "ul"
+  /*♥*/
+  closePreloaderUL() {
+    setTimeout(() => {
+      this.refs.filmsList.style.display = "flex";
+      this.refs.preloader.style.display = "none";
+    }, 1000);
   }
 }
 
