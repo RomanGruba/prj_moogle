@@ -11,6 +11,8 @@
   left: 0;
   width: 100%;
   z-index:111;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .nav-header{
@@ -257,6 +259,7 @@ color: #736b7f;
       fill: #77c1bb;
       border: none;
       background: none;
+      font-family: 'Roboto', sans-serif;
       cursor: pointer;
       &:not(:last-child){
         margin-right: 20px;}

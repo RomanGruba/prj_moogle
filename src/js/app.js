@@ -1,3 +1,5 @@
+import '../partials/copyright';
+
 class App {
   constructor() {
     this.refs = {

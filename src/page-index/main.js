@@ -474,7 +474,7 @@ class Mooogle {
 
   // обработчик на клик по "btn sort by name"
   clickOnBtnName() {
-    newApp.openPreloader();
+    newApp.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortName) {
       if (localStorage.getItem("mediaType") === "movie") {
@@ -514,12 +514,12 @@ class Mooogle {
       this.flagSortName = true;
     }
     this.refs.filmsList.innerHTML = this.sortMarkupName;
-    newApp.closePreloader();
+    newApp.closePreloaderUL();
   }
 
   // обработчик на клик по "btn sort by date"
   clickOnBtnDate() {
-    newApp.openPreloader();
+    newApp.openPreloaderUL();
     this.killInfinityScroll();
     if (this.flagSortDate) {
       if (localStorage.getItem("mediaType") === "movie") {
@@ -547,8 +547,9 @@ class Mooogle {
       this.flagSortDate = true;
     }
     this.refs.filmsList.innerHTML = this.sortMarkupDate;
-    newApp.closePreloader();
+    newApp.closePreloaderUL();
   }
 }
 
 new Mooogle();
+
