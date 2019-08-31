@@ -413,7 +413,6 @@ class Mooogle {
         }
         this.builderListItemOnPageIndex(data);
         setTimeout(() => this.infinityScroll(), 1000);
-        
       })
       .catch(error => {
         console.warn(error);
@@ -431,7 +430,7 @@ class Mooogle {
         }
         localStorage.setItem("mediaType", "movie");
         this.builderListItemOnPageIndex(data);
-        setTimeout(() => this.infinityScroll(), 1000);;
+        setTimeout(() => this.infinityScroll(), 1000);
       })
       .catch(error => console.warn(error));
   }
@@ -447,7 +446,7 @@ class Mooogle {
         }
         localStorage.setItem("mediaType", "TV");
         this.builderListItemOnPageIndex(data);
-        setTimeout(() => this.infinityScroll(), 1000);;
+        setTimeout(() => this.infinityScroll(), 1000);
       })
       .catch(error => console.warn(error));
   }
