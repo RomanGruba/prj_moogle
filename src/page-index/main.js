@@ -38,6 +38,7 @@ class Mooogle {
       filmDate: document.querySelectorAll("#film_date"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
       buttonFilm: document.querySelector(".menu-items-click--film"),
+      buttonFav: document.querySelector(".menu-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
       buttonIconStar: document.querySelector(".button_icon-star"),
@@ -46,7 +47,9 @@ class Mooogle {
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
-      menuList: document.getElementById("menu-list")
+      menuList: document.getElementById("menu-list"),
+      // div 'header_sort'
+      headerSort: document.querySelector(".header__sort-movies")
     };
 
     this.renderedData = [];
@@ -134,6 +137,35 @@ class Mooogle {
       }
     });
 
+    //listener mobile favorites Roman
+    this.refs.buttonFav.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        this.openPreloaderUL();
+
+        if (localStorage.getItem("favorites")) {
+          const markup = filmsTemplate(
+            JSON.parse(localStorage.getItem("favorites"))
+          );
+          this.clearList();
+          this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+          let allStars = document.querySelectorAll(".icon-star");
+          allStars.forEach(el => {
+            el.classList.remove("fill-white");
+            el.classList.add("fill-gold");
+          });
+          if (localStorage.getItem("mediaType") === "favorites") {
+            this.refs.headerButtonFilm.classList.remove("active-focus");
+            this.refs.headerButtonTvShow.classList.remove("active-focus");
+            this.refs.buttonFavorite.classList.add("active-focus");
+          }
+        }
+        this.killInfinityScroll();
+        this.hideSidebar();
+        this.closePreloaderUL();
+      }
+    });
+
     //listener desktop Oleksii
     this.refs.headerButtonTvShow.addEventListener("click", event => {
       event.preventDefault();
@@ -151,8 +183,9 @@ class Mooogle {
             this.refs.headerButtonFilm.classList.remove("active-focus");
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
-        }, 1000);
+        }, 300);
       }
+      this.refs.headerSort.style.display = "flex";
     });
 
     //listener mobile Oleksii
@@ -187,8 +220,9 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.remove("active-focus");
             this.refs.headerButtonFilm.classList.add("active-focus");
           }
-        }, 1000);
+        }, 300);
       }
+      this.refs.headerSort.style.display = "flex";
     });
 
     // слушатель на click on image and star
@@ -240,6 +274,7 @@ class Mooogle {
           this.refs.headerButtonTvShow.classList.remove("active-focus");
           this.refs.buttonFavorite.classList.add("active-focus");
         }
+        this.refs.headerSort.style.display = "none";
       }
     });
 
@@ -429,6 +464,12 @@ class Mooogle {
 
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
+    if (this.refs.buttonFavorite.classList.contains("active-focus")) {
+      console.log("sdsdsd");
+      this.refs.buttonFavorite.classList.remove("active-focus");
+      this.refs.headerButtonFilm.classList.add("active-focus");
+    }
+
     return api
       .getSearching()
       .then(data => {

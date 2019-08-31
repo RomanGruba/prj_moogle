@@ -7,6 +7,7 @@
 .fill-gold {
   fill: gold;
 }
+
 .imbd {
   color: white;
   padding: 10px;
@@ -14,6 +15,7 @@
   font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
+
 .button_icon {
   top: 10px;
   position: absolute;
@@ -38,39 +40,44 @@
 .icon {
   height: 20px;
   width: 20px;
-  transition: all 0.3s;
+
 }
-.icon:hover {
+
+.icon:active {
   height: 35px;
   width: 35px;
   transform: translate(-5px, -5px);
+  transition: all 0.1s;
 }
+
 .fill-white {
   fill: white;
 }
 
 .gradient {
   position: absolute;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 77%,
-    rgba(0, 0, 0, 1) 90%
-  );
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 77%,
+      rgba(0, 0, 0, 1) 90%);
   height: 178px;
   width: 346px;
   position: absolute;
   top: 0;
   left: 0;
 }
+
 .films_item {
   position: relative;
 }
+
 .films-item:hover {
   filter: brightness(1.5);
 }
+
 .fill-color {
   fill: gold;
 }
+
 .img-sample,
 .films-item,
 .img-container {
@@ -79,6 +86,7 @@
   border-radius: 3px;
   filter: brightness(0.9);
 }
+
 .films-item:not(:last-child) {
   margin-bottom: 6px;
 }
@@ -90,6 +98,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .films-name {
   z-index: 1;
   position: relative;
@@ -100,6 +109,7 @@
   font-weight: 500;
   font-size: 17px;
 }
+
 .img-container {
   position: relative;
 }
@@ -112,9 +122,11 @@
   .films-item:nth-of-type(odd) {
     margin-right: 16px;
   }
+
   .films-list {
     padding-top: 170px;
   }
+
   .button_icon {
     top: 15px;
   }
@@ -122,6 +134,7 @@
   .films-item {
     margin-bottom: 16px;
   }
+
   .img-sample,
   .gradient,
   .films-item,
@@ -135,6 +148,7 @@
     left: 15px;
     top: -30px;
   }
+
   .films-list {
     flex-flow: row wrap;
     justify-content: center;
@@ -145,6 +159,7 @@
 }
 
 @media (min-width: 1024px) {
+
   .img-sample,
   .gradient,
   .films-item,
@@ -158,6 +173,7 @@
     left: 12px;
     top: -40px;
   }
+
   .films-list {
     padding-top: 180px;
   }
