@@ -1,3 +1,17 @@
-.header__sort-movies{
+.header__sort-movies {
   display: none;
+}
+
+.logotype {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .logotype {
+    padding-left: 0px;
+  }
 }

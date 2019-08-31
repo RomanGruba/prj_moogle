@@ -38,6 +38,7 @@ class Mooogle {
       filmDate: document.querySelectorAll("#film_date"),
       buttonTvShow: document.querySelector(".menu-items-click--tv"),
       buttonFilm: document.querySelector(".menu-items-click--film"),
+      buttonFav: document.querySelector(".menu-items-click--favorite"),
       headerButtonFilm: document.querySelector(".header-items-click--film"),
       headerButtonTvShow: document.querySelector(".header-items-click--tv"),
       buttonIconStar: document.querySelector(".button_icon-star"),
@@ -46,7 +47,9 @@ class Mooogle {
       // toggle-btn + Sidebar
       buttonShowSidebar: document.querySelector(".toggle-btn"),
       sidebarItem: document.querySelector(".sidebar"),
-      menuList: document.getElementById("menu-list")
+      menuList: document.getElementById("menu-list"),
+      // div 'header_sort'
+      headerSort: document.querySelector(".header__sort-movies")
     };
 
     this.renderedData = [];
@@ -71,6 +74,12 @@ class Mooogle {
       this.openSearchBlockHandler.bind(this)
     );
 
+    // слушатель на кнопку вызова модального окна для яблок
+    this.refs.btnCallSearchModal.addEventListener(
+      "touchstart",
+      this.openSearchBlockHandler.bind(this)
+    );
+
     // слушатель для кнопки "button up"
     window.addEventListener(
       "scroll",
@@ -83,15 +92,33 @@ class Mooogle {
       this.scrollToUpHandler.bind(this)
     );
 
+    // слушатель на кнопке "button up" для яблок
+    this.refs.scrollUpBtn.addEventListener(
+      "touchstart",
+      this.scrollToUpHandler.bind(this)
+    );
+
     // слушатель на кнопке "btn sort by name"
     this.refs.btnSortName.addEventListener(
       "click",
       this.clickOnBtnName.bind(this)
     );
 
+    // слушатель на кнопке "btn sort by name" для яблок
+    this.refs.btnSortName.addEventListener(
+      "touchstart",
+      this.clickOnBtnName.bind(this)
+    );
+
     // слушатель на кнопке "btn sort by date"
     this.refs.btnSortDate.addEventListener(
       "click",
+      this.clickOnBtnDate.bind(this)
+    );
+
+    // слушатель на кнопке "btn sort by date" для яблок
+    this.refs.btnSortDate.addEventListener(
+      "touchstart",
       this.clickOnBtnDate.bind(this)
     );
 
@@ -105,6 +132,35 @@ class Mooogle {
         this.killInfinityScroll();
         this.sortArray = [];
         this.renderTvShows();
+        this.hideSidebar();
+        this.closePreloaderUL();
+      }
+    });
+
+    //listener mobile favorites Roman
+    this.refs.buttonFav.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        this.openPreloaderUL();
+
+        if (localStorage.getItem("favorites")) {
+          const markup = filmsTemplate(
+            JSON.parse(localStorage.getItem("favorites"))
+          );
+          this.clearList();
+          this.refs.filmsList.insertAdjacentHTML("beforeend", markup);
+          let allStars = document.querySelectorAll(".icon-star");
+          allStars.forEach(el => {
+            el.classList.remove("fill-white");
+            el.classList.add("fill-gold");
+          });
+          if (localStorage.getItem("mediaType") === "favorites") {
+            this.refs.headerButtonFilm.classList.remove("active-focus");
+            this.refs.headerButtonTvShow.classList.remove("active-focus");
+            this.refs.buttonFavorite.classList.add("active-focus");
+          }
+        }
+        this.killInfinityScroll();
         this.hideSidebar();
         this.closePreloaderUL();
       }
@@ -127,8 +183,9 @@ class Mooogle {
             this.refs.headerButtonFilm.classList.remove("active-focus");
             this.refs.headerButtonTvShow.classList.add("active-focus");
           }
-        }, 1000);
+        }, 300);
       }
+      this.refs.headerSort.style.display = "flex";
     });
 
     //listener mobile Oleksii
@@ -163,8 +220,9 @@ class Mooogle {
             this.refs.headerButtonTvShow.classList.remove("active-focus");
             this.refs.headerButtonFilm.classList.add("active-focus");
           }
-        }, 1000);
+        }, 300);
       }
+      this.refs.headerSort.style.display = "flex";
     });
 
     // слушатель на click on image and star
@@ -216,6 +274,7 @@ class Mooogle {
           this.refs.headerButtonTvShow.classList.remove("active-focus");
           this.refs.buttonFavorite.classList.add("active-focus");
         }
+        this.refs.headerSort.style.display = "none";
       }
     });
 
@@ -364,6 +423,7 @@ class Mooogle {
 
     // обработчик на клик по модалке
     this.clickCloseSearchBlockHandler = function(e) {
+      console.log(e.target.matches);
       if (e.target.className !== "search_modal") {
         return;
       }
@@ -404,6 +464,11 @@ class Mooogle {
 
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
+    if (this.refs.buttonFavorite.classList.contains("active-focus")) {
+      this.refs.buttonFavorite.classList.remove("active-focus");
+      this.refs.headerButtonFilm.classList.add("active-focus");
+    }
+
     return api
       .getSearching()
       .then(data => {
@@ -474,24 +539,6 @@ class Mooogle {
   }
 
   // обработчик на клик по "btn sort by name"
-  // clickOnBtnName() {
-  //   this.openPreloaderUL();
-  //   this.killInfinityScroll();
-  //   if (localStorage.getItem("mediaType") === "movie") {
-  //     this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
-  //       if (a.title < z.title) return -1;
-  //       if (a.title > z.title) return 1;
-  //     });
-  //   } else if (localStorage.getItem("mediaType") === "TV") {
-  //     this.sortArrayNameAZ = this.sortArray.sort((a, z) => {
-  //       if (a.original_name < z.original_name) return -1;
-  //       if (a.original_name > z.original_name) return 1;
-  //     });
-  //   }
-  //   this.sortMarkupName = filmsTemplate(this.sortArrayNameAZ);
-  //   this.refs.filmsList.innerHTML = this.sortMarkupName;
-  //   this.closePreloaderUL();
-  // }
   clickOnBtnName() {
     this.openPreloaderUL();
     this.killInfinityScroll();
