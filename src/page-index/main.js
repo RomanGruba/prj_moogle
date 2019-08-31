@@ -465,7 +465,6 @@ class Mooogle {
   // Рендеринг найденых фильмов
   renderSearchingFilm() {
     if (this.refs.buttonFavorite.classList.contains("active-focus")) {
-      console.log("sdsdsd");
       this.refs.buttonFavorite.classList.remove("active-focus");
       this.refs.headerButtonFilm.classList.add("active-focus");
     }
